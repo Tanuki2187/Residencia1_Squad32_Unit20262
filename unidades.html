@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidades</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <style>
+  :root {
+    --primary-blue: #2A68C2;
+    --secondary-blue: #4B83DA;
+    --sidebar-bg: #2C64B4;
+    --sidebar-active: #4078CA;
+    --bg-color: #F4F7FE;
+    --text-dark: #1F2937;
+    --text-light: #6B7280;
+    --white: #FFFFFF;
+    
+    /* Icon Colors */
+    --blue-icon: #3B82F6;
+    --orange-icon: #EA580C;
+    --green-icon: #10B981;
+}
+
+/* Base Layout Container (Ensures full width) */
+.dashboard-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw; 
+    max-width: 100%;
+}
+
+/* Main Content Styles (Stretches to fill space) */
+.main-content {
+    flex: 1;
+    width: calc(100% - 250px);
+    min-width: 0;
+    padding: 30px 40px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+</style>
+    <div class="dashboard-container">
+        
+<!-- Sidebar -->
+      <aside class="menu">
+      <div class="logo">
+        <span class="logo-icone"></span>
+        <span class="logo-texto">Attento</span>
+      </div>
+
+      <nav class="menu-lista">
+<!-- data-pagina indica qual botão pessoa clicou -->
+        <button class="menu-item" data-pagina="inicio" href="dashboard.html"> Início</button>
+        <button class="menu-item" data-pagina="unidades" href="unidades.html"> Unidades</button>
+        <button class="menu-item" data-pagina="salas " href="salas.html"> Salas</button>
+        <button class="menu-item" data-pagina="conveniencia" href="conveniencia.html"> Conveniência</button>
+        <button class="menu-item" data-pagina="financeiros" href="#"> Financeiro</button>
+      </nav>
+
+      <div class="menu-rodape">
+        <hr></hr>
+        <button class="menu-item" data-pagina="config"> Configurações</button>
+        <button class="menu-item" data-pagina="sair">↩ Sair</button>
+      </div>
+    </aside>
+
+
+<!-- Main Content -->
+        <main class="main-content">
+            <header class="unidades-header">
+                <div class="header-titles">
+                    <h1>Unidades</h1>
+                    <p>Gerencie as duas unidades da empresa.</p>
+                </div>
+                
+                <div class="header-actions">
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" placeholder="Buscar unidade...">
+                    </div>
+                    <button class="btn-primary">
+                        <i class="fa-solid fa-plus"></i> Cadastrar unidade
+                    </button>
+                </div>
+            </header>
+
+            <!-- Grid -->
+            <section class="unidades-grid">
+                
+                <!-- Cards -->
+                <div class="unidade-card">
+                    <div class="unidade-image unidade-img">
+                        <i class="fa-regular fa-image"></i>
+                    </div>
+                    <div class="unidade-body">
+                        <div class="unidade-title-row">
+                            <h2>Unidade 1</h2>
+                            <span class="badge active-badge">Ativa</span>
+                        </div>
+                        <p class="unidade-endereco">
+                            <i class="fa-solid fa-location-dot"></i> Av. Beira Mar, 1234 - Aracaju/SE
+                        </p>
+                        
+                        <div class="unidade-stats">
+                            <div class="stat">
+                                <div class="stat-val">
+                                    <i class="fa-solid fa-door-open blue-icon"></i> 12
+                                </div>
+                                <div class="stat-lbl">Total de salas</div>
+                            </div>
+                            <div class="stat divider"></div>
+                            <div class="stat">
+                                <div class="stat-val">
+                                    <i class="fa-solid fa-door-closed orange-icon"></i> 8
+                                </div>
+                                <div class="stat-lbl">Ocupadas</div>
+                            </div>
+                            <div class="stat divider"></div>
+                            <div class="stat">
+                                <div class="stat-val">
+                                    <i class="fa-solid fa-phone green-icon"></i> 4
+                                </div>
+                                <div class="stat-lbl">Disponíveis</div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn-secondary" href="salas.html">
+                            Ver detalhes <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- unidade Card 2 -->
+                <div class="unidade-card">
+                    <div class="unidade-image unidade-img">
+                        <i class="fa-regular fa-image"></i>
+                    </div>
+                    <div class="unidade-body">
+                        <div class="unidade-title-row">
+                            <h2>Unidade 2</h2>
+                            <span class="badge active-badge">Ativa</span>
+                        </div>
+                        <p class="unidade-endereco">
+                            <i class="fa-solid fa-location-dot"></i> Av. Santos Dumont, 567 - Aracaju/SE
+                        </p>
+                        
+                        <div class="unidade-stats">
+                            <div class="stat">
+                                <div class="stat-val">
+                                    <i class="fa-solid fa-door-open blue-icon"></i> 12
+                                </div>
+                                <div class="stat-lbl">Total de salas</div>
+                            </div>
+                            <div class="stat divider"></div>
+                            <div class="stat">
+                                <div class="stat-val">
+                                    <i class="fa-solid fa-door-closed orange-icon"></i> 10
+                                </div>
+                                <div class="stat-lbl">Ocupadas</div>
+                            </div>
+                            <div class="stat divider"></div>
+                            <div class="stat">
+                                <div class="stat-val">
+                                    <i class="fa-solid fa-phone green-icon"></i> 2
+                                </div>
+                                <div class="stat-lbl">Disponíveis</div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn-secondary" href="salas.html">
+                            Ver detalhes <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+    </div>
+</body>
+</html>

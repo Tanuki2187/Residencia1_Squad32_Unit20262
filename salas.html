@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Salas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="app">
+
+    <!-- MENU LATERAL -->
+    <aside class="menu">
+      <div class="logo">
+        <span class="logo-icone"></span>
+        <span class="logo-texto">Attento</span>
+      </div>
+
+      <nav class="menu-lista">
+        <!-- data-pagina serve pra gente saber em qual aba a pessoa clicou -->
+      <button class="menu-item" data-pagina="inicio" href="dashboard.html"> Início</button>
+        <button class="menu-item" data-pagina="unidades" href="unidades.html"> Unidades</button>
+        <button class="menu-item" data-pagina="salas " href="salas.html"> Salas</button>
+        <button class="menu-item" data-pagina="conveniencia" href="conveniencia.html"> Conveniência</button>
+        <button class="menu-item" data-pagina="financeiros" href="#"> Financeiro </button>
+      </nav>
+
+      <div class="menu-rodape">
+        <hr>
+        <button class="menu-item" data-pagina="config"> Configurações</button>
+        <button class="menu-item" data-pagina="sair">↩ Sair</button>
+      </div>
+    </aside>
+
+    <!-- CONTEÚDO -->
+    <main class="conteudo">
+
+      <div class="topo-pagina">
+        <div>
+          <h1>Salas</h1>
+          <p class="subtitulo">Gerencie e visualize todas as salas das unidades.</p>
+        </div>
+        <button id="btnNovaSala" class="botao-principal">+ Cadastrar sala</button>
+      </div>
+
+      <!-- FILTROS -->
+      <div class="filtros">
+        <input type="text" id="campoBusca" placeholder=" Buscar sala...">
+
+        <select id="filtroUnidade">
+          <option value="todas">Todas as unidades</option>
+          <option value="Unidade 1">Unidade 1</option>
+          <option value="Unidade 2">Unidade 2</option>
+        </select>
+
+        <select id="filtroStatus">
+          <option value="todos">Todos os status</option>
+          <option value="Ocupada">Ocupada</option>
+          <option value="Disponível">Disponível</option>
+          <option value="Reservada">Reservada</option>
+          <option value="Indisponível">Indisponível</option>
+        </select>
+      </div>
+
+      <!-- AQUI ENTRAM OS CARDS DAS SALAS -->
+      <div class="grade-salas" id="listaDeSalas">
+        <!-- os cards são criados pelo script.js, olha lá o array "salas" -->
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Um "modelo" de card, escondido, que o JS copia pra cada sala -->
+  <template id="modeloCard">
+    <div class="card-sala">
+      <div class="card-topo">
+        <h3 class="card-nome"></h3>
+        <span class="card-menu">⋯</span>
+      </div>
+      <p class="card-unidade"></p>
+
+      <div class="card-status">
+        <span class="bolinha-status"></span>
+        <span class="texto-status"></span>
+      </div>
+
+      <p class="card-profissional"></p>
+      <p class="card-horario"></p>
+
+      <button class="botao-detalhes">Ver detalhes →</button>
+    </div>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>

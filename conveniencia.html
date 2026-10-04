@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Conveniência</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="app">
+
+    <!-- MENU LATERAL -->
+    <aside class="menu">
+      <div class="logo">
+        <span class="logo-icone"></span>
+        <span class="logo-texto">Attento</span>
+      </div>
+
+      <nav class="menu-lista">
+        <button class="menu-item" data-pagina="inicio" href="dashboard.html"> Início</button>
+        <button class="menu-item" data-pagina="unidades" href="unidades.html"> Unidades</button>
+        <button class="menu-item" data-pagina="salas " href="salas.html"> Salas</button>
+        <button class="menu-item" data-pagina="conveniencia" href="conveniencia.html"> Conveniência</button>
+        <button class="menu-item" data-pagina="financeiros" href="#"> Financeiro</button>
+      </nav>
+
+      <div class="menu-rodape">
+        <button class="menu-item" data-pagina="config">Configurações</button>
+        <button class="menu-item" data-pagina="sair">↩ Sair</button>
+      </div>
+    </aside>
+
+    <!-- CONTEÚDO -->
+    <main class="conteudo">
+      <div class="topo-pagina">
+        <div>
+          <h1>Conveniência</h1>
+          <p class="subtitulo">Gerencie os produtos e os consumos da conveniência.</p>
+        </div>
+
+        <button id="btnNovoProduto" class="botao-principal">
+          + Cadastrar produto
+        </button>
+      </div>
+
+      <!-- RESUMO -->
+      <div class="resumo">
+
+        <div class="card-resumo">
+          <span class="resumo-titulo">Produtos</span>
+          <strong id="totalProdutos">0</strong>
+          <span class="resumo-legenda">cadastrados</span>
+        </div>
+
+        <div class="card-resumo">
+          <span class="resumo-titulo">Itens consumidos</span>
+          <strong id="totalItens">0</strong>
+          <span class="resumo-legenda">no período</span>
+        </div>
+
+        <div class="card-resumo">
+          <span class="resumo-titulo">Total vendido</span>
+          <strong id="totalVendido">R$ 0,00</strong>
+          <span class="resumo-legenda">no período</span>
+        </div>
+
+        <div class="card-resumo">
+          <span class="resumo-titulo">Estoque baixo</span>
+          <strong id="estoqueBaixo">0</strong>
+          <span class="resumo-legenda">produtos</span>
+        </div>
+
+      </div>
+
+      <!-- FILTROS -->
+      <div class="filtros">
+        <input type="text" id="campoBusca" placeholder=" Buscar produto...">
+
+        <select id="filtroStatus">
+          <option value="todos">Todos os produtos</option>
+          <option value="disponivel">Disponíveis</option>
+          <option value="baixo">Estoque baixo</option>
+          <option value="indisponivel">Sem estoque</option>
+        </select>
+      </div>
+
+      <!-- PRODUTOS -->
+      <div class="titulo-secao">
+        <h2>Produtos</h2>
+        <span id="contadorProdutos">0 produtos</span>
+      </div>
+
+      <div class="grade-produtos" id="listaDeProdutos">
+        <!-- cards criados pelo script.js -->
+      </div>
+
+      <!-- MOVIMENTAÇÕES -->
+      <div class="titulo-secao movimentacoes-titulo">
+        <div>
+          <h2>Últimos consumos</h2>
+          <p>Registros de consumo da conveniência.</p>
+        </div>
+
+        <button id="btnNovoConsumo" class="botao-secundario">
+          + Registrar consumo
+        </button>
+      </div>
+
+      <div class="tabela-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Profissional</th>
+              <th>Produto</th>
+              <th>Quantidade</th>
+              <th>Data</th>
+              <th>Valor</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+
+          <tbody id="listaMovimentacoes">
+            <!-- movimentações inseridas pelo JS -->
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- MODAL: NOVO PRODUTO -->
+  <div class="modal-fundo" id="modalProduto">
+    <div class="modal">
+
+      <div class="modal-topo">
+        <div>
+          <h2>Cadastrar produto</h2>
+          <p>Adicione um novo item à conveniência.</p>
+        </div>
+
+        <button class="fechar-modal" data-fechar="modalProduto">×</button>
+      </div>
+
+      <form id="formProduto">
+
+        <label>
+          Nome do produto
+          <input type="text" id="nomeProduto" required placeholder="Ex.: Água mineral">
+        </label>
+
+        <label>
+          Preço
+          <input type="number" id="precoProduto" min="0" step="0.01" required placeholder="0,00">
+        </label>
+
+        <label>
+          Estoque inicial
+          <input type="number" id="quantidadeProduto" min="0" required placeholder="0">
+        </label>
+
+        <div class="modal-botoes">
+          <button type="button" class="botao-cancelar" data-fechar="modalProduto">Cancelar</button>
+          <button type="submit" class="botao-principal">Cadastrar</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: NOVO CONSUMO -->
+  <div class="modal-fundo" id="modalConsumo">
+    <div class="modal">
+
+      <div class="modal-topo">
+        <div>
+          <h2>Registrar consumo</h2>
+          <p>Registre uma venda da conveniência.</p>
+        </div>
+
+        <button class="fechar-modal" data-fechar="modalConsumo">×</button>
+      </div>
+
+      <form id="formConsumo">
+
+        <label>
+          Profissional
+          <!-- Depois o backend pode transformar isso em um select preenchido automaticamente. -->
+          <input type="text" id="profissionalConsumo" required placeholder="Nome do profissional">
+        </label>
+
+        <label>
+          Produto
+          <select id="produtoConsumo" required></select>
+        </label>
+
+        <label>
+          Quantidade
+          <input type="number" id="quantidadeConsumo" min="1" value="1" required>
+        </label>
+
+        <label>
+          Data
+          <input type="date" id="dataConsumo" required>
+        </label>
+
+        <div class="modal-botoes">
+          <button type="button" class="botao-cancelar" data-fechar="modalConsumo">Cancelar</button>
+          <button type="submit" class="botao-principal">Registrar</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
