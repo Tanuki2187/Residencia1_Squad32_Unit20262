@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Using Font Awesome for placeholder icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<style> 
+  /* Base Variables & Reset */
+:root {
+    --primary-blue: #2A68C2;
+    --sidebar-bg: #2C64B4;
+    --sidebar-active: #4078CA;
+    --bg-color: #F4F7FE;
+    --text-dark: #1F2937;
+    --text-light: #6B7280;
+    --white: #FFFFFF;
+    
+    /* Status Colors */
+    --green-text: #059669;
+    --green-bg: #D1FAE5;
+    --blue-text: #2563EB;
+    --blue-bg: #DBEAFE;
+    --red-text: #DC2626;
+    --yellow-icon: #F59E0B;
+    --orange-icon: #EA580C;
+}
+</style>
+<body>
+    <div class="dashboard-container"> 
+<!-- Sidebar -->
+  <aside class="menu">
+      <div class="logo">
+        <span class="logo-icone"></span>
+        <span class="logo-texto">Attento</span>
+      </div>
+    <nav class="menu-lista">
+        <!-- data-pagina indica qual botão pessoa clicou -->
+       <a href="dashboard.html"></a><button class="menu-item" data-pagina="inicio"> Início</button></a>
+       <a href="unidades.html"><button class="menu-item" data-pagina="unidades"> Unidades</button></a>
+       <a href="salas.html"><button class="menu-item" data-pagina="salas "> Salas</button></a>
+       <a href="conveniencia.html"><button class="menu-item" data-pagina="conveniencia"> Conveniência</button></a>
+       <a href="#"><button class="menu-item" data-pagina="financeiro"> Financeiro</button></a>
+    </nav>
+
+      <div class="menu-rodape">
+        <hr></hr>
+        <button class="menu-item" data-pagina="config"> Configurações</button>
+        <a href="index.html"><button class="menu-item" data-pagina="sair">↩ Sair</button></a>
+      </div>
+  </aside>
+<!-- Main Content -->
+  <main class="main-content">     
+    <!-- Header -->
+    <header class="top-header">
+      <div class="search-bar">
+        <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" placeholder="Buscar no sistema...">
+      </div>
+                
+      <div class="user-profile">
+          <div class="notification-icon">
+              <i class="fa-regular fa-bell"></i>
+                <span class="badge"></span>
+            </div>
+        <div class="avatar">JG</div>
+            <div class="user-info">
+                <span class="user-name">João Gabriel</span>
+                <span class="user-role">Administrador <i class="fa-solid fa-chevron-down"></i></span>
+            </div>
+        </div>
+      </header>
+
+<section class="page-header">
+    <h1>Olá, João Gabriel!</h1>
+      <p>Aqui está o resumo da operação de hoje.</p>
+</section>
+
+<!-- KPI -->
+            <section class="kpi-cards">
+                  <div class="card kpi-card">
+                      <div class="kpi-icon blue"><i class="fa-solid fa-qrcode"></i></div>
+                      <div class="kpi-value">24</div>
+                      <div class="kpi-label">Total de salas</div>
+                  </div>
+                  <div class="card kpi-card">
+                      <div class="kpi-icon orange"><i class="fa-solid fa-door-closed"></i></div>
+                      <div class="kpi-value">18</div>
+                      <div class="kpi-label">Ocupadas</div>
+                      <div class="kpi-subtext">75%</div>
+                  </div>
+                  <div class="card kpi-card">
+                      <div class="kpi-icon green"><i class="fa-solid fa-phone"></i></div>
+                      <div class="kpi-value">6</div>
+                      <div class="kpi-label">Disponíveis</div>
+                      <div class="kpi-subtext">25%</div>
+                  </div>
+                  <div class="card kpi-card">
+                      <div class="kpi-icon green"><i class="fa-solid fa-money-bill"></i></div>
+                      <div class="kpi-value">R$ 32.450</div>
+                      <div class="kpi-label">Recebidos no mês</div>
+                      <div class="kpi-subtext highlight-green"><i class="fa-solid fa-arrow-up"></i> 12%</div>
+                  </div>
+                  <div class="card kpi-card">
+                      <div class="kpi-icon yellow"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                      <div class="kpi-value">3</div>
+                      <div class="kpi-label">Pendências</div>
+                      <div class="kpi-subtext highlight-red">Atenção</div>
+                  </div>
+            </section>
+
+<!-- Agenda e Pendencias -->
+            <section class="bottom-grid">
+  <!-- Agenda -->
+                <div class="card agenda-card">
+                    <div class="card-header">
+                        <h2>Agenda de hoje</h2>
+                        <a href="salas.html" class="view-all">Ver todas <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                        <div class="agenda-list">
+                            <div class="agenda-item">
+                                <span class="time">08:00 - 12:00</span>
+                                <span class="room fw-bold">Sala 01</span>
+                                <span class="unit">Unidade 1</span>
+                                <span class="doctor">Dr. Carlos Silva</span>
+                                <span class="status-pill status-ocupada"><i class="fa-solid fa-circle"></i> Ocupada</span>
+                            </div>
+                            <div class="agenda-item">
+                                <span class="time">10:00 - 12:00</span>
+                                <span class="room fw-bold">Sala 03</span>
+                                <span class="unit">Unidade 2</span>
+                                <span class="doctor">Dra. Mariana Costa</span>
+                                <span class="status-pill status-ocupada"><i class="fa-solid fa-circle"></i> Ocupada</span>
+                            </div>
+                            <div class="agenda-item">
+                                <span class="time">14:00 - 16:00</span>
+                                <span class="room fw-bold">Sala 07</span>
+                                <span class="unit">Unidade 1</span>
+                                <span class="doctor">Dr. Roberto Lima</span>
+                                <span class="status-pill status-disponivel"><i class="fa-solid fa-circle"></i> Disponível</span>
+                            </div>
+                            <div class="agenda-item">
+                                <span class="time">16:00 - 18:00</span>
+                                <span class="room fw-bold">Sala 12</span>
+                                <span class="unit">Unidade 2</span>
+                                <span class="doctor">Dra. Ana Souza</span>
+                                <span class="status-pill status-ocupada"><i class="fa-solid fa-circle"></i> Ocupada</span>
+                            </div>
+                        </div>
+                </div>
+  <!-- Pendencias -->
+                <div class="card pendencias-card">
+                    <div class="card-header">
+                        <h2>Pendências</h2>
+                        <a href="#" class="view-all">Ver todas <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                      <div class="pendencias-list">
+                          <div class="pendencia-item">
+                              <div class="p-icon p-orange"><i class="fa-solid fa-file-invoice"></i></div>
+                              <div class="p-content">
+                                  <span class="p-title">3 pagamentos em atraso</span>
+                                  <span class="p-desc">Vencidos ou próximos do vencimento</span>
+                              </div>
+                          </div>
+                          <div class="pendencia-item">
+                              <div class="p-icon p-yellow"><i class="fa-regular fa-clock"></i></div>
+                              <div class="p-content">
+                                  <span class="p-title">2 salas sem agendamento</span>
+                                  <span class="p-desc">Verificar disponibilidade</span>
+                              </div>
+                          </div>
+                          <div class="pendencia-item">
+                              <div class="p-icon p-yellow"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                              <div class="p-content">
+                                  <span class="p-title">1 produto com estoque baixo</span>
+                                  <span class="p-desc">Conveniência</span>
+                              </div>
+                          </div>
+                          <div class="pendencia-item">
+                              <div class="p-icon p-orange"><i class="fa-solid fa-file-contract"></i></div>
+                              <div class="p-content">
+                                  <span class="p-title">1 contrato para renovação</span>
+                                  <span class="p-desc">Próximos 7 dias</span>
+                              </div>
+                          </div>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+    </div>
+</body>
+</html>
