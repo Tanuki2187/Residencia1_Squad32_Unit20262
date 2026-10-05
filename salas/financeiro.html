@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attento - Financeiro</title>
+  <link rel="stylesheet" href="financeiro.css">
+</head>
+<body>
+
+  <div class="app">
+
+    <!-- MENU LATERAL -->
+    <aside class="menu">
+      <div class="logo">
+        <span class="logo-icone"></span>
+        <span class="logo-texto">Attento</span>
+      </div>
+
+      <nav class="menu-lista">
+        <!-- data-pagina serve pra gente saber em qual aba a pessoa clicou -->
+        <button class="menu-item" data-pagina="inicio">Início</button>
+        <button class="menu-item" data-pagina="unidades">Unidades</button>
+        <button class="menu-item" data-pagina="salas">Salas</button>
+        <button class="menu-item" data-pagina="agenda">Agenda</button>
+        <button class="menu-item" data-pagina="atendimento">Atendimento</button>
+        <button class="menu-item" data-pagina="concorrencia">Concorrência</button>
+        <button class="menu-item" data-pagina="profissionais">Profissionais</button>
+        <button class="menu-item ativo" data-pagina="financeiros">Financeiros</button>
+        <button class="menu-item" data-pagina="relatorios">Relatórios</button>
+      </nav>
+
+      <div class="menu-rodape">
+        <button class="menu-item" data-pagina="config">Configurações</button>
+        <button class="menu-item" data-pagina="sair">Sair</button>
+      </div>
+    </aside>
+
+    <!-- CONTEÚDO -->
+    <main class="conteudo">
+
+      <div class="topo-pagina">
+        <div>
+          <h1>Financeiro</h1>
+          <p class="subtitulo">Acompanhe os recebimentos e pendências.</p>
+        </div>
+        <button id="btnExportar" class="botao-principal">Exportar planilha</button>
+      </div>
+
+      <!-- FILTROS -->
+      <div class="filtros">
+        <input type="text" id="campoBusca" placeholder="Buscar profissional...">
+
+        <select id="filtroUnidade">
+          <option value="todas">Todas as unidades</option>
+          <option value="Unidade 1">Unidade 1</option>
+          <option value="Unidade 2">Unidade 2</option>
+        </select>
+
+        <select id="filtroStatus">
+          <option value="todos">Todos os status</option>
+          <option value="Pago">Pago</option>
+          <option value="Pendente">Pendente</option>
+          <option value="Em atraso">Em atraso</option>
+        </select>
+      </div>
+
+      <!-- RESUMO (os valores são calculados pelo financeiro.js) -->
+      <div class="resumo">
+        <div class="card-resumo">
+          <p class="resumo-titulo">Recebido</p>
+          <p class="resumo-valor status-pago" id="valorRecebido">R$ 0</p>
+        </div>
+
+        <div class="card-resumo">
+          <p class="resumo-titulo">Pendente</p>
+          <p class="resumo-valor status-pendente" id="valorPendente">R$ 0</p>
+        </div>
+
+        <div class="card-resumo">
+          <p class="resumo-titulo">Total previsto</p>
+          <p class="resumo-valor" id="valorPrevisto">R$ 0</p>
+        </div>
+      </div>
+
+      <!-- TABELA DE PAGAMENTOS -->
+      <div class="card-tabela">
+        <h2>Pagamentos</h2>
+
+        <table class="tabela">
+          <thead>
+            <tr>
+              <th>Profissional</th>
+              <th>Unidade</th>
+              <th>Sala</th>
+              <th>Valor</th>
+              <th>Vencimento</th>
+              <th>Pagamento</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="listaDePagamentos">
+            <!-- as linhas são criadas pelo financeiro.js, olha lá o array "pagamentos" -->
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Um "modelo" de linha, escondido, que o JS copia pra cada pagamento -->
+  <template id="modeloLinha">
+    <tr>
+      <td class="col-profissional"></td>
+      <td class="col-unidade"></td>
+      <td class="col-sala"></td>
+      <td class="col-valor"></td>
+      <td class="col-vencimento"></td>
+      <td class="col-pagamento"></td>
+      <td>
+        <span class="linha-status">
+          <span class="bolinha-status"></span>
+          <span class="texto-status"></span>
+        </span>
+      </td>
+    </tr>
+  </template>
+
+  <script src="financeiro.js"></script>
+</body>
+</html>

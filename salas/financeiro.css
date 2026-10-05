@@ -1,0 +1,224 @@
+/* reset bem simples, só pra tirar as margens padrão do navegador */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background-color: #f2f4f8;
+}
+
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ---------- MENU LATERAL ---------- */
+.menu {
+  width: 220px;
+  background-color: #2f4f9e;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 14px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 30px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.menu-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.menu-item {
+  background: none;
+  border: none;
+  color: #d6ddf2;
+  text-align: left;
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.menu-item:hover {
+  background-color: #3d5ead;
+}
+
+.menu-item.ativo {
+  background-color: white;
+  color: #2f4f9e;
+  font-weight: bold;
+}
+
+.menu-rodape {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ---------- CONTEÚDO ---------- */
+.conteudo {
+  flex: 1;
+  min-width: 0; /* deixa a tabela rolar pro lado em tela pequena */
+  padding: 30px 40px;
+}
+
+.topo-pagina {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.topo-pagina h1 {
+  font-size: 24px;
+  color: #1c2b4a;
+}
+
+.subtitulo {
+  color: #6b7280;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.botao-principal {
+  background-color: #2f4f9e;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.botao-principal:hover {
+  background-color: #24407f;
+}
+
+/* ---------- FILTROS ---------- */
+.filtros {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.filtros input,
+.filtros select {
+  padding: 10px 12px;
+  border: 1px solid #d7dbe3;
+  border-radius: 8px;
+  background-color: white;
+  font-size: 14px;
+}
+
+#campoBusca {
+  flex: 1;
+}
+
+/* ---------- CARDS DE RESUMO ---------- */
+.resumo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.card-resumo {
+  background-color: white;
+  border: 1px solid #e4e7ee;
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.resumo-titulo {
+  color: #8a8f9c;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.resumo-valor {
+  font-size: 22px;
+  font-weight: bold;
+  color: #1c2b4a;
+}
+
+/* ---------- TABELA DE PAGAMENTOS ---------- */
+.card-tabela {
+  background-color: white;
+  border: 1px solid #e4e7ee;
+  border-radius: 10px;
+  padding: 16px;
+  overflow-x: auto;
+}
+
+.card-tabela h2 {
+  font-size: 16px;
+  color: #1c2b4a;
+  margin-bottom: 12px;
+}
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.tabela th {
+  text-align: left;
+  color: #6b7280;
+  font-weight: bold;
+  padding: 10px 12px;
+  background-color: #f2f4f8;
+  white-space: nowrap;
+}
+
+.tabela td {
+  padding: 12px;
+  color: #1c2b4a;
+  border-bottom: 1px solid #e4e7ee;
+  white-space: nowrap;
+}
+
+.tabela tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.col-valor {
+  font-weight: bold;
+}
+
+.tabela .col-pagamento {
+  color: #8a8f9c;
+}
+
+.linha-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bolinha-status {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+  /* a bolinha pinta o fundo com a mesma cor do texto (currentColor) */
+  background-color: currentColor;
+}
+
+/* cada status tem uma cor - o JS decide qual classe usar */
+.status-pago { color: #22a55e; }
+.status-pendente { color: #e08a1e; }
+.status-atraso { color: #e0413a; }
