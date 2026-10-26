@@ -34,25 +34,29 @@
     <div class="dashboard-container"> 
 <!-- Sidebar -->
   <aside class="menu">
-      <div class="logo">
-        <span class="logo-icone"></span>
-        <span class="logo-texto">Attento</span>
-      </div>
-    <nav class="menu-lista">
-        <!-- data-pagina indica qual botão pessoa clicou -->
-        <button class="menu-item" data-pagina="inicio" href="dashboard.html"> Início</button>
-        <button class="menu-item" data-pagina="unidades" href="unidades.html"> Unidades</button>
-        <button class="menu-item" data-pagina="salas " href="salas.html"> Salas</button>
-        <button class="menu-item" data-pagina="conveniencia" href="conveniencia.html"> Conveniência</button>
-        <button class="menu-item" data-pagina="financeiro" href="#"> Financeiro</button>
-    </nav>
+  <div class="logo">
+    <span class="logo-icone">
+      <img src="assets/favicon-96x96.png" alt="Logo">
+    </span>
+    <span>Attento</span>
+  </div>
+    
+  <nav class="menu-lista">
+ 
+    <a href="dashboard.html" class="menu-item" data-pagina="inicio" aria-current="page">Início</a>
+    <a href="unidades.html" class="menu-item" data-pagina="unidades">Unidades</a>
+    <a href="salas.html" class="menu-item" data-pagina="salas">Salas</a>
+    <a href="conveniencia.html" class="menu-item" data-pagina="conveniencia">Conveniência</a>
+    <a href="financeiro.html" class="menu-item" data-pagina="financeiro">Financeiro</a>
+  </nav>
 
-      <div class="menu-rodape">
-        <hr></hr>
-        <button class="menu-item" data-pagina="config"> Configurações</button>
-        <button class="menu-item" data-pagina="sair">↩ Sair</button>
-      </div>
-  </aside>
+  <div class="menu-rodape">
+    <hr>
+    <button class="menu-item" data-pagina="config">Configurações</button>
+    <a href="index.html" class="menu-item" data-pagina="sair">↩ Sair</a>
+  </div>
+</aside>
+
 <!-- Main Content -->
   <main class="main-content">     
     <!-- Header -->
@@ -156,7 +160,7 @@
                 <div class="card pendencias-card">
                     <div class="card-header">
                         <h2>Pendências</h2>
-                        <a href="#" class="view-all">Ver todas <i class="fa-solid fa-arrow-right"></i></a>
+                        <a href="financeiro.html" class="view-all">Ver todas <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
                       <div class="pendencias-list">
                           <div class="pendencia-item">

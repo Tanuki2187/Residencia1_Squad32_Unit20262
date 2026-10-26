@@ -22,6 +22,14 @@ body {
     display: flex;
     min-height: 100vh;
   }
+/* >>> PARTE INSERIDA (Salas e Financeiro) - 22/10/2026
+   o "body { display: flex }" encolhia as páginas de Salas e Financeiro
+   para ~60% da tela; esta regra só vale nessas duas páginas */
+.app:has(#listaDeSalas),
+.app:has(#listaDePagamentos) {
+  width: 100%;
+}
+/* <<< FIM DA PARTE INSERIDA */
 /* ---------- UNIDADES---------- */
 
 .unidades-header {
@@ -485,7 +493,7 @@ body {
 .status-ocupada { background: var(--green-bg); color: var(--green-text); }
 .status-disponivel { background: var(--blue-bg); color: var(--blue-text); }
 
-/* Pendencias List */
+/* Pendencias */
 .pendencias-list {
     display: flex;
     flex-direction: column;
@@ -531,197 +539,212 @@ body {
 
 /* ---------- MENU LATERAL ---------- */
 
-  .menu {
-    width: 10%;
-    background-color: #5B88C5;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    padding: 20px 14px;
-  }
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 30px;
-    font-weight: bold;
-    font-size: 18px;
-  }
+.menu {
+  width: 15%;
+  background-color: #5B88C5;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 14px;
+}
 
-  .logo-icone {
-    width: 22px;
-    height: 22px;
-    border: 3px solid white;
-    border-radius: 50%;
-    display: inline-block;
-  }
+.logo {
+  display: flex;
+  flex-direction: row !important; /* Força o alinhamento horizontal */
+  align-items: center; /* Centraliza verticalmente o ícone e o texto */
+  gap: 8px;
+  margin-bottom: 30px;
+  font-weight: bold;
+  font-size: 18px;
+  white-space: nowrap; 
+}
 
-  .menu-lista {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    flex: 1;
-  }
+.logo-icone {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .menu-item {
-    background: none;
-    border: none;
-    color: #d6ddf2;
-    text-align: left;
-    padding: 10px 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-  }
+.logo-icone img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
 
-  .menu-item:hover {
-    background-color: #3d5ead;
-  }
+a.menu-item {
+  text-decoration: none;
+  display: block;
+}
 
-  .menu-item.ativo {
-    background-color: white;
-    color: #5B88C5;
-    font-weight: bold;
-  }
+.menu-lista {
+ display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
 
-  .menu-rodape {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
+.menu-item {
+  background: none;
+  border: none;
+  color: #d6ddf2;
+  text-align: left;
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.menu-item:hover {
+  background-color: #3d5ead;
+}
+
+.menu-item.ativo {
+  background-color: white;
+  color: #5B88C5;
+  font-weight: bold;
+}
+
+.menu-rodape {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
 
 /* ---------- CONTEÚDO ---------- */
 
-  .conteudo {
-    flex: 1; 
-    width: calc(100% - 220px);
-    min-width: 0; 
-    padding: 20px 40px 40px 40px; 
-    overflow-y: auto;
-    overflow-x: hidden; 
+.conteudo {
+  flex: 1; 
+  width: calc(100% - 220px);
+  min-width: 0; 
+  padding: 20px 40px 40px 40px; 
+  overflow-y: auto;
+  overflow-x: hidden; 
     
-  }
+}
 
-  .topo-pagina {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
+.topo-pagina {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
 
-  .topo-pagina h1 {
-    font-size: 24px;
-    color: #1c2b4a;
-  }
+.topo-pagina h1 {
+  font-size: 24px;
+  color: #1c2b4a;
+}
 
-  .subtitulo {
-    color: #6b7280;
-    font-size: 14px;
-    margin-top: 4px;
-  }
+.subtitulo {
+  color: #6b7280;
+  font-size: 14px;
+  margin-top: 4px;
+}
 
-  .botao-principal {
-    background-color: #5B88C5;
-    color: white;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-  }
+.botao-principal {
+  background-color: #5B88C5;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
 
-  .botao-principal:hover {
-    background-color: #5B88C5;
-  }
+.botao-principal:hover {
+  background-color: #5B88C5;
+}
 
-  .botao-secundario {
-    background-color: white;
-    color: #2f4f9e;
-    border: 1px solid #2f4f9e;
-    padding: 9px 15px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 13px;
-  }
+.botao-secundario {
+  background-color: white;
+  color: #2f4f9e;
+  border: 1px solid #2f4f9e;
+  padding: 9px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
 
-  .botao-secundario:hover {
-    background-color: #eef2fc;
-  }
+.botao-secundario:hover {
+  background-color: #eef2fc;
+}
 
 /* ---------- LOGIN ---------- */
 
-  .lado-esquerdo {
-    flex: 0 0 33.33%;
-    background-color: #638cc5; /* Base blue color */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 80px;
-    position: relative;
-    overflow: hidden;
-    color: white;
+.lado-esquerdo {
+  flex: 0 0 33.33%;
+  background-color: #638cc5; /* Base blue color */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 80px;
+  position: relative;
+  overflow: hidden;
+  color: white;
 }
 
 
-  .lado-direito {
-      flex: 1;
-      background-color: #ffffff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-  }
+.lado-direito {
+  flex: 1;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .login-box {
-      width: 100%;
-      max-width: 400px;
-      text-align: center;
-  }
+.login-box {
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
 
-  .login-box h2 {
-      font-size: 28px;
-      color: #000;
-      font-weight: 600;
-      margin-bottom: 8px;
-  }
+.login-box h2 {
+  font-size: 28px;
+  color: #000;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
 
-  .login-box p {
-      font-size: 16px;
-      color: #6c757d;
-      margin-bottom: 30px;
-  }
+.login-box p {
+  font-size: 16px;
+  color: #6c757d;
+  margin-bottom: 30px;
+}
 
-  .login-form {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-  }
+.login-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
 
-  .login-form input {
-      width: 100%;
-      padding: 14px 15px;
-      font-size: 14px;
-      border: 1px solid #ced4da;
-      outline: none;
-      transition: border-color 0.2s;
-  }
+.login-form input {
+  width: 100%;
+  padding: 14px 15px;
+  font-size: 14px;
+  border: 1px solid #ced4da;
+  outline: none;
+  transition: border-color 0.2s;
+}
 
-  .login-form input:focus {
-      border-color: #1a73e8;
-  }
+.login-form input:focus {
+   border-color: #1a73e8;
+}
 
-  .login-form input[type="text"] {
-      border-top-left-radius: 4px;
-      border-top-right-radius: 4px;
-      border-bottom: none; 
-  }
+.login-form input[type="text"] {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom: none; 
+}
 
-  .login-form input[type="password"] {
-      border-bottom-left-radius: 4px;
-      border-bottom-right-radius: 4px;
-      margin-bottom: 15px;
-  }
+.login-form input[type="password"] {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  margin-bottom: 15px;
+}
 
-  .login-form button {
+.login-form button {
       width: 100%;
       padding: 14px;
       background-color: #0d6efd; 
@@ -1079,6 +1102,186 @@ tr:last-child td {
   border-radius: 8px;
   cursor: pointer;
 }
+
+/* ##########################################################
+   >>> INÍCIO DA PARTE INSERIDA: páginas Salas e Financeiro
+   (salas.html e financeiro.html)
+   Inserido em: 22/10/2026
+
+   O que foi mudado neste arquivo:
+   - adicionado este bloco, com os estilos que só existem nas
+     páginas de Salas e Financeiro;
+   - logo depois do .app (começo do arquivo): adicionada a regra
+     .app:has(...), que só vale em Salas e Financeiro. Sem ela, o
+     "body { display: flex }" encolhia essas páginas para ~60% da tela;
+   - no MENU LATERAL: adicionada a regra a.menu-item, porque na sidebar
+     de Salas e Financeiro os itens são links <a> e sem ela ficariam
+     sublinhados (os <button> das outras páginas não mudam);
+   - as partes comuns (reset, sidebar, conteúdo, filtros, resumo e
+     tabela) usam as regras que já existiam neste arquivo;
+   - nenhuma regra que já existia foi alterada ou removida.
+   ########################################################## */
+
+/* ---------- SALAS E FINANCEIRO (bolinha de status) ---------- */
+.bolinha-status {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+  /* a bolinha pinta o fundo com a mesma cor do texto (currentColor) */
+  background-color: currentColor;
+}
+
+/* ---------- SALAS (salas.html) ---------- */
+/* ---------- CARDS DE SALA ---------- */
+.grade-salas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 18px;
+}
+
+.card-sala {
+  background-color: white;
+  border: 1px solid #e4e7ee;
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.card-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-nome {
+  font-size: 15px;
+  color: #1c2b4a;
+}
+
+.card-menu {
+  color: #9aa1af;
+  cursor: pointer;
+}
+
+.card-unidade {
+  color: #8a8f9c;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.card-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+/* cada status tem uma cor - o JS decide qual classe usar.
+   só "color" aqui: se pintar o fundo também, o texto some em cima da cor.
+   (".card-status" na frente para não mudar o .status-ocupada e o
+   .status-disponivel do DASHBOARD, que usam os mesmos nomes) */
+.card-status.status-disponivel { color: #22a55e; } /* verde */
+.card-status.status-reservada { color: #e0a800; }  /* amarelo */
+.card-status.status-ocupada { color: #e0413a; }    /* vermelho */
+.card-status.status-indisponivel { color: #8a8f9c; } /* cinza */
+
+.card-profissional,
+.card-horario {
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+
+.botao-detalhes {
+  width: 100%;
+  margin-top: 12px;
+  padding: 8px;
+  background: white;
+  border: 1px solid #2f4f9e;
+  color: #2f4f9e;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.botao-detalhes:hover {
+  background-color: #eef2fc;
+}
+
+/* ---------- FINANCEIRO (financeiro.html) ---------- */
+/* ---------- CARDS DE RESUMO ---------- */
+/* o layout dos cards (.resumo, .card-resumo, .resumo-titulo)
+   vem da seção RESUMO, aqui fica só o valor */
+.resumo-valor {
+  font-size: 22px;
+  font-weight: bold;
+  color: #1c2b4a;
+}
+
+/* ---------- TABELA DE PAGAMENTOS ---------- */
+.card-tabela {
+  background-color: white;
+  border: 1px solid #e4e7ee;
+  border-radius: 10px;
+  padding: 16px;
+  overflow-x: auto;
+}
+
+.card-tabela h2 {
+  font-size: 16px;
+  color: #1c2b4a;
+  margin-bottom: 12px;
+}
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.tabela th {
+  text-align: left;
+  color: #6b7280;
+  font-weight: bold;
+  padding: 10px 12px;
+  background-color: #f2f4f8;
+  white-space: nowrap;
+}
+
+.tabela td {
+  padding: 12px;
+  color: #1c2b4a;
+  border-bottom: 1px solid #e4e7ee;
+  white-space: nowrap;
+}
+
+.tabela tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.col-valor {
+  font-weight: bold;
+}
+
+.tabela .col-pagamento {
+  color: #8a8f9c;
+}
+
+.linha-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* cada status tem uma cor - o JS decide qual classe usar */
+.status-pago { color: #22a55e; }
+.status-pendente { color: #e08a1e; }
+.status-atraso { color: #e0413a; }
+
+/* ##########################################################
+   <<< FIM DA PARTE INSERIDA: páginas Salas e Financeiro
+   ########################################################## */
 
 /* ---------- RESPONSIVO ---------- */
 
