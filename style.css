@@ -493,7 +493,7 @@ body {
 .status-ocupada { background: var(--green-bg); color: var(--green-text); }
 .status-disponivel { background: var(--blue-bg); color: var(--blue-text); }
 
-/* Pendencias */
+/* Pendencias List */
 .pendencias-list {
     display: flex;
     flex-direction: column;
@@ -539,212 +539,205 @@ body {
 
 /* ---------- MENU LATERAL ---------- */
 
-.menu {
-  width: 15%;
-  background-color: #5B88C5;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  padding: 20px 14px;
-}
+  .menu {
+    width: 10%;
+    background-color: #5B88C5;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 14px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 30px;
+    font-weight: bold;
+    font-size: 18px;
+  }
 
-.logo {
-  display: flex;
-  flex-direction: row !important; /* Força o alinhamento horizontal */
-  align-items: center; /* Centraliza verticalmente o ícone e o texto */
-  gap: 8px;
-  margin-bottom: 30px;
-  font-weight: bold;
-  font-size: 18px;
-  white-space: nowrap; 
-}
+  .logo-icone {
+    width: 22px;
+    height: 22px;
+    border: 3px solid white;
+    border-radius: 50%;
+    display: inline-block;
+  }
 
-.logo-icone {
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0; 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  .menu-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+  }
 
-.logo-icone img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
+  .menu-item {
+    background: none;
+    border: none;
+    color: #d6ddf2;
+    text-align: left;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+  }
 
-a.menu-item {
-  text-decoration: none;
-  display: block;
-}
+  .menu-item:hover {
+    background-color: #3d5ead;
+  }
 
-.menu-lista {
- display: flex;
-  flex-direction: column;
-  gap: 2px;
-  flex: 1;
-}
+  .menu-item.ativo {
+    background-color: white;
+    color: #5B88C5;
+    font-weight: bold;
+  }
 
-.menu-item {
-  background: none;
-  border: none;
-  color: #d6ddf2;
-  text-align: left;
-  padding: 10px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-}
+  .menu-rodape {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
 
-.menu-item:hover {
-  background-color: #3d5ead;
-}
-
-.menu-item.ativo {
-  background-color: white;
-  color: #5B88C5;
-  font-weight: bold;
-}
-
-.menu-rodape {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
+  /* >>> PARTE INSERIDA (Salas e Financeiro) - 22/10/2026
+     na sidebar de Salas e Financeiro os itens são links <a>;
+     sem isso eles ficariam sublinhados (os <button> não mudam) */
+  a.menu-item {
+    text-decoration: none;
+  }
+  /* <<< FIM DA PARTE INSERIDA */
 
 /* ---------- CONTEÚDO ---------- */
 
-.conteudo {
-  flex: 1; 
-  width: calc(100% - 220px);
-  min-width: 0; 
-  padding: 20px 40px 40px 40px; 
-  overflow-y: auto;
-  overflow-x: hidden; 
+  .conteudo {
+    flex: 1; 
+    width: calc(100% - 220px);
+    min-width: 0; 
+    padding: 20px 40px 40px 40px; 
+    overflow-y: auto;
+    overflow-x: hidden; 
     
-}
+  }
 
-.topo-pagina {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
+  .topo-pagina {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
 
-.topo-pagina h1 {
-  font-size: 24px;
-  color: #1c2b4a;
-}
+  .topo-pagina h1 {
+    font-size: 24px;
+    color: #1c2b4a;
+  }
 
-.subtitulo {
-  color: #6b7280;
-  font-size: 14px;
-  margin-top: 4px;
-}
+  .subtitulo {
+    color: #6b7280;
+    font-size: 14px;
+    margin-top: 4px;
+  }
 
-.botao-principal {
-  background-color: #5B88C5;
-  color: white;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-}
+  .botao-principal {
+    background-color: #5B88C5;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+  }
 
-.botao-principal:hover {
-  background-color: #5B88C5;
-}
+  .botao-principal:hover {
+    background-color: #5B88C5;
+  }
 
-.botao-secundario {
-  background-color: white;
-  color: #2f4f9e;
-  border: 1px solid #2f4f9e;
-  padding: 9px 15px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 13px;
-}
+  .botao-secundario {
+    background-color: white;
+    color: #2f4f9e;
+    border: 1px solid #2f4f9e;
+    padding: 9px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+  }
 
-.botao-secundario:hover {
-  background-color: #eef2fc;
-}
+  .botao-secundario:hover {
+    background-color: #eef2fc;
+  }
 
 /* ---------- LOGIN ---------- */
 
-.lado-esquerdo {
-  flex: 0 0 33.33%;
-  background-color: #638cc5; /* Base blue color */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 80px;
-  position: relative;
-  overflow: hidden;
-  color: white;
+  .lado-esquerdo {
+    flex: 0 0 33.33%;
+    background-color: #638cc5; /* Base blue color */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 80px;
+    position: relative;
+    overflow: hidden;
+    color: white;
 }
 
 
-.lado-direito {
-  flex: 1;
-  background-color: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  .lado-direito {
+      flex: 1;
+      background-color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
 
-.login-box {
-  width: 100%;
-  max-width: 400px;
-  text-align: center;
-}
+  .login-box {
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+  }
 
-.login-box h2 {
-  font-size: 28px;
-  color: #000;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
+  .login-box h2 {
+      font-size: 28px;
+      color: #000;
+      font-weight: 600;
+      margin-bottom: 8px;
+  }
 
-.login-box p {
-  font-size: 16px;
-  color: #6c757d;
-  margin-bottom: 30px;
-}
+  .login-box p {
+      font-size: 16px;
+      color: #6c757d;
+      margin-bottom: 30px;
+  }
 
-.login-form {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
+  .login-form {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+  }
 
-.login-form input {
-  width: 100%;
-  padding: 14px 15px;
-  font-size: 14px;
-  border: 1px solid #ced4da;
-  outline: none;
-  transition: border-color 0.2s;
-}
+  .login-form input {
+      width: 100%;
+      padding: 14px 15px;
+      font-size: 14px;
+      border: 1px solid #ced4da;
+      outline: none;
+      transition: border-color 0.2s;
+  }
 
-.login-form input:focus {
-   border-color: #1a73e8;
-}
+  .login-form input:focus {
+      border-color: #1a73e8;
+  }
 
-.login-form input[type="text"] {
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-  border-bottom: none; 
-}
+  .login-form input[type="text"] {
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      border-bottom: none; 
+  }
 
-.login-form input[type="password"] {
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
-  margin-bottom: 15px;
-}
+  .login-form input[type="password"] {
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+      margin-bottom: 15px;
+  }
 
-.login-form button {
+  .login-form button {
       width: 100%;
       padding: 14px;
       background-color: #0d6efd; 
@@ -1133,6 +1126,22 @@ tr:last-child td {
 }
 
 /* ---------- SALAS (salas.html) ---------- */
+/* 06/11/2026 - Centraliza a janela de edição, escurece o fundo e destaca o erro de salvamento. */
+#dialogEditarSalas {
+  margin: auto;
+  border: 0;
+  max-height: calc(100% - 30px);
+}
+
+#dialogEditarSalas::backdrop {
+  background-color: rgba(20, 30, 50, 0.35);
+}
+
+#erroEditarSalas {
+  color: #a32925;
+  font-size: 13px;
+}
+
 /* ---------- CARDS DE SALA ---------- */
 .grade-salas {
   display: grid;

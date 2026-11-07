@@ -5,11 +5,8 @@
 // Inserido em: 22/10/2026
 //
 // O que foi mudado neste arquivo:
-// - adicionado este bloco no COMEÇO do arquivo. Ele precisa ficar antes
-//   do código da Conveniência: aquele código procura elementos que só
-//   existem na página dela (ex.: btnNovoProduto) e, nas outras páginas,
-//   para com erro; se este bloco ficasse depois, não rodaria em Salas e
-//   Financeiro;
+// - este bloco foi adicionado no começo do arquivo porque, na época,
+//   a Conveniência tentava acessar seus elementos em todas as páginas;
 // - nenhuma linha do código que já existia foi alterada.
 //
 // Cada página fica dentro da sua própria function (...)() pra que as
@@ -25,8 +22,10 @@
   // só roda na página de salas
   if (!document.getElementById("listaDeSalas")) return;
 
+  // 06/11/2026 - O ID fixo identifica cada sala mesmo após mudar o nome ou a unidade.
   var salas = [
     {
+      id: "01",
       nome: "Sala 01",
       unidade: "Unidade 1",
       status: "Ocupada",
@@ -34,6 +33,7 @@
       horario: "08:00 - 12:00"
     },
     {
+      id: "02",
       nome: "Sala 02",
       unidade: "Unidade 1",
       status: "Disponível",
@@ -41,6 +41,7 @@
       horario: "Próxima: 14:00"
     },
     {
+      id: "03",
       nome: "Sala 03",
       unidade: "Unidade 1",
       status: "Reservada",
@@ -48,6 +49,7 @@
       horario: "10:00 - 14:00"
     },
     {
+      id: "04",
       nome: "Sala 04",
       unidade: "Unidade 2",
       status: "Ocupada",
@@ -55,6 +57,7 @@
       horario: "08:00 - 12:00"
     },
     {
+      id: "05",
       nome: "Sala 05",
       unidade: "Unidade 2",
       status: "Disponível",
@@ -62,6 +65,7 @@
       horario: "Próxima: 13:00"
     },
     {
+      id: "06",
       nome: "Sala 06",
       unidade: "Unidade 2",
       status: "Indisponível",
@@ -77,7 +81,34 @@
   var campoBusca = document.getElementById("campoBusca");
   var filtroUnidade = document.getElementById("filtroUnidade");
   var filtroStatus = document.getElementById("filtroStatus");
-  var btnNovaSala = document.getElementById("btnNovaSala");
+
+  // 06/11/2026 - Configura o formulário e recupera as edições salvas no navegador.
+  var btnEditarSalas = document.getElementById("btnEditarSalas");
+  var dialogEditarSalas = document.getElementById("dialogEditarSalas");
+  var formEditarSalas = document.getElementById("formEditarSalas");
+  var campos = formEditarSalas.elements;
+  var erroEditarSalas = document.getElementById("erroEditarSalas");
+  var prefixoSala = "attento.sala.";
+
+  // Cada sala tem uma chave própria, mesmo quando o nome ou a unidade mudam.
+  salas.forEach(function (sala) {
+    try {
+      var dadosSalvos = JSON.parse(localStorage.getItem(prefixoSala + sala.id));
+      Object.assign(sala, dadosSalvos);
+    } catch {
+      // Mantém os dados iniciais se não for possível ler a edição salva.
+    }
+
+    campos.sala.add(new Option(sala.nome + " — " + sala.unidade, sala.id));
+  });
+
+  // Usa as mesmas opções dos filtros, sem a opção de exibir todos.
+  Array.from(filtroUnidade.options).slice(1).forEach(function (opcao) {
+    campos.unidade.add(opcao.cloneNode(true));
+  });
+  Array.from(filtroStatus.options).slice(1).forEach(function (opcao) {
+    campos.status.add(opcao.cloneNode(true));
+  });
 
   // essa função pega o texto do status e devolve o "nome" da classe css
   // (feito assim pra não precisar ficar comparando acento e tal em vários lugares)
@@ -119,7 +150,9 @@
       card.querySelector(".card-profissional").textContent =
         sala.profissional ? "👤 " + sala.profissional : "-- --";
 
-      card.querySelector(".card-horario").textContent = "🕒 " + sala.horario;
+      // 06/11/2026 - Exibe traços no cartão quando o horário fica vazio após a edição.
+      card.querySelector(".card-horario").textContent =
+        sala.horario ? "🕒 " + sala.horario : "-- --";
 
       // quando clicar em "ver detalhes", por enquanto só mostra um alerta
       // (aqui é o lugar certo pra depois abrir um modal de verdade)
@@ -158,25 +191,66 @@
   filtroUnidade.addEventListener("change", aplicarFiltros);
   filtroStatus.addEventListener("change", aplicarFiltros);
 
-  // botão de cadastrar sala - por enquanto adiciona uma sala de exemplo
-  // (dá pra trocar isso depois por um formulário/modal de cadastro)
-  btnNovaSala.addEventListener("click", function () {
-    var novaSala = {
-      nome: "Sala " + (salas.length + 1).toString().padStart(2, "0"),
-      unidade: "Unidade 1",
-      status: "Disponível",
-      profissional: "",
-      horario: "Próxima: --:--"
+  // 06/11/2026 - Localiza a sala escolhida pelo ID e carrega seus dados no formulário.
+  function salaSelecionada() {
+    return salas.find(function (sala) {
+      return sala.id === campos.sala.value;
+    });
+  }
+
+  function preencherFormulario() {
+    var sala = salaSelecionada();
+    campos.nome.value = sala.nome;
+    campos.unidade.value = sala.unidade;
+    campos.status.value = sala.status;
+    campos.profissional.value = sala.profissional;
+    campos.horario.value = sala.horario;
+    erroEditarSalas.hidden = true;
+  }
+
+  btnEditarSalas.addEventListener("click", function () {
+    preencherFormulario();
+    dialogEditarSalas.showModal();
+  });
+
+  campos.sala.addEventListener("change", preencherFormulario);
+
+  // 06/11/2026 - Cancelar fecha a janela e descarta os dados digitados no formulário.
+  document.getElementById("btnCancelarEdicaoSala").addEventListener("click", function () {
+    dialogEditarSalas.close();
+  });
+
+  // 06/11/2026 - Salva no navegador e só então atualiza a sala e reaplica os filtros.
+  formEditarSalas.addEventListener("submit", function (evento) {
+    evento.preventDefault();
+
+    var sala = salaSelecionada();
+    var alteracoes = {
+      nome: campos.nome.value.trim(),
+      unidade: campos.unidade.value,
+      status: campos.status.value,
+      profissional: campos.profissional.value.trim(),
+      horario: campos.horario.value.trim()
     };
 
-    salas.push(novaSala);
+    try {
+      localStorage.setItem(prefixoSala + sala.id, JSON.stringify(alteracoes));
+    } catch {
+      erroEditarSalas.textContent = "Não foi possível salvar as alterações neste navegador.";
+      erroEditarSalas.hidden = false;
+      return;
+    }
+
+    Object.assign(sala, alteracoes);
+    campos.sala.selectedOptions[0].textContent = sala.nome + " — " + sala.unidade;
+    dialogEditarSalas.close();
     aplicarFiltros();
   });
 
   // o menu lateral não precisa de JS: os itens já são links no html
 
-  // desenha a lista assim que a página carrega
-  desenharSalas(salas);
+  // 06/11/2026 - Mostra as salas com os dados salvos e os filtros atuais ao carregar.
+  aplicarFiltros();
 })();
 
 
@@ -379,6 +453,9 @@
 // <<< FIM DA PARTE INSERIDA: páginas Salas e Financeiro
 // ##########################################################
 
+// 06/11/2026 - Inicia a Conveniência apenas na página de produtos para evitar conflitos de filtro.
+if (document.getElementById("listaDeProdutos")) {
+
 /*
  * DADOS MOCKADOS DO PROTÓTIPO
  *
@@ -542,6 +619,7 @@ function desenharProdutos(lista) {
 
         <div class="produto-topo">
           <h3>${produto.nome}</h3>
+          <span class="menu-produto">⋯</span>
         </div>
 
         <p class="produto-preco">${formatarDinheiro(produto.preco)}</p>
@@ -881,6 +959,42 @@ formConsumo.addEventListener("submit", function (evento) {
 
 });
 
+
+/* -----------------------------
+   MENU LATERAL
+----------------------------- */
+
+var itensDoMenu =
+  document.querySelectorAll(".menu-item");
+
+itensDoMenu.forEach(function (item) {
+
+  item.addEventListener("click", function () {
+
+    itensDoMenu.forEach(function (i) {
+      i.classList.remove("ativo");
+    });
+
+    item.classList.add("ativo");
+
+    var pagina =
+      item.getAttribute("data-pagina");
+
+    if (pagina !== "conveniencia") {
+
+      alert(
+        'A página "' +
+        pagina +
+        '" não foi atribuída ainda.'
+      );
+
+    }
+
+  });
+
+});
+
+
 /* -----------------------------
    INICIALIZAÇÃO
 ----------------------------- */
@@ -893,3 +1007,5 @@ desenharProdutos(produtos);
 desenharMovimentacoes();
 atualizarResumo();
 aplicarFiltros();
+
+}
