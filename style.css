@@ -1,3 +1,12 @@
+/* 16/11/2026 — Índice atual: Compartilhados; Sidebar e aparência; Configurações; Login; Unidades; Dashboard; Salas; Financeiro; Conveniência.
+ * Os índices e comentários antigos foram preservados como referência histórica.
+ * Dentro de cada categoria, a ordem relativa das regras e suas condições de mídia foi mantida. */
+
+/* ==========================================================
+   16/11/2026 — COMPARTILHADOS
+   Estrutura, componentes reutilizados, acessibilidade, feedback e tema geral.
+========================================================== */
+
 /*
  * ==========================================================
  * STYLE UNIFICADO
@@ -16,12 +25,9 @@
  *   8. CONVENIÊNCIA    -> página de produtos e consumo
  *   9. RESPONSIVO      -> ajustes para telas menores
  */
-
-
 /* ==========================================================
    1. BASE
 ========================================================== */
-
 /* Reset: tira margens/paddings padrão do navegador e define a fonte. */
 * {
   margin: 0;
@@ -39,13 +45,6 @@ body {
   overflow: hidden;
 }
 
-/* Container de tela cheia (usado no login). */
-.container {
-  display: flex;
-  width: 100%;
-  height: 100vh;
-}
-
 /* Estrutura principal das páginas com menu lateral. */
 .app {
   display: flex;
@@ -61,13 +60,1119 @@ body {
   width: 100%;
 }
 
+/* ---------- CONTEÚDO ---------- */
+/* Área principal à direita do menu. */
+.conteudo {
+  flex: 1;
+  width: calc(100% - 220px);
+  min-width: 0;
+  padding: 20px 40px 40px 40px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Topo da página: título à esquerda, botão à direita. */
+.topo-pagina {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+.topo-pagina h1 {
+  font-size: 24px;
+  color: #1c2b4a;
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+.subtitulo {
+  color: #6b7280;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+/* ---------- BOTÕES ---------- */
+/* Botão de ação principal (azul). */
+.botao-principal {
+  background-color: #5B88C5;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* 16/11/2026 — Realça a interação ao passar o ponteiro sobre o elemento. */
+.botao-principal:hover {
+  background-color: #5B88C5;
+}
+
+/* Botão secundário (contorno azul). */
+.botao-secundario {
+  background-color: white;
+  color: #2f4f9e;
+  border: 1px solid #2f4f9e;
+  padding: 9px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+/* 16/11/2026 — Realça a interação ao passar o ponteiro sobre o elemento. */
+.botao-secundario:hover {
+  background-color: #eef2fc;
+}
+
+/* ---------- RESUMO (cards de totais) ---------- */
+/* Grade com os cards de resumo no topo da página. */
+.resumo {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+.card-resumo {
+  background-color: white;
+  border: 1px solid #e4e7ee;
+  border-radius: 10px;
+  padding: 17px;
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+.resumo-titulo {
+  display: block;
+  color: #6b7280;
+  font-size: 12px;
+  margin-bottom: 7px;
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+.card-resumo strong {
+  display: block;
+  color: #1c2b4a;
+  font-size: 22px;
+  margin-bottom: 3px;
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+.resumo-legenda {
+  color: #9aa1af;
+  font-size: 11px;
+}
+
+/* ---------- FILTROS ---------- */
+/* Barra de busca e selects de filtro. */
+.filtros {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+/* 16/11/2026 — Alinha os campos de busca, seleção e ordenação. */
+.filtros input,
+.filtros select {
+  padding: 10px 12px;
+  border: 1px solid #d7dbe3;
+  border-radius: 8px;
+  background-color: white;
+  font-size: 14px;
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+#campoBusca {
+  flex: 1;
+}
+
+/* ---------- TÍTULOS DE SEÇÃO ---------- */
+/* Título de uma seção com contador/legenda ao lado. */
+.titulo-secao {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 13px;
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+.titulo-secao h2 {
+  color: #1c2b4a;
+  font-size: 17px;
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+.titulo-secao > span {
+  color: #8a8f9c;
+  font-size: 12px;
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+.titulo-secao p {
+  color: #8a8f9c;
+  font-size: 12px;
+  margin-top: 3px;
+}
+
+/* ---------- TABELA (base) ---------- */
+/* Estilo padrão de tabelas: cabeçalho cinza e linhas com divisória. */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+th {
+  background-color: #f7f8fa;
+  color: #6b7280;
+  text-align: left;
+  padding: 12px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  border-bottom: 1px solid #e4e7ee;
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+td {
+  padding: 12px 14px;
+  color: #4b5563;
+  border-bottom: 1px solid #eef0f3;
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+tr:last-child td {
+  border-bottom: none;
+}
+
+/* ---------- MODAIS ---------- */
+/* Fundo escuro que cobre a tela; só aparece com a classe "aberto". */
+.modal-fundo {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(20, 30, 50, 0.35);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+/* 16/11/2026 — Define a apresentação e os limites dos diálogos. */
+.modal-fundo.aberto {
+  display: flex;
+}
+
+/* Caixa branca do modal. */
+.modal {
+  width: 430px;
+  max-width: calc(100% - 30px);
+  background-color: white;
+  border-radius: 11px;
+  padding: 22px;
+}
+
+/* 16/11/2026 — Define a apresentação e os limites dos diálogos. */
+.modal-topo {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+/* 16/11/2026 — Define a apresentação e os limites dos diálogos. */
+.modal-topo h2 {
+  color: #1c2b4a;
+  font-size: 18px;
+}
+
+/* 16/11/2026 — Define a apresentação e os limites dos diálogos. */
+.modal-topo p {
+  color: #6b7280;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* Botão "×" que fecha o modal. */
+.fechar-modal {
+  border: none;
+  background: #f2f4f8;
+  color: #6b7280;
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Campos do formulário dentro do modal. */
+.modal label {
+  display: block;
+  color: #4b5563;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 14px;
+}
+
+/* 16/11/2026 — Define a apresentação e os limites dos diálogos. */
+.modal input,
+.modal select {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 10px;
+  border: 1px solid #d7dbe3;
+  border-radius: 7px;
+  font-size: 13px;
+}
+
+/* Linha de botões no rodapé do modal. */
+.modal-botoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 9px;
+  margin-top: 20px;
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+.botao-cancelar {
+  background: white;
+  color: #6b7280;
+  border: 1px solid #d7dbe3;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* ---------- BOLINHA DE STATUS (Salas e Financeiro) ---------- */
+/* A bolinha pinta o fundo com a mesma cor do texto (currentColor). */
+.bolinha-status {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+  background-color: currentColor;
+}
+
+/* ==========================================================
+   5. DASHBOARD
+========================================================== */
+/* Container de tela cheia do painel. */
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  max-width: 100%;
+}
+
+/* Área principal do painel (à direita do menu). */
+.main-content {
+  flex: 1;
+  width: calc(100% - 250px);
+  min-width: 0;
+  padding: 20px 40px 40px 40px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+.avatar {
+  width: 36px;
+  height: 36px;
+  background-color: var(--primary-blue);
+  color: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Card base (fundo branco, cantos arredondados). */
+.card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+.card-header h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+.view-all {
+  font-size: 13px;
+  color: var(--sidebar-bg);
+  text-decoration: none;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+.agenda-item .status-pill {
+  flex: 0.5;
+  text-align: right;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  gap: 6px;
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+.status-pill i {
+  font-size: 6px;
+}
+
+/* ==========================================================
+   6. SALAS (salas.html)
+========================================================== */
+/* Janela de edição: centralizada, com fundo escurecido e erro destacado. */
+#dialogEditarSalas {
+  margin: auto;
+  border: 0;
+  max-height: calc(100% - 30px);
+}
+
+/* 16/11/2026 — Escurece o fundo enquanto um diálogo está aberto. */
+#dialogEditarSalas::backdrop {
+  background-color: rgba(20, 30, 50, 0.35);
+}
+
+/*
+ * Cada status tem uma cor - o JS decide qual classe usar.
+ * Só "color" aqui: se pintar o fundo também, o texto some em cima da cor.
+ * (".card-status" na frente para não mudar o .status-ocupada e o
+ * .status-disponivel do DASHBOARD, que usam os mesmos nomes.)
+ */
+.card-status.status-disponivel {
+  color: #22a55e;
+}
+
+/* verde */
+.card-status.status-reservada {
+  color: #e0a800;
+}
+
+/* amarelo */
+.card-status.status-ocupada {
+  color: #e0413a;
+}
+
+/* vermelho */
+.card-status.status-indisponivel {
+  color: #8a8f9c;
+}
+
+/* ==========================================================
+   7. FINANCEIRO (financeiro.html)
+========================================================== */
+/*
+ * Cards de resumo: o layout (.resumo, .card-resumo, .resumo-titulo)
+ * vem da seção COMPARTILHADO; aqui fica só o valor.
+ */
+.resumo-valor {
+  font-size: 22px;
+  font-weight: bold;
+  color: #1c2b4a;
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+.col-valor {
+  font-weight: bold;
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+.bolinha-estoque {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* Caixa branca que envolve a tabela de movimentações. */
+.tabela-container {
+  background-color: white;
+  border: 1px solid #e4e7ee;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* ==========================================================
+   9. RESPONSIVO
+========================================================== */
+/* Telas até 1100px: resumo e produtos em 2 colunas. */
+@media (max-width: 1100px) {
+  .resumo {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+@media (max-width: 750px) {
+  .conteudo {
+    padding: 25px 20px;
+  }
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+@media (max-width: 600px) {
+  .conteudo {
+    padding: 20px 15px;
+  }
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+@media (max-width: 600px) {
+  .resumo {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+@media (max-width: 600px) {
+  .topo-pagina {
+    align-items: flex-start;
+    gap: 15px;
+    flex-direction: column;
+  }
+}
+
+/* 16/11/2026 — Alinha os campos de busca, seleção e ordenação. */
+@media (max-width: 600px) {
+  .filtros {
+    flex-direction: column;
+  }
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+@media (max-width: 600px) {
+  .tabela-container {
+    overflow-x: auto;
+  }
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+@media (max-width: 600px) {
+  table {
+    min-width: 700px;
+  }
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+@media (max-width: 600px) {
+  @media (max-width: 900px) {
+    .main-content {
+      width: calc(100% - 80px);
+    }
+  }
+}
+
+/*
+   AJUSTE DE AÇÕES E BOTÃO EXCLUIR (CONVENIÊNCIA)
+*/
+.tabela-container {
+  background-color: white;
+  border: 1px solid #e4e7ee;
+  border-radius: 10px;
+  overflow-x: auto;
+}
+
+/* ==========================================
+   10. TEMA ESCURO - ATTENTO
+========================================== */
+/* Fundo geral e textos */
+body.dark {
+  background-color: #151B26 !important;
+  color: #E5EAF2;
+}
+
+/* Áreas principais */
+body.dark .main-content,
+body.dark .dashboard-container,
+body.dark .app {
+  background-color: #151B26 !important;
+  color: #E5EAF2;
+}
+
+/* Textos secundários */
+body.dark p,
+body.dark label,
+body.dark .subtitulo,
+body.dark .resumo-titulo,
+body.dark .resumo-legenda,
+body.dark .card-unidade,
+body.dark .card-profissional,
+body.dark .card-horario,
+body.dark .unidade-endereco,
+body.dark .stat-lbl {
+  color: #AAB7C8;
+}
+
+/* Cards gerais */
+body.dark .card,
+body.dark .card-resumo,
+body.dark .card-sala,
+body.dark .card-tabela,
+body.dark .card-produto,
+body.dark .tabela-container,
+body.dark .unidade-card,
+body.dark .agenda-card,
+body.dark .pendencias-card {
+  background-color: #222C3A !important;
+  color: #E5EAF2 !important;
+  border-color: #354255 !important;
+}
+
+/* Linhas das tabelas */
+body.dark tbody tr {
+  background-color: #222C3A;
+}
+
+/* Campos de pesquisa, formulários e seleções */
+body.dark input,
+body.dark select,
+body.dark textarea {
+  background-color: #263449 !important;
+  color: #F1F5F9 !important;
+  border-color: #46546A !important;
+}
+
+/* Texto de orientação dos campos */
+body.dark input::placeholder,
+body.dark textarea::placeholder {
+  color: #9AA9BC;
+}
+
+/* Modais */
+body.dark .modal,
+body.dark dialog {
+  background-color: #222C3A !important;
+  color: #E5EAF2 !important;
+  border-color: #354255 !important;
+}
+
+/* 16/11/2026 — Ajusta cores e contraste destes elementos no modo escuro. */
+body.dark .modal-topo,
+body.dark .modal label {
+  color: #E5EAF2;
+}
+
+/* Botões secundários */
+body.dark .botao-detalhes,
+body.dark .botao-consumir {
+  background-color: #263449 !important;
+  color: #8DB8F0 !important;
+  border-color: #5B88C5 !important;
+}
+
+/* Transição suave */
+body,
+body * {
+  transition:
+  background-color 0.2s ease,
+  color 0.2s ease,
+  border-color 0.2s ease;
+}
+
+/* CORREÇÕES DARK THEME - DASHBOARD */
+body.dark .kpi-value,
+body.dark .agenda-item .time,
+body.dark .agenda-item .room,
+body.dark .p-title,
+body.dark .unidade-title-row h2,
+body.dark .stat-val {
+  color: #F1F5F9 !important;
+}
+
+/* 16/11/2026 — Ajusta cores e contraste destes elementos no modo escuro. */
+body.dark .kpi-label,
+body.dark .kpi-subtext,
+body.dark .agenda-item .unit,
+body.dark .agenda-item .doctor,
+body.dark .p-desc,
+body.dark .page-header p,
+body.dark .header-titles p,
+body.dark .unidade-endereco,
+body.dark .stat-lbl {
+  color: #AAB7C8 !important;
+}
+
+/* FINANCEIRO - PRESERVAR CORES DOS INDICADORES NO DARK THEME */
+body.dark .card-resumo {
+  background-color: #222C3A !important;
+  border-color: #354255 !important;
+}
+
+/* 16/11/2026 — Ajusta cores e contraste destes elementos no modo escuro. */
+body.dark .resumo-titulo {
+  color: #C2CEDD !important;
+}
+
+/* Sidebar compartilhada: as regras abaixo substituem os antigos menus móveis. */
+body.has-sidebar {
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+body.has-sidebar .app,
+body.has-sidebar .dashboard-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+body.has-sidebar .main-content,
+body.has-sidebar .conteudo {
+  flex: 1 1 0;
+  width: 0;
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* 16/11/2026 — Define a apresentação e os limites dos diálogos. */
+.modal-configuracoes {
+  margin: auto;
+  padding: 24px;
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  border: 1px solid #DCE2EA;
+  border-radius: 12px;
+}
+
+/* 16/11/2026 — Escurece o fundo enquanto um diálogo está aberto. */
+.modal-configuracoes::backdrop {
+  background: rgb(0 0 0 / 55%);
+}
+
+/* 16/11/2026 — Define a apresentação e os limites dos diálogos. */
+.modal-configuracoes .modal-botoes {
+  margin-top: 24px;
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+@media (max-width: 900px) {
+  body.has-sidebar .main-content,
+    body.has-sidebar .conteudo {
+    padding: 20px 12px;
+  }
+}
+
+/* Feedback, filtros e diálogos compartilhados. */
+[hidden] {
+  display: none !important;
+}
+
+/* 16/11/2026 — Define a apresentação e os limites dos diálogos. */
+dialog.modal {
+  margin: auto;
+  border: 1px solid #DCE2EA;
+  max-height: calc(100vh - 32px);
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  color: #1F2937;
+}
+
+/* 16/11/2026 — Escurece o fundo enquanto um diálogo está aberto. */
+dialog.modal::backdrop {
+  background: rgb(0 0 0 / 55%);
+}
+
+/* 16/11/2026 — Define a apresentação e os limites dos diálogos. */
+dialog .modal-topo {
+  align-items: flex-start; gap: 16px;
+}
+
+/* 16/11/2026 — Define a apresentação e os limites dos diálogos. */
+dialog .modal-botoes {
+  flex-wrap: wrap; margin-top: 24px;
+}
+
+/* 16/11/2026 — Define a apresentação e os limites dos diálogos. */
+dialog p {
+  line-height: 1.6;
+}
+
+/* 16/11/2026 — Diferencia controles temporariamente desabilitados. */
+button:disabled {
+  opacity: .55; cursor: not-allowed;
+}
+
+/* 16/11/2026 — Destaca o foco para facilitar a navegação pelo teclado. */
+:where(button, a, input, select):focus-visible {
+  outline: 3px solid #2A68C2; outline-offset: 3px;
+}
+
+/* 16/11/2026 — Apresenta o acesso ao perfil e as informações do usuário. */
+.barra-usuario {
+  display: flex; justify-content: flex-end; margin-bottom: 16px;
+}
+
+/* 16/11/2026 — Apresenta o acesso ao perfil e as informações do usuário. */
+.usuario-botao {
+  display: flex; align-items: center; gap: 12px; border: 1px solid #DCE2EA; background: white; color: #1F2937; padding: 8px 12px; border-radius: 12px; cursor: pointer; max-width: 100%; text-align: left;
+}
+
+/* 16/11/2026 — Apresenta o acesso ao perfil e as informações do usuário. */
+.usuario-botao strong, .usuario-botao small {
+  display: block;
+}
+
+/* 16/11/2026 — Apresenta o acesso ao perfil e as informações do usuário. */
+.usuario-botao small {
+  color: #6B7280; margin-top: 3px;
+}
+
+/* 16/11/2026 — Apresenta o acesso ao perfil e as informações do usuário. */
+.usuario-botao .avatar {
+  flex: 0 0 36px;
+}
+
+/* 16/11/2026 — Apresenta o acesso ao perfil e as informações do usuário. */
+.perfil-dados {
+  display: grid; grid-template-columns: auto 1fr; gap: 12px 20px; margin-bottom: 20px;
+}
+
+/* 16/11/2026 — Apresenta o acesso ao perfil e as informações do usuário. */
+.perfil-dados dt {
+  font-weight: 600;
+}
+
+/* 16/11/2026 — Alinha os campos de busca, seleção e ordenação. */
+.filtros {
+  display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px;
+}
+
+/* 16/11/2026 — Alinha os campos de busca, seleção e ordenação. */
+.filtros label {
+  display: flex; flex-direction: column; flex: 1 1 160px; min-width: 0; gap: 6px; font-size: 13px; color: #374151;
+}
+
+/* 16/11/2026 — Alinha os campos de busca, seleção e ordenação. */
+.filtros label input, .filtros label select {
+  width: 100%; min-width: 0; min-height: 44px; flex: 0 0 auto;
+}
+
+/* 16/11/2026 — Alinha os campos de busca, seleção e ordenação. */
+.filtros > button {
+  min-height: 44px;
+}
+
+/* 16/11/2026 — Organiza o filtro retrátil de datas e seu resumo de período. */
+.filtro-periodo {
+  border: 1px solid #DCE2EA; padding: 16px; border-radius: 10px; margin: 0 0 20px;
+}
+
+/* 16/11/2026 — Organiza o filtro retrátil de datas e seu resumo de período. */
+.filtro-periodo h3 {
+  margin-bottom: 12px; font-size: 16px;
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+.periodo-texto, .contador-resultados {
+  color: #526176; font-size: 13px; line-height: 1.5; margin: 12px 0 16px;
+}
+
+/* 16/11/2026 — Posiciona as confirmações de ações sem deslocar o conteúdo. */
+.mensagens-sistema {
+  position: fixed; z-index: 1000; right: 20px; bottom: 20px; max-width: min(440px, calc(100vw - 40px)); padding: 16px; background: #145A3A; color: white; border-radius: 10px; box-shadow: 0 4px 20px rgb(0 0 0 / 20%);
+}
+
+/* 16/11/2026 — Posiciona as confirmações de ações sem deslocar o conteúdo. */
+.mensagens-sistema:empty, .acoes-desfazer:empty {
+  display: none;
+}
+
+/* 16/11/2026 — Organiza os avisos e botões para restaurar exclusões. */
+.acoes-desfazer {
+  position: fixed; z-index: 999; right: 20px; bottom: 112px; width: min(440px, calc(100vw - 40px)); max-height: 35vh; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;
+}
+
+/* 16/11/2026 — Organiza os avisos e botões para restaurar exclusões. */
+.acao-desfazer {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 16px; border: 1px solid #BDD4EF; border-radius: 10px; background: white; color: #1F2937; box-shadow: 0 4px 16px rgb(0 0 0 / 15%);
+}
+
+/* 16/11/2026 — Organiza os avisos e botões para restaurar exclusões. */
+.acao-desfazer span {
+  flex: 1 1 100%;
+}
+
+/* 16/11/2026 — Organiza os avisos e botões para restaurar exclusões. */
+.acao-desfazer button {
+  min-height: 44px; background: #EDF5FF; border: 1px solid #2A68C2; color: #244B7C; border-radius: 6px; padding: 8px 12px; cursor: pointer;
+}
+
+/* 16/11/2026 — Ajusta cores e contraste destes elementos no modo escuro. */
+body.dark .usuario-botao, body.dark .filtro-periodo, body.dark .acao-desfazer {
+  background: #222C3A; color: #E5EAF2; border-color: #52647A;
+}
+
+/* 16/11/2026 — Ajusta cores e contraste destes elementos no modo escuro. */
+body.dark .usuario-botao small, body.dark .periodo-texto, body.dark .contador-resultados {
+  color: #C2CEDD;
+}
+
+/* 16/11/2026 — Ajusta cores e contraste destes elementos no modo escuro. */
+body.dark .filtros label {
+  color: #E5EAF2;
+}
+
+/* 16/11/2026 — Ajusta cores e contraste destes elementos no modo escuro. */
+body.dark .acao-desfazer button, body.dark .botao-secundario {
+  background: #263449; color: #BDD8FC; border-color: #8DB8F0;
+}
+
+/* 16/11/2026 — Ajusta cores e contraste destes elementos no modo escuro. */
+body.dark .acao-desfazer span {
+  color: #E5EAF2;
+}
+
+/* 16/11/2026 — Alinha os campos de busca, seleção e ordenação. */
+@media (max-width: 600px) {
+  .filtros {
+    align-items: stretch;
+  }
+}
+
+/* 16/11/2026 — Alinha os campos de busca, seleção e ordenação. */
+@media (max-width: 600px) {
+  .filtros label {
+    flex-basis: auto; width: 100%;
+  }
+}
+
+/* 16/11/2026 — Apresenta o acesso ao perfil e as informações do usuário. */
+@media (max-width: 600px) {
+  .usuario-botao {
+    gap: 8px; padding: 8px;
+  }
+}
+
+/* 16/11/2026 — Apresenta o acesso ao perfil e as informações do usuário. */
+@media (max-width: 600px) {
+  .usuario-botao strong {
+    font-size: 13px;
+  }
+}
+
+/* 16/11/2026 — Apresenta o acesso ao perfil e as informações do usuário. */
+@media (max-width: 600px) {
+  .usuario-botao small {
+    font-size: 11px;
+  }
+}
+
+/* 16/11/2026 — Apresenta o acesso ao perfil e as informações do usuário. */
+@media (max-width: 600px) {
+  .barra-usuario {
+    justify-content: flex-start;
+  }
+}
+
+/* Período compacto: os campos abrem somente quando solicitados. */
+.filtro-periodo-retratil {
+  padding: 0;
+}
+
+/* 16/11/2026 — Organiza o filtro retrátil de datas e seu resumo de período. */
+.filtro-periodo-retratil > summary {
+  padding: 12px 16px;
+  cursor: pointer;
+  list-style-position: inside;
+  border-radius: 10px;
+  line-height: 1.5;
+}
+
+/* 16/11/2026 — Destaca o foco para facilitar a navegação pelo teclado. */
+.filtro-periodo-retratil > summary:focus-visible {
+  outline: 3px solid #2A68C2;
+  outline-offset: 3px;
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+.titulo-filtro-periodo {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* 16/11/2026 — Organiza o filtro retrátil de datas e seu resumo de período. */
+.filtro-periodo-retratil > summary .periodo-texto {
+  display: inline;
+  margin: 0 0 0 12px;
+}
+
+/* 16/11/2026 — Organiza o filtro retrátil de datas e seu resumo de período. */
+.filtro-periodo-retratil .periodo-controles {
+  padding: 4px 16px 16px;
+}
+
+/* 16/11/2026 — Organiza o filtro retrátil de datas e seu resumo de período. */
+.filtro-periodo-retratil .filtros {
+  margin-bottom: 0;
+}
+
+/* 16/11/2026 — Organiza o filtro retrátil de datas e seu resumo de período. */
+@media (max-width: 600px) {
+  .filtro-periodo-retratil > summary .periodo-texto {
+    display: block;
+    margin: 4px 0 0 20px;
+  }
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+.kpi-card, .bottom-grid > *, .resumo > *, .card-sala, .card-produto {
+  min-width: 0;
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+.agenda-item .status-pill {
+  text-align: center;
+}
+
+/* 16/11/2026 — Apresenta o acesso ao perfil e as informações do usuário. */
+body.has-sidebar .barra-usuario {
+  align-items: center; gap: 12px;
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+@media (max-width: 1100px) {
+  .card-header {
+    gap: 12px; flex-wrap: wrap;
+  }
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+@media (max-width: 700px) {
+  body.has-sidebar .main-content, body.has-sidebar .conteudo {
+    padding: 16px; overflow-x: hidden;
+  }
+}
+
+/* 16/11/2026 — Apresenta o acesso ao perfil e as informações do usuário. */
+@media (max-width: 700px) {
+  body.has-sidebar .barra-usuario {
+    justify-content: space-between;
+  }
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+@media (max-width: 700px) {
+  .card {
+    padding: 16px;
+  }
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+@media (max-width: 700px) {
+  .topo-pagina, .titulo-secao {
+    flex-wrap: wrap; gap: 12px;
+  }
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+@media (max-width: 700px) {
+  .grade-salas, .grade-produtos {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+@media (max-width: 700px) {
+  .agenda-item .status-pill {
+    grid-column: 2; grid-row: 1;
+  }
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+@media (max-width: 700px) {
+  .dica-tabela {
+    display: block; font-size: 12px; color: #526176; margin: 12px 0;
+  }
+}
+
+/* 16/11/2026 — Ajusta cores e contraste destes elementos no modo escuro. */
+@media (max-width: 700px) {
+  body.dark .dica-tabela {
+    color: #C2CEDD;
+  }
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+@media (max-width: 700px) {
+  .tabela-container, .card-tabela {
+    max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain;
+  }
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+@media (max-width: 700px) {
+  .tabela-container table, .card-tabela table {
+    min-width: 700px;
+  }
+}
+
+/* 16/11/2026 — Define a apresentação e os limites dos diálogos. */
+@media (max-width: 700px) {
+  .modal-botoes > button {
+    flex: 1 1 auto;
+  }
+}
+
+/* 16/11/2026 — Apresenta o acesso ao perfil e as informações do usuário. */
+@media (max-width: 380px) {
+  .usuario-botao .avatar {
+    display: none;
+  }
+}
+
+/* 16/11/2026 — Apresenta o acesso ao perfil e as informações do usuário. */
+@media (max-width: 380px) {
+  .perfil-dados {
+    grid-template-columns: minmax(0, 1fr); gap: 6px;
+  }
+}
+
+/* 16/11/2026 — Apresenta o acesso ao perfil e as informações do usuário. */
+@media (max-width: 380px) {
+  .perfil-dados dd {
+    margin-bottom: 12px;
+  }
+}
+
+
+/* ==========================================================
+   16/11/2026 — SIDEBAR E APARÊNCIA
+   Navegação, recolhimento, menu móvel e seletor de tema.
+========================================================== */
 
 /* ==========================================================
    2. COMPARTILHADO
 ========================================================== */
-
 /* ---------- MENU LATERAL ---------- */
-
 /* Barra lateral azul. */
 .menu {
   width: 10%;
@@ -100,6 +1205,7 @@ body {
   justify-content: center;
 }
 
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
 .logo-icone img {
   width: 100%;
   height: auto;
@@ -133,6 +1239,7 @@ a.menu-item {
   display: block;
 }
 
+/* 16/11/2026 — Realça a interação ao passar o ponteiro sobre o elemento. */
 .menu-item:hover {
   background-color: #3d5ead;
 }
@@ -151,290 +1258,639 @@ a.menu-item {
   gap: 4px;
 }
 
-/* ---------- CONTEÚDO ---------- */
-
-/* Área principal à direita do menu. */
-.conteudo {
-  flex: 1;
-  width: calc(100% - 220px);
-  min-width: 0;
-  padding: 20px 40px 40px 40px;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-/* Topo da página: título à esquerda, botão à direita. */
-.topo-pagina {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.topo-pagina h1 {
-  font-size: 24px;
-  color: #1c2b4a;
-}
-
-.subtitulo {
-  color: #6b7280;
-  font-size: 14px;
-  margin-top: 4px;
-}
-
-/* ---------- BOTÕES ---------- */
-
-/* Botão de ação principal (azul). */
-.botao-principal {
-  background-color: #5B88C5;
-  color: white;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.botao-principal:hover {
-  background-color: #5B88C5;
-}
-
-/* Botão secundário (contorno azul). */
-.botao-secundario {
-  background-color: white;
-  color: #2f4f9e;
-  border: 1px solid #2f4f9e;
-  padding: 9px 15px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 13px;
-}
-
-.botao-secundario:hover {
-  background-color: #eef2fc;
-}
-
-/* ---------- RESUMO (cards de totais) ---------- */
-
-/* Grade com os cards de resumo no topo da página. */
-.resumo {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-  margin-bottom: 22px;
-}
-
-.card-resumo {
-  background-color: white;
-  border: 1px solid #e4e7ee;
-  border-radius: 10px;
-  padding: 17px;
-}
-
-.resumo-titulo {
-  display: block;
-  color: #6b7280;
-  font-size: 12px;
-  margin-bottom: 7px;
-}
-
-.card-resumo strong {
-  display: block;
-  color: #1c2b4a;
-  font-size: 22px;
-  margin-bottom: 3px;
-}
-
-.resumo-legenda {
-  color: #9aa1af;
-  font-size: 11px;
-}
-
-/* ---------- FILTROS ---------- */
-
-/* Barra de busca e selects de filtro. */
-.filtros {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 22px;
-}
-
-.filtros input,
-.filtros select {
-  padding: 10px 12px;
-  border: 1px solid #d7dbe3;
-  border-radius: 8px;
-  background-color: white;
-  font-size: 14px;
-}
-
-#campoBusca {
-  flex: 1;
-}
-
-/* ---------- TÍTULOS DE SEÇÃO ---------- */
-
-/* Título de uma seção com contador/legenda ao lado. */
-.titulo-secao {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 13px;
-}
-
-.titulo-secao h2 {
-  color: #1c2b4a;
-  font-size: 17px;
-}
-
-.titulo-secao > span {
-  color: #8a8f9c;
-  font-size: 12px;
-}
-
-.titulo-secao p {
-  color: #8a8f9c;
-  font-size: 12px;
-  margin-top: 3px;
-}
-
-/* ---------- TABELA (base) ---------- */
-
-/* Estilo padrão de tabelas: cabeçalho cinza e linhas com divisória. */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
-}
-
-th {
-  background-color: #f7f8fa;
-  color: #6b7280;
-  text-align: left;
-  padding: 12px 14px;
-  font-size: 12px;
-  font-weight: 600;
-  border-bottom: 1px solid #e4e7ee;
-}
-
-td {
-  padding: 12px 14px;
-  color: #4b5563;
-  border-bottom: 1px solid #eef0f3;
-}
-
-tr:last-child td {
-  border-bottom: none;
-}
-
-/* ---------- MODAIS ---------- */
-
-/* Fundo escuro que cobre a tela; só aparece com a classe "aberto". */
-.modal-fundo {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(20, 30, 50, 0.35);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-}
-
-.modal-fundo.aberto {
-  display: flex;
-}
-
-/* Caixa branca do modal. */
-.modal {
-  width: 430px;
-  max-width: calc(100% - 30px);
-  background-color: white;
-  border-radius: 11px;
-  padding: 22px;
-}
-
-.modal-topo {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.modal-topo h2 {
-  color: #1c2b4a;
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+.menu-produto {
   font-size: 18px;
 }
 
-.modal-topo p {
-  color: #6b7280;
-  font-size: 12px;
-  margin-top: 4px;
+/* Telas até 750px: menu mais estreito e produtos em 1 coluna. */
+@media (max-width: 750px) {
+  .menu {
+    width: 180px;
+  }
 }
 
-/* Botão "×" que fecha o modal. */
-.fechar-modal {
+/*
+ * Telas até 600px: menu só com ícones, resumo em 1 coluna,
+ * filtros empilhados e tabela com rolagem horizontal.
+ */
+@media (max-width: 600px) {
+  .menu {
+    width: 70px;
+    padding: 20px 8px;
+  }
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+@media (max-width: 600px) {
+  .logo-texto {
+    display: none;
+  }
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+@media (max-width: 600px) {
+  .menu-item {
+    font-size: 0;
+    text-align: center;
+  }
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+@media (max-width: 600px) {
+  .menu-item.ativo {
+    font-size: 0;
+  }
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+@media (max-width: 600px) {
+  @media (max-width: 900px) {
+    .menu {
+      width: 80px;
+      align-items: center;
+    }
+  }
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+@media (max-width: 600px) {
+  @media (max-width: 900px) {
+    .menu-item {
+      padding: 10px 0;
+      display: none;
+    }
+  }
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+@media (max-width: 600px) {
+  @media (max-width: 900px) {
+    .menu-lista li.active {
+      border-radius: 0;
+      margin-right: 0;
+      border-left: 4px solid var(--white);
+    }
+  }
+}
+
+/* ==========================================
+   MENU LATERAL - TEMA CLARO E ESCURO
+========================================== */
+/* Tema claro */
+.menu {
+  background-color: #5B88C5;
+  transition: background-color 0.3s ease;
+}
+
+/* Tema escuro */
+body.dark .menu {
+  background-color: #192A40 !important;
+}
+
+/* Textos e botões do menu escuro */
+body.dark .menu .menu-item {
+  color: #DCE6F2 !important;
+}
+
+/* Efeito ao passar o mouse */
+body.dark .menu .menu-item:hover {
+  background-color: #263B55 !important;
+  color: #FFFFFF !important;
+}
+
+/* Linha divisória */
+body.dark .menu hr {
+  border-color: #52647A;
+}
+
+/* Botão de alternância */
+body.dark #btnTema {
+  color: #DCE6F2 !important;
+}
+
+/* Botão de alternância */
+#btnTema {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
+
+/* ==========================================
+   SELETOR DE APARÊNCIA - ATTENTO
+========================================== */
+.theme-selector {
+  position: relative;
+  width: 100%;
+}
+
+/* Menu suspenso */
+.theme-dropdown {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 10px;
+  width: 180px;
+  padding: 6px;
+  background-color: #FFFFFF;
+  border: 1px solid #DCE2EA;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
+  z-index: 9999;
+}
+
+/* Esconde o menu quando fechado */
+.theme-dropdown[hidden] {
+  display: none;
+}
+
+/* Opções */
+.theme-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px;
   border: none;
-  background: #f2f4f8;
-  color: #6b7280;
-  width: 30px;
-  height: 30px;
-  border-radius: 7px;
-  font-size: 20px;
+  border-radius: 8px;
+  background: transparent;
+  color: #263449;
+  font-size: 14px;
+  text-align: left;
   cursor: pointer;
 }
 
-/* Campos do formulário dentro do modal. */
-.modal label {
-  display: block;
-  color: #4b5563;
-  font-size: 12px;
+/* Check fica no lado direito */
+.theme-check {
+  margin-left: auto;
+}
+
+/* Opção selecionada */
+.theme-option.active {
+  background-color: #EDE7FF;
+  color: #7040E8;
+  font-weight: 600;
+}
+
+/* 16/11/2026 — Apresenta as opções e o estado do seletor de aparência. */
+.theme-option.active .theme-check::after {
+  content: "✓";
+}
+
+/* Passar o mouse */
+.theme-option:hover {
+  background-color: #EEF2F7;
+}
+
+/* 16/11/2026 — Realça a interação ao passar o ponteiro sobre o elemento. */
+.theme-option.active:hover {
+  background-color: #E4D9FF;
+}
+
+/* ==========================================
+   SELETOR NO TEMA ESCURO
+========================================== */
+body.dark .theme-dropdown {
+  background-color: #222C3A;
+  border-color: #354255;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+}
+
+/* 16/11/2026 — Ajusta cores e contraste destes elementos no modo escuro. */
+body.dark .theme-option {
+  color: #E5EAF2;
+}
+
+/* 16/11/2026 — Realça a interação ao passar o ponteiro sobre o elemento. */
+body.dark .theme-option:hover {
+  background-color: #304158;
+}
+
+/* 16/11/2026 — Ajusta cores e contraste destes elementos no modo escuro. */
+body.dark .theme-option.active {
+  background-color: #493477;
+  color: #FFFFFF;
+}
+
+/* 16/11/2026 — Realça a interação ao passar o ponteiro sobre o elemento. */
+body.dark .theme-option.active:hover {
+  background-color: #59418D;
+}
+
+/* Unidades: estatísticas completas e navegação legível em telas pequenas. */
+.pagina-unidades .menu {
+  flex: 0 0 220px;
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+.pagina-unidades .menu-item[aria-current="page"] {
+  background-color: white;
+  color: #305f9e;
   font-weight: bold;
-  margin-bottom: 14px;
 }
 
-.modal input,
-.modal select {
-  display: block;
-  width: 100%;
-  margin-top: 6px;
-  padding: 10px;
-  border: 1px solid #d7dbe3;
-  border-radius: 7px;
-  font-size: 13px;
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+@media (max-width: 900px) {
+  .pagina-unidades .menu {
+    flex: 0 0 auto;
+    width: 100%;
+    align-items: stretch;
+    padding: 16px;
+  }
 }
 
-/* Linha de botões no rodapé do modal. */
-.modal-botoes {
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+@media (max-width: 900px) {
+  .pagina-unidades .logo {
+    margin-bottom: 16px;
+  }
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+@media (max-width: 900px) {
+  .pagina-unidades .menu-lista {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+@media (max-width: 900px) {
+  .pagina-unidades .menu-item,
+    .pagina-unidades .menu-item.ativo {
+    display: block;
+    min-height: 44px;
+    padding: 12px 8px;
+    font-size: 14px;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+@media (max-width: 900px) {
+  .pagina-unidades .menu-rodape {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+  }
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+@media (max-width: 900px) {
+  .pagina-unidades .menu-rodape hr {
+    display: none;
+  }
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+@media (max-width: 900px) {
+  .pagina-unidades .menu-rodape > .menu-item,
+    .pagina-unidades .theme-selector {
+    flex: 1 1 auto;
+    width: auto;
+  }
+}
+
+/* 16/11/2026 — Apresenta as opções e o estado do seletor de aparência. */
+@media (max-width: 900px) {
+  .pagina-unidades .theme-dropdown {
+    left: 0;
+    right: auto;
+  }
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+body.has-sidebar .menu.sidebar {
+  flex: 0 0 220px;
+  width: 220px;
+  min-height: 0;
+  height: 100%;
+  padding: 16px 12px;
+  align-items: stretch;
+  overflow-y: auto;
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+body.has-sidebar .sidebar-header {
   display: flex;
-  justify-content: flex-end;
-  gap: 9px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+body.has-sidebar .sidebar .logo {
+  color: inherit;
+  text-decoration: none;
+  margin-bottom: 0;
+  min-width: 0;
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+.sidebar-icon {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+.sidebar-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  min-height: 44px;
+  flex: 0 0 44px;
+  border: 1px solid currentColor;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+body.has-sidebar .sidebar .menu-lista,
+body.has-sidebar .sidebar .menu-rodape {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  gap: 4px;
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+body.has-sidebar .sidebar .menu-rodape {
+  flex: 0 0 auto;
   margin-top: 20px;
 }
 
-.botao-cancelar {
-  background: white;
-  color: #6b7280;
-  border: 1px solid #d7dbe3;
-  padding: 10px 15px;
-  border-radius: 8px;
-  cursor: pointer;
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+body.has-sidebar .sidebar .menu-item,
+body.has-sidebar .sidebar #btnTema {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  font-size: 14px;
+  text-align: left;
+  overflow-wrap: normal;
+  color: white;
 }
 
-/* ---------- BOLINHA DE STATUS (Salas e Financeiro) ---------- */
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+body.has-sidebar .sidebar .menu-label {
+  white-space: nowrap;
+}
 
-/* A bolinha pinta o fundo com a mesma cor do texto (currentColor). */
-.bolinha-status {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  display: inline-block;
-  background-color: currentColor;
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+body.has-sidebar .sidebar .theme-selector {
+  width: 100%;
+  flex: 0 0 auto;
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+body.has-sidebar .sidebar .menu-rodape hr {
+  display: block;
+  width: 100%;
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+body.has-sidebar .sidebar.recolhida {
+  flex-basis: 76px;
+  width: 76px;
+  padding-inline: 10px;
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+body.has-sidebar .sidebar.recolhida .sidebar-header {
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+body.has-sidebar .sidebar.recolhida .menu-label {
+  display: none;
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+body.has-sidebar .sidebar.recolhida .menu-item,
+body.has-sidebar .sidebar.recolhida #btnTema {
+  justify-content: center;
+  gap: 0;
+  padding-inline: 8px;
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+.sidebar.recolhida .sidebar-toggle .sidebar-icon {
+  transform: rotate(180deg);
+}
+
+/* 16/11/2026 — Realça a interação ao passar o ponteiro sobre o elemento. */
+body.has-sidebar .sidebar .menu-item[aria-current="page"],
+body.has-sidebar .sidebar .menu-item[aria-current="page"]:hover,
+body.has-sidebar.dark .sidebar .menu-item[aria-current="page"],
+body.has-sidebar.dark .sidebar .menu-item[aria-current="page"]:hover {
+  background-color: #FFFFFF !important;
+  color: #2A68C2 !important;
+  font-weight: 600;
+}
+
+/* 16/11/2026 — Destaca o foco para facilitar a navegação pelo teclado. */
+.sidebar :is(a, button):focus-visible {
+  outline: 3px solid #FBBF24;
+  outline-offset: 2px;
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+body.has-sidebar .sidebar .theme-dropdown {
+  left: 0;
+  right: auto;
+  width: 100%;
+  min-width: 0;
+  padding: 4px;
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+.sidebar.recolhida .theme-option {
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 2px;
+  text-align: center;
+  font-size: 12px;
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+.sidebar.recolhida .theme-check {
+  margin: 0;
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+.menu-movel-toggle, .menu-movel-fechar, .fundo-menu-movel, .dica-tabela {
+  display: none;
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+@media (max-width: 700px) {
+  body.has-sidebar .menu.sidebar, body.has-sidebar .menu.sidebar.recolhida {
+    position: fixed; top: 0; left: 0; bottom: 0; z-index: 1200;
+    width: min(280px, 85vw); height: 100%; padding: 16px;
+    transform: translateX(-100%); visibility: hidden;
+    overscroll-behavior: contain;
+  }
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+@media (max-width: 700px) {
+  body.has-sidebar.menu-movel-aberto .menu.sidebar {
+    transform: translateX(0); visibility: visible;
+  }
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+@media (max-width: 700px) {
+  body.has-sidebar .sidebar.recolhida .sidebar-header {
+    flex-direction: row;
+  }
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+@media (max-width: 700px) {
+  body.has-sidebar .sidebar .sidebar-header {
+    position: relative; padding-right: 44px; min-height: 44px;
+  }
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+@media (max-width: 700px) {
+  body.has-sidebar .sidebar.recolhida .menu-label {
+    display: inline;
+  }
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+@media (max-width: 700px) {
+  body.has-sidebar .sidebar.recolhida .menu-item, body.has-sidebar .sidebar.recolhida #btnTema {
+    justify-content: flex-start; gap: 12px; padding: 10px 12px;
+  }
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+@media (max-width: 700px) {
+  body.has-sidebar .sidebar-toggle {
+    display: none;
+  }
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+@media (max-width: 700px) {
+  .menu-movel-toggle, .menu-movel-fechar {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: 44px; min-height: 44px; padding: 8px 12px; border: 1px solid #2A68C2; border-radius: 8px; background: white; color: #2A68C2; cursor: pointer;
+  }
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+@media (max-width: 700px) {
+  .menu-movel-fechar {
+    position: absolute; right: 0; top: 0; color: inherit; background: transparent; border-color: currentColor; font-size: 24px;
+  }
+}
+
+/* 16/11/2026 — Define a apresentação deste componente reutilizado entre páginas. */
+@media (max-width: 700px) {
+  body.has-sidebar .fundo-menu-movel {
+    display: block; position: fixed; inset: 0; z-index: 1100; border: 0; background: rgb(0 0 0 / 55%); cursor: pointer;
+  }
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+@media (max-width: 700px) {
+  body.has-sidebar .sidebar.recolhida .theme-option {
+    flex-direction: row; gap: 10px; padding: 10px; text-align: left; font-size: 14px;
+  }
+}
+
+/* 16/11/2026 — Define a disposição e os estados dos controles de navegação. */
+@media (max-width: 700px) {
+  body.has-sidebar .sidebar.recolhida .theme-check {
+    margin-left: auto;
+  }
 }
 
 
 /* ==========================================================
-   3. LOGIN
+   16/11/2026 — CONFIGURAÇÕES
+   Aparência, edição do perfil, restauração e suporte técnico.
 ========================================================== */
 
+/* 16/11/2026 — Limita o tamanho dos formulários e permite rolagem em telas pequenas. */
+.modal-configuracoes, .modal-suporte { width: 600px; max-width: calc(100% - 32px); }
+
+/* 16/11/2026 — Separa visualmente as quatro áreas do modal. */
+.config-secao { border-top: 1px solid #DCE2EA; padding-top: 20px; margin-top: 20px; }
+.config-secao h3 { margin-bottom: 12px; font-size: 16px; }
+
+/* 16/11/2026 — Apresenta orientações curtas perto da ação correspondente. */
+.config-ajuda { margin: 8px 0 12px; color: #526176; font-size: 13px; line-height: 1.5; }
+
+/* 16/11/2026 — Mantém campos e rótulos legíveis, inclusive com teclado virtual. */
+.modal-configuracoes label, .modal-suporte label { display: block; margin: 12px 0 6px; font-size: 14px; }
+.modal-configuracoes input, .modal-configuracoes select, .modal-suporte input, .modal-suporte select, .modal-suporte textarea { width: 100%; min-height: 44px; padding: 10px; border: 1px solid #AAB7C8; border-radius: 6px; font-size: 16px; }
+.modal-suporte textarea { resize: vertical; min-height: 120px; }
+
+/* 16/11/2026 — Alinha a prévia da fotografia ao seletor de arquivo. */
+.config-foto-linha { display: flex; align-items: flex-start; gap: 16px; margin-top: 12px; }
+.config-foto-linha > div { min-width: 0; flex: 1; }
+.config-foto-preview, .perfil-foto { display: flex; align-items: center; justify-content: center; width: 88px; height: 88px; flex: 0 0 88px; border-radius: 50%; overflow: hidden; background: #DBEAFE; color: #244B7C; font-size: 24px; font-weight: 600; }
+.perfil-foto { margin-bottom: 20px; }
+
+/* 16/11/2026 — Recorta somente a apresentação das fotos para manter os avatares circulares. */
+.config-foto-preview img, .perfil-foto img, .usuario-botao .avatar img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.usuario-botao .avatar { overflow: hidden; }
+
+/* 16/11/2026 — Agrupa as ações de restauração sem vinculá-las ao envio do formulário de perfil. */
+.config-acoes { display: flex; flex-wrap: wrap; gap: 12px; }
+.config-acoes button { min-height: 44px; }
+#resultadoRestauracao, #resultadoSuporte { margin-top: 12px; color: #145A3A; line-height: 1.5; }
+
+/* 16/11/2026 — Mantém os novos componentes compatíveis com o tema escuro. */
+body.dark .config-secao { border-color: #52647A; }
+body.dark .config-ajuda { color: #C2CEDD; }
+body.dark .config-foto-preview, body.dark .perfil-foto { background: #263449; color: #BDD8FC; }
+body.dark #resultadoRestauracao, body.dark #resultadoSuporte { color: #86EFAC !important; }
+
+/* 16/11/2026 — Empilha a foto e os botões quando o espaço horizontal é reduzido. */
+@media (max-width: 480px) {
+  .config-foto-linha { flex-direction: column; }
+  .config-foto-linha > div { width: 100%; }
+  .config-acoes { flex-direction: column; }
+  .modal-configuracoes .modal-botoes { flex-direction: column; }
+}
+
+/* ==========================================================
+   16/11/2026 — LOGIN
+   Apresentação, formulário de acesso e controles de senha.
+========================================================== */
+
+/* Container de tela cheia (usado no login). */
+.container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+/* ==========================================================
+   3. LOGIN
+========================================================== */
 /* Lado esquerdo azul da tela de login. */
 .lado-esquerdo {
   flex: 0 0 33.33%;
@@ -464,6 +1920,7 @@ tr:last-child td {
   text-align: center;
 }
 
+/* 16/11/2026 — Organiza a apresentação e os controles da tela de acesso. */
 .login-box h2 {
   font-size: 28px;
   color: #000;
@@ -471,6 +1928,7 @@ tr:last-child td {
   margin-bottom: 8px;
 }
 
+/* 16/11/2026 — Organiza a apresentação e os controles da tela de acesso. */
 .login-box p {
   font-size: 16px;
   color: #6c757d;
@@ -484,6 +1942,7 @@ tr:last-child td {
   width: 100%;
 }
 
+/* 16/11/2026 — Organiza a apresentação e os controles da tela de acesso. */
 .login-form input {
   width: 100%;
   padding: 14px 15px;
@@ -493,16 +1952,19 @@ tr:last-child td {
   transition: border-color 0.2s;
 }
 
+/* 16/11/2026 — Destaca o foco para facilitar a navegação pelo teclado. */
 .login-form input:focus {
   border-color: #1a73e8;
 }
 
+/* 16/11/2026 — Organiza a apresentação e os controles da tela de acesso. */
 .login-form input[type="text"] {
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   border-bottom: none;
 }
 
+/* 16/11/2026 — Organiza a apresentação e os controles da tela de acesso. */
 .login-form input[type="password"] {
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
@@ -523,15 +1985,148 @@ tr:last-child td {
   transition: background-color 0.2s;
 }
 
+/* 16/11/2026 — Realça a interação ao passar o ponteiro sobre o elemento. */
 .login-form button:hover {
   background-color: #0b5ed7;
 }
 
+/*
+   * Login, menu compacto e painel. Este bloco já estava aninhado
+   * dentro do de 600px nos arquivos originais, então só vale em
+   * telas de até 600px (mantido assim para não mudar o comportamento).
+   */
+@media (max-width: 600px) {
+  @media (max-width: 900px) {
+    .container {
+      flex-direction: column;
+    }
+  }
+}
+
+/* 16/11/2026 — Organiza a apresentação e os controles da tela de acesso. */
+@media (max-width: 600px) {
+  @media (max-width: 900px) {
+    .lado-esquerdo {
+      flex: 0 0 auto;
+      padding: 50px 20px;
+    }
+  }
+}
+
+/* 16/11/2026 — Organiza a apresentação e os controles da tela de acesso. */
+@media (max-width: 600px) {
+  @media (max-width: 900px) {
+    .lado-direito {
+      padding: 50px 20px;
+    }
+  }
+}
+
+/* 16/11/2026 — Organiza a apresentação e os controles da tela de acesso. */
+.login-form label {
+  font-size: 14px; text-align: left; margin: 12px 0 6px; color: #374151;
+}
+
+/* 16/11/2026 — Organiza a apresentação e os controles da tela de acesso. */
+.login-form #usuarioLogin, .login-form #senhaLogin {
+  border: 1px solid #CED4DA; border-radius: 6px; margin: 0;
+}
+
+/* 16/11/2026 — Organiza a apresentação e os controles da tela de acesso. */
+.campo-senha {
+  display: flex; position: relative; margin-bottom: 16px;
+}
+
+/* 16/11/2026 — Organiza a apresentação e os controles da tela de acesso. */
+.login-form .campo-senha input {
+  padding-right: 90px;
+}
+
+/* 16/11/2026 — Organiza a apresentação e os controles da tela de acesso. */
+.login-form #btnMostrarSenha {
+  position: absolute; top: 4px; right: 4px; bottom: 4px; width: 80px; padding: 6px; background: #EDF5FF; color: #244B7C; font-size: 13px;
+}
+
+/* 16/11/2026 — Organiza a apresentação e os controles da tela de acesso. */
+.recuperar-senha {
+  margin-top: 16px; color: #2A68C2; text-align: center;
+}
+
+/* 16/11/2026 — Organiza a apresentação e os controles da tela de acesso. */
+.pagina-login .lado-direito {
+  padding: 32px 24px;
+}
+
+/* 16/11/2026 — Organiza a apresentação e os controles da tela de acesso. */
+@media (max-width: 700px) {
+  .pagina-login {
+    height: auto; min-height: 100vh; display: block; overflow: auto;
+  }
+}
+
+/* 16/11/2026 — Organiza a apresentação e os controles da tela de acesso. */
+@media (max-width: 700px) {
+  .pagina-login .container {
+    flex-direction: column; height: auto; min-height: 100vh;
+  }
+}
+
+/* 16/11/2026 — Organiza a apresentação e os controles da tela de acesso. */
+@media (max-width: 700px) {
+  .pagina-login .lado-esquerdo {
+    flex: 0 0 auto; padding: 20px;
+  }
+}
+
+/* 16/11/2026 — Organiza a apresentação e os controles da tela de acesso. */
+@media (max-width: 700px) {
+  .pagina-login .lado-esquerdo img {
+    width: 130px; max-height: 130px !important; object-fit: contain;
+  }
+}
+
+/* 16/11/2026 — Organiza a apresentação e os controles da tela de acesso. */
+@media (max-width: 700px) {
+  .pagina-login .lado-esquerdo h4 {
+    font-size: 13px; text-align: center;
+  }
+}
+
+/* 16/11/2026 — Organiza a apresentação e os controles da tela de acesso. */
+@media (max-width: 700px) {
+  .pagina-login .lineart {
+    display: none;
+  }
+}
+
+/* 16/11/2026 — Organiza a apresentação e os controles da tela de acesso. */
+@media (max-width: 700px) {
+  .pagina-login .lado-direito {
+    flex: 1; padding: 24px 20px 40px;
+  }
+}
+
+
+/* 16/11/2026 — Mantém os limites da imagem institucional que antes estavam no HTML do login. */
+.pagina-login .lado-esquerdo img {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+/* 16/11/2026 — Preserva a cor e a família tipográfica do slogan da tela de acesso. */
+.pagina-login .lado-esquerdo h4 {
+  color: #ffffff83;
+  font-family: Verdana, 'Arial', sans-serif;
+}
+
+/* ==========================================================
+   16/11/2026 — UNIDADES
+   Cards, fotografias, indicadores e layout das unidades.
+========================================================== */
 
 /* ==========================================================
    4. UNIDADES
 ========================================================== */
-
 /* Cabeçalho: títulos à esquerda, busca e botão à direita. */
 .unidades-header {
   display: flex;
@@ -540,6 +2135,7 @@ tr:last-child td {
   margin-bottom: 30px;
 }
 
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
 .header-titles h1 {
   font-size: 24px;
   color: #1a233a;
@@ -547,11 +2143,13 @@ tr:last-child td {
   margin-bottom: 4px;
 }
 
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
 .header-titles p {
   font-size: 14px;
   color: var(--text-light);
 }
 
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
 .header-actions {
   display: flex;
   gap: 15px;
@@ -570,6 +2168,7 @@ tr:last-child td {
   color: #9CA3AF;
 }
 
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
 .search-box input {
   border: none;
   outline: none;
@@ -594,10 +2193,12 @@ tr:last-child td {
   transition: background-color 0.2s;
 }
 
+/* 16/11/2026 — Realça a interação ao passar o ponteiro sobre o elemento. */
 .btn-primary:hover {
   background-color: #1e53a3;
 }
 
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
 .btn-secondary {
   width: 100%;
   padding: 12px;
@@ -616,6 +2217,7 @@ tr:last-child td {
   transition: background-color 0.2s;
 }
 
+/* 16/11/2026 — Realça a interação ao passar o ponteiro sobre o elemento. */
 .btn-secondary:hover {
   background-color: var(--primary-blue);
 }
@@ -638,6 +2240,7 @@ tr:last-child td {
   flex-direction: column;
 }
 
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
 .unidade-img {
   height: 180px;
   background: linear-gradient(135deg, #E0E7FF 0%, #DBEAFE 100%);
@@ -648,6 +2251,20 @@ tr:last-child td {
   color: #93C5FD;
 }
 
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
+.unidade-img img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
+.unidade-card a.btn-secondary {
+  text-decoration: none;
+}
+
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
 .unidade-body {
   padding: 24px;
   display: flex;
@@ -655,6 +2272,7 @@ tr:last-child td {
   flex-grow: 1;
 }
 
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
 .unidade-title-row {
   display: flex;
   justify-content: space-between;
@@ -662,6 +2280,7 @@ tr:last-child td {
   margin-bottom: 8px;
 }
 
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
 .unidade-title-row h2 {
   font-size: 18px;
   font-weight: 700;
@@ -678,6 +2297,7 @@ tr:last-child td {
   font-weight: 600;
 }
 
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
 .unidade-endereco {
   font-size: 13px;
   color: var(--text-light);
@@ -687,6 +2307,7 @@ tr:last-child td {
   margin-bottom: 24px;
 }
 
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
 .unidade-endereco i {
   color: #9CA3AF;
 }
@@ -699,6 +2320,7 @@ tr:last-child td {
   margin-bottom: 24px;
 }
 
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
 .stat {
   display: flex;
   flex-direction: column;
@@ -707,6 +2329,7 @@ tr:last-child td {
   flex: 1;
 }
 
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
 .stat.divider {
   flex: 0;
   width: 1px;
@@ -714,6 +2337,7 @@ tr:last-child td {
   background-color: #E5E7EB;
 }
 
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
 .stat-val {
   font-size: 18px;
   font-weight: 700;
@@ -723,41 +2347,164 @@ tr:last-child td {
   gap: 8px;
 }
 
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
 .stat-val i {
   font-size: 14px;
 }
 
-.blue-icon   { color: var(--blue-icon); }
-.orange-icon { color: var(--orange-icon); }
-.green-icon  { color: var(--green-icon); }
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
+.blue-icon {
+  color: var(--blue-icon);
+}
 
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
+.orange-icon {
+  color: var(--orange-icon);
+}
+
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
+.green-icon {
+  color: var(--green-icon);
+}
+
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
 .stat-lbl {
   font-size: 12px;
   color: var(--text-light);
 }
 
+/* Imagem ilustrativa das unidades */
+body.dark .unidade-img {
+  background: linear-gradient(135deg, #263B55, #192A40) !important;
+  color: #8DB8F0 !important;
+}
 
-/* ==========================================================
-   5. DASHBOARD
-========================================================== */
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
+.pagina-unidades .unidades-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
 
-/* Container de tela cheia do painel. */
-.dashboard-container {
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
+.pagina-unidades .unidade-card {
+  min-width: 0;
+}
+
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
+.pagina-unidades .unidade-title-row {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
+.pagina-unidades .unidade-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 12px;
+}
+
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
+.pagina-unidades .unidade-stats .stat:first-child {
+  grid-column: 1 / -1;
+}
+
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
+.pagina-unidades .unidade-endereco {
+  overflow-wrap: anywhere;
+}
+
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
+@media (max-width: 1100px) {
+  .pagina-unidades .unidades-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+}
+
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
+@media (max-width: 900px) {
+  body.pagina-unidades {
+    display: block;
+    height: auto;
+    min-height: 100vh;
+    overflow: auto;
+  }
+}
+
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
+@media (max-width: 900px) {
+  .pagina-unidades .dashboard-container {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+    width: 100%;
+  }
+}
+
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
+@media (max-width: 900px) {
+  .pagina-unidades .main-content {
+    width: 100%;
+    padding: 24px 16px;
+    overflow: visible;
+  }
+}
+
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
+@media (max-width: 900px) {
+  .pagina-unidades .unidade-body {
+    padding: 20px 16px;
+  }
+}
+
+/* 16/11/2026 — Apresenta este componente dos cards e indicadores das unidades. */
+@media (max-width: 700px) {
+  button, .btn-secondary {
+    min-height: 44px;
+  }
+}
+
+/* 16/11/2026 — Estilos da página transferidos do HTML; o escopo evita interferir nas demais telas. */
+body.pagina-unidades {
+  --primary-blue: #2A68C2;
+  --secondary-blue: #4B83DA;
+  --sidebar-bg: #2C64B4;
+  --sidebar-active: #4078CA;
+  --bg-color: #F4F7FE;
+  --text-dark: #1F2937;
+  --text-light: #6B7280;
+  --white: #FFFFFF;
+  
+  /* Icon Colors */
+  --blue-icon: #3B82F6;
+  --orange-icon: #EA580C;
+  --green-icon: #10B981;
+}
+
+/* 16/11/2026 — Estilos da página transferidos do HTML; o escopo evita interferir nas demais telas. */
+/* Base Layout Container (Ensures full width) */
+:where(body.pagina-unidades) .dashboard-container {
   display: flex;
   height: 100vh;
   width: 100vw;
   max-width: 100%;
 }
 
-/* Área principal do painel (à direita do menu). */
-.main-content {
+/* 16/11/2026 — Estilos da página transferidos do HTML; o escopo evita interferir nas demais telas. */
+/* Main Content Styles (Stretches to fill space) */
+:where(body.pagina-unidades) .main-content {
   flex: 1;
   width: calc(100% - 250px);
   min-width: 0;
-  padding: 20px 40px 40px 40px;
+  padding: 30px 40px;
   overflow-y: auto;
   overflow-x: hidden;
 }
+
+
+/* ==========================================================
+   16/11/2026 — DASHBOARD
+   Indicadores, situação das salas e acompanhamento da operação.
+========================================================== */
 
 /* Cabeçalho superior: busca à esquerda, perfil do usuário à direita. */
 .top-header {
@@ -768,6 +2515,7 @@ tr:last-child td {
   margin-bottom: 20px;
 }
 
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
 .search-bar {
   display: flex;
   align-items: center;
@@ -775,6 +2523,7 @@ tr:last-child td {
   gap: 10px;
 }
 
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
 .search-bar input {
   border: none;
   background: transparent;
@@ -791,6 +2540,7 @@ tr:last-child td {
   gap: 15px;
 }
 
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
 .notification-icon {
   position: relative;
   font-size: 20px;
@@ -799,6 +2549,7 @@ tr:last-child td {
   cursor: pointer;
 }
 
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
 .notification-icon .badge {
   position: absolute;
   top: 0;
@@ -809,30 +2560,20 @@ tr:last-child td {
   border-radius: 50%;
 }
 
-.avatar {
-  width: 36px;
-  height: 36px;
-  background-color: var(--primary-blue);
-  color: var(--white);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: 600;
-}
-
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
 .user-info {
   display: flex;
   flex-direction: column;
 }
 
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
 .user-name {
   font-size: 14px;
   font-weight: 600;
   color: var(--text-dark);
 }
 
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
 .user-role {
   font-size: 12px;
   color: var(--text-light);
@@ -846,6 +2587,7 @@ tr:last-child td {
   margin-bottom: 25px;
 }
 
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
 .page-header h1 {
   font-size: 24px;
   color: #1a233a;
@@ -853,17 +2595,10 @@ tr:last-child td {
   margin-bottom: 4px;
 }
 
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
 .page-header p {
   font-size: 14px;
   color: var(--text-light);
-}
-
-/* Card base (fundo branco, cantos arredondados). */
-.card {
-  background: var(--white);
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
 }
 
 /* Grade com os 5 cards de indicadores (KPIs). */
@@ -874,11 +2609,13 @@ tr:last-child td {
   margin-bottom: 25px;
 }
 
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
 .kpi-card {
   display: flex;
   flex-direction: column;
 }
 
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
 .kpi-icon {
   width: 32px;
   height: 32px;
@@ -890,11 +2627,27 @@ tr:last-child td {
   font-size: 14px;
 }
 
-.kpi-icon.blue   { background: #E0E7FF; color: #4338CA; }
-.kpi-icon.orange { background: #FFEDD5; color: #C2410C; }
-.kpi-icon.green  { background: #D1FAE5; color: #047857; }
-.kpi-icon.yellow { background: #FEF3C7; color: #B45309; }
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
+.kpi-icon.blue {
+  background: #E0E7FF; color: #4338CA;
+}
 
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
+.kpi-icon.orange {
+  background: #FFEDD5; color: #C2410C;
+}
+
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
+.kpi-icon.green {
+  background: #D1FAE5; color: #047857;
+}
+
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
+.kpi-icon.yellow {
+  background: #FEF3C7; color: #B45309;
+}
+
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
 .kpi-value {
   font-size: 22px;
   font-weight: 700;
@@ -902,20 +2655,29 @@ tr:last-child td {
   margin-bottom: 4px;
 }
 
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
 .kpi-label {
   font-size: 13px;
   color: var(--text-light);
   margin-bottom: 8px;
 }
 
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
 .kpi-subtext {
   font-size: 12px;
   color: var(--text-light);
   font-weight: 500;
 }
 
-.highlight-green { color: var(--green-text); }
-.highlight-red   { color: var(--red-text); }
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
+.highlight-green {
+  color: var(--green-text);
+}
+
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
+.highlight-red {
+  color: var(--red-text);
+}
 
 /* Parte de baixo: agenda (maior) e pendências (menor). */
 .bottom-grid {
@@ -924,35 +2686,13 @@ tr:last-child td {
   gap: 20px;
 }
 
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.card-header h2 {
-  font-size: 16px;
-  font-weight: 600;
-  color: #111827;
-}
-
-.view-all {
-  font-size: 13px;
-  color: var(--sidebar-bg);
-  text-decoration: none;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
 /* Lista de agenda: horário, sala e status em cada linha. */
 .agenda-list {
   display: flex;
   flex-direction: column;
 }
 
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
 .agenda-item {
   display: flex;
   align-items: center;
@@ -962,33 +2702,25 @@ tr:last-child td {
   color: var(--text-light);
 }
 
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
 .agenda-item:last-child {
   border-bottom: none;
 }
 
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
 .agenda-item > span {
   flex: 1;
 }
 
-.agenda-item .time { font-weight: 500; color: #374151; flex: 0.8; }
-.agenda-item .room.fw-bold { font-weight: 600; color: #111827; }
-
-.agenda-item .status-pill {
-  flex: 0.5;
-  text-align: right;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 500;
-  gap: 6px;
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
+.agenda-item .time {
+  font-weight: 500; color: #374151; flex: 0.8;
 }
 
-.status-pill i { font-size: 6px; }
-.status-ocupada   { background: var(--green-bg); color: var(--green-text); }
-.status-disponivel { background: var(--blue-bg);  color: var(--blue-text); }
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
+.agenda-item .room.fw-bold {
+  font-weight: 600; color: #111827;
+}
 
 /* Lista de pendências com ícone, título e descrição. */
 .pendencias-list {
@@ -997,12 +2729,14 @@ tr:last-child td {
   gap: 20px;
 }
 
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
 .pendencia-item {
   display: flex;
   align-items: flex-start;
   gap: 12px;
 }
 
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
 .p-icon {
   width: 24px;
   height: 24px;
@@ -1012,14 +2746,23 @@ tr:last-child td {
   font-size: 14px;
 }
 
-.p-orange { color: var(--orange-icon); }
-.p-yellow { color: var(--yellow-icon); }
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
+.p-orange {
+  color: var(--orange-icon);
+}
 
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
+.p-yellow {
+  color: var(--yellow-icon);
+}
+
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
 .p-content {
   display: flex;
   flex-direction: column;
 }
 
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
 .p-title {
   font-size: 13px;
   font-weight: 500;
@@ -1027,27 +2770,165 @@ tr:last-child td {
   margin-bottom: 2px;
 }
 
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
 .p-desc {
   font-size: 12px;
   color: var(--text-light);
 }
 
+/* Cabeçalhos e títulos */
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark h4,
+body.dark .page-header h1,
+body.dark .card-header h2 {
+  color: #F1F5F9 !important;
+}
+
+/* SINO DE NOTIFICAÇÕES - DARK THEME */
+body.dark .notification-icon {
+  color: #B8CBE3 !important;
+}
+
+/* 16/11/2026 — Ajusta cores e contraste destes elementos no modo escuro. */
+body.dark .notification-icon i {
+  color: #B8CBE3 !important;
+}
+
+/* Indicador de notificação */
+body.dark .notification-icon .badge {
+  background-color: #E88A72;
+  border-color: #192A40;
+}
+
+/* Grades fluidas e navegação móvel compartilhada. */
+.kpi-cards {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px;
+}
+
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
+.kpi-value {
+  overflow-wrap: anywhere;
+}
+
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
+.agenda-item {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) auto; gap: 8px 12px;
+}
+
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
+.agenda-item .time {
+  grid-column: 1;
+}
+
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
+.agenda-item .doctor {
+  grid-column: 2 / -1;
+}
+
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
+.agenda-item > span {
+  overflow-wrap: anywhere;
+}
+
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
+.acompanhamento-link {
+  text-decoration: none; color: inherit; gap: 12px; min-height: 64px;
+}
+
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
+.acompanhamento-link .p-content {
+  flex: 1;
+}
+
+/* 16/11/2026 — Realça a interação ao passar o ponteiro sobre o elemento. */
+.acompanhamento-link:hover {
+  background: #EDF5FF; border-radius: 8px;
+}
+
+/* 16/11/2026 — Realça a interação ao passar o ponteiro sobre o elemento. */
+body.dark .acompanhamento-link:hover {
+  background: #263449;
+}
+
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
+@media (max-width: 1100px) {
+  .bottom-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
+@media (max-width: 700px) {
+  .kpi-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;
+  }
+}
+
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
+@media (max-width: 700px) {
+  .kpi-value {
+    font-size: 20px;
+  }
+}
+
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
+@media (max-width: 700px) {
+  .agenda-item {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+}
+
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
+@media (max-width: 700px) {
+  .agenda-item .room {
+    grid-column: 1; grid-row: 1;
+  }
+}
+
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
+@media (max-width: 700px) {
+  .agenda-item .unit, .agenda-item .time, .agenda-item .doctor {
+    grid-column: 1 / -1;
+  }
+}
+
+/* 16/11/2026 — Organiza este componente dos indicadores e listas do painel. */
+@media (max-width: 380px) {
+  .kpi-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* 16/11/2026 — Estilos da página transferidos do HTML; o escopo evita interferir nas demais telas. */
+/* Base Variables & Reset */
+body.pagina-dashboard {
+  --primary-blue: #2A68C2;
+  --sidebar-bg: #2C64B4;
+  --sidebar-active: #4078CA;
+  --bg-color: #F4F7FE;
+  --text-dark: #1F2937;
+  --text-light: #6B7280;
+  --white: #FFFFFF;
+  
+  /* Status Colors */
+  --green-text: #059669;
+  --green-bg: #D1FAE5;
+  --blue-text: #2563EB;
+  --blue-bg: #DBEAFE;
+  --red-text: #DC2626;
+  --yellow-icon: #F59E0B;
+  --orange-icon: #EA580C;
+}
+
 
 /* ==========================================================
-   6. SALAS (salas.html)
+   16/11/2026 — SALAS
+   Grade, cards e detalhes das salas.
 ========================================================== */
 
-/* Janela de edição: centralizada, com fundo escurecido e erro destacado. */
-#dialogEditarSalas {
-  margin: auto;
-  border: 0;
-  max-height: calc(100% - 30px);
-}
-
-#dialogEditarSalas::backdrop {
-  background-color: rgba(20, 30, 50, 0.35);
-}
-
+/* 16/11/2026 — Apresenta os dados e as ações dos cards de salas. */
 #erroEditarSalas {
   color: #a32925;
   font-size: 13px;
@@ -1068,28 +2949,33 @@ tr:last-child td {
   padding: 16px;
 }
 
+/* 16/11/2026 — Apresenta os dados e as ações dos cards de salas. */
 .card-topo {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
+/* 16/11/2026 — Apresenta os dados e as ações dos cards de salas. */
 .card-nome {
   font-size: 15px;
   color: #1c2b4a;
 }
 
+/* 16/11/2026 — Apresenta os dados e as ações dos cards de salas. */
 .card-menu {
   color: #9aa1af;
   cursor: pointer;
 }
 
+/* 16/11/2026 — Apresenta os dados e as ações dos cards de salas. */
 .card-unidade {
   color: #8a8f9c;
   font-size: 13px;
   margin-bottom: 10px;
 }
 
+/* 16/11/2026 — Apresenta os dados e as ações dos cards de salas. */
 .card-status {
   display: flex;
   align-items: center;
@@ -1098,17 +2984,7 @@ tr:last-child td {
   font-size: 13px;
 }
 
-/*
- * Cada status tem uma cor - o JS decide qual classe usar.
- * Só "color" aqui: se pintar o fundo também, o texto some em cima da cor.
- * (".card-status" na frente para não mudar o .status-ocupada e o
- * .status-disponivel do DASHBOARD, que usam os mesmos nomes.)
- */
-.card-status.status-disponivel   { color: #22a55e; } /* verde */
-.card-status.status-reservada    { color: #e0a800; } /* amarelo */
-.card-status.status-ocupada      { color: #e0413a; } /* vermelho */
-.card-status.status-indisponivel { color: #8a8f9c; } /* cinza */
-
+/* cinza */
 .card-profissional,
 .card-horario {
   font-size: 13px;
@@ -1129,24 +3005,36 @@ tr:last-child td {
   font-size: 13px;
 }
 
+/* 16/11/2026 — Realça a interação ao passar o ponteiro sobre o elemento. */
 .botao-detalhes:hover {
   background-color: #eef2fc;
 }
 
+/* 16/11/2026 — Apresenta os dados e as ações dos cards de salas. */
+.detalhes-sala {
+  white-space: pre-line;
+}
+
+/* 16/11/2026 — Apresenta os dados e as ações dos cards de salas. */
+.erro-formulario, #erroEditarSalas {
+  color: #B42318; padding: 10px 0; line-height: 1.5;
+}
+
+/* 16/11/2026 — Ajusta cores e contraste destes elementos no modo escuro. */
+body.dark .erro-formulario, body.dark #erroEditarSalas {
+  color: #FFB4AB;
+}
+
+/* 16/11/2026 — Apresenta os dados e as ações dos cards de salas. */
+.grade-salas {
+  grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr));
+}
+
 
 /* ==========================================================
-   7. FINANCEIRO (financeiro.html)
+   16/11/2026 — FINANCEIRO
+   Tabela, valores e status de pagamentos.
 ========================================================== */
-
-/*
- * Cards de resumo: o layout (.resumo, .card-resumo, .resumo-titulo)
- * vem da seção COMPARTILHADO; aqui fica só o valor.
- */
-.resumo-valor {
-  font-size: 22px;
-  font-weight: bold;
-  color: #1c2b4a;
-}
 
 /* Card branco que envolve a tabela de pagamentos. */
 .card-tabela {
@@ -1157,6 +3045,7 @@ tr:last-child td {
   overflow-x: auto;
 }
 
+/* 16/11/2026 — Formata os valores, registros e indicadores financeiros. */
 .card-tabela h2 {
   font-size: 16px;
   color: #1c2b4a;
@@ -1170,6 +3059,7 @@ tr:last-child td {
   font-size: 13px;
 }
 
+/* 16/11/2026 — Formata os valores, registros e indicadores financeiros. */
 .tabela th {
   text-align: left;
   color: #6b7280;
@@ -1179,6 +3069,7 @@ tr:last-child td {
   white-space: nowrap;
 }
 
+/* 16/11/2026 — Formata os valores, registros e indicadores financeiros. */
 .tabela td {
   padding: 12px;
   color: #1c2b4a;
@@ -1186,14 +3077,12 @@ tr:last-child td {
   white-space: nowrap;
 }
 
+/* 16/11/2026 — Formata os valores, registros e indicadores financeiros. */
 .tabela tbody tr:last-child td {
   border-bottom: none;
 }
 
-.col-valor {
-  font-weight: bold;
-}
-
+/* 16/11/2026 — Formata os valores, registros e indicadores financeiros. */
 .tabela .col-pagamento {
   color: #8a8f9c;
 }
@@ -1205,16 +3094,64 @@ tr:last-child td {
   gap: 6px;
 }
 
-/* Cada status tem uma cor - o JS decide qual classe usar. */
-.status-pago     { color: #22a55e; }
-.status-pendente { color: #e08a1e; }
-.status-atraso   { color: #e0413a; }
+/* Cabeçalho das tabelas */
+body.dark th,
+body.dark .tabela th {
+  background-color: #263449 !important;
+  color: #E5EAF2 !important;
+}
 
+/* Células das tabelas */
+body.dark td,
+body.dark .tabela td {
+  color: #DCE5F0 !important;
+  border-color: #354255 !important;
+}
+
+/* Total previsto - azul */
+body.dark #valorPrevisto {
+  color: #8DB8F0 !important;
+}
+
+/* 16/11/2026 — Formata os valores, registros e indicadores financeiros. */
+.card-tabela {
+  overflow-x: auto;
+}
+
+
+/* ==========================================================
+   16/11/2026 — CONVENIÊNCIA
+   Catálogo, estoque, consumo e ações de produtos.
+========================================================== */
+
+/* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
+.status-ocupada {
+  background: var(--green-bg); color: var(--green-text);
+}
+
+/* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
+.status-disponivel {
+  background: var(--blue-bg);  color: var(--blue-text);
+}
+
+/* Cada status tem uma cor - o JS decide qual classe usar. */
+.status-pago {
+  color: #22a55e;
+}
+
+/* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
+.status-pendente {
+  color: #e08a1e;
+}
+
+/* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
+.status-atraso {
+  color: #e0413a;
+}
 
 /* ==========================================================
    8. CONVENIÊNCIA (página de produtos e consumo)
 ========================================================== */
-
 /* Grade com os cards de produto (3 por linha). */
 .grade-produtos {
   display: grid;
@@ -1237,10 +3174,12 @@ tr:last-child td {
   min-height: 145px;
 }
 
+/* 16/11/2026 — Realça a interação ao passar o ponteiro sobre o elemento. */
 .card-produto:hover {
   border-color: #bdcbe3;
 }
 
+/* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
 .produto-imagem {
   width: 70px;
   height: 70px;
@@ -1253,17 +3192,20 @@ tr:last-child td {
   font-size: 30px;
 }
 
+/* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
 .produto-informacoes {
   flex: 1;
   min-width: 0;
 }
 
+/* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
 .produto-topo {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
+/* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
 .produto-topo h3 {
   color: #1c2b4a;
   font-size: 14px;
@@ -1272,10 +3214,7 @@ tr:last-child td {
   text-overflow: ellipsis;
 }
 
-.menu-produto {
-  font-size: 18px;
-}
-
+/* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
 .produto-preco {
   color: #1c2b4a;
   font-size: 17px;
@@ -1292,16 +3231,22 @@ tr:last-child td {
   font-size: 11px;
 }
 
-.bolinha-estoque {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
+/* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
+.bolinha-estoque.estoque-disponivel {
+  background-color: #22a55e;
 }
 
-.bolinha-estoque.estoque-disponivel   { background-color: #22a55e; }
-.bolinha-estoque.estoque-baixo        { background-color: #e08a1e; }
-.bolinha-estoque.estoque-indisponivel { background-color: #e0413a; }
+/* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
+.bolinha-estoque.estoque-baixo {
+  background-color: #e08a1e;
+}
 
+/* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
+.bolinha-estoque.estoque-indisponivel {
+  background-color: #e0413a;
+}
+
+/* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
 .quantidade-estoque {
   margin-left: 4px;
 }
@@ -1319,6 +3264,7 @@ tr:last-child td {
   font-size: 11px;
 }
 
+/* 16/11/2026 — Realça a interação ao passar o ponteiro sobre o elemento. */
 .botao-consumir:hover {
   background-color: #eef2fc;
 }
@@ -1334,14 +3280,6 @@ tr:last-child td {
   margin-top: 28px;
 }
 
-/* Caixa branca que envolve a tabela de movimentações. */
-.tabela-container {
-  background-color: white;
-  border: 1px solid #e4e7ee;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
 /* Selo de status (Pago / Pendente) na tabela de movimentações. */
 .status {
   display: inline-block;
@@ -1351,153 +3289,33 @@ tr:last-child td {
   font-weight: bold;
 }
 
+/* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
 .status.pago {
   background-color: #e9f8ef;
   color: #22a55e;
 }
 
+/* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
 .status.pendente {
   background-color: #fff4df;
   color: #d27d13;
 }
 
-
-/* ==========================================================
-   9. RESPONSIVO
-========================================================== */
-
-/* Telas até 1100px: resumo e produtos em 2 colunas. */
+/* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
 @media (max-width: 1100px) {
-
-  .resumo {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   .grade-produtos {
     grid-template-columns: repeat(2, 1fr);
   }
-
 }
 
-/* Telas até 750px: menu mais estreito e produtos em 1 coluna. */
+/* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
 @media (max-width: 750px) {
-
-  .menu {
-    width: 180px;
-  }
-
-  .conteudo {
-    padding: 25px 20px;
-  }
-
   .grade-produtos {
     grid-template-columns: 1fr;
   }
-
 }
 
-/*
- * Telas até 600px: menu só com ícones, resumo em 1 coluna,
- * filtros empilhados e tabela com rolagem horizontal.
- */
-@media (max-width: 600px) {
-
-  .menu {
-    width: 70px;
-    padding: 20px 8px;
-  }
-
-  .logo-texto {
-    display: none;
-  }
-
-  .menu-item {
-    font-size: 0;
-    text-align: center;
-  }
-
-  .menu-item.ativo {
-    font-size: 0;
-  }
-
-  .conteudo {
-    padding: 20px 15px;
-  }
-
-  .resumo {
-    grid-template-columns: 1fr;
-  }
-
-  .topo-pagina {
-    align-items: flex-start;
-    gap: 15px;
-    flex-direction: column;
-  }
-
-  .filtros {
-    flex-direction: column;
-  }
-
-  .tabela-container {
-    overflow-x: auto;
-  }
-
-  table {
-    min-width: 700px;
-  }
-
-  /*
-   * Login, menu compacto e painel. Este bloco já estava aninhado
-   * dentro do de 600px nos arquivos originais, então só vale em
-   * telas de até 600px (mantido assim para não mudar o comportamento).
-   */
-  @media (max-width: 900px) {
-    .container {
-      flex-direction: column;
-    }
-
-    .lado-esquerdo {
-      flex: 0 0 auto;
-      padding: 50px 20px;
-    }
-
-    .lado-direito {
-      padding: 50px 20px;
-    }
-
-    .menu {
-      width: 80px;
-      align-items: center;
-    }
-
-    .menu-item {
-      padding: 10px 0;
-      display: none;
-    }
-
-    .menu-lista li.active {
-      border-radius: 0;
-      margin-right: 0;
-      border-left: 4px solid var(--white);
-    }
-
-    .main-content {
-      width: calc(100% - 80px);
-    }
-  }
-}
-
-/*
-   AJUSTE DE AÇÕES E BOTÃO EXCLUIR (CONVENIÊNCIA)
-*/
-
-.tabela-container {
-  background-color: white;
-  border: 1px solid #e4e7ee;
-  border-radius: 10px;
-  overflow-x: auto;
-}
-
+/* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
 .btn-excluir {
   background: transparent;
   border: none;
@@ -1511,372 +3329,183 @@ tr:last-child td {
   transition: background-color 0.2s, color 0.2s;
 }
 
+/* 16/11/2026 — Realça a interação ao passar o ponteiro sobre o elemento. */
 .btn-excluir:hover {
   background-color: #fde8e8;
   color: #c0392b;
 }
 
+/* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
 .btn-excluir svg {
   width: 18px;
   height: 18px;
   stroke-width: 2;
 }
 
-/* ==========================================
-   10. TEMA ESCURO - ATTENTO
-========================================== */
-
-/* Fundo geral e textos */
-body.dark {
-    background-color: #151B26 !important;
-    color: #E5EAF2;
-}
-
-/* Áreas principais */
-body.dark .main-content,
-body.dark .dashboard-container,
-body.dark .app {
-    background-color: #151B26 !important;
-    color: #E5EAF2;
-}
-
-/* Cabeçalhos e títulos */
-body.dark h1,
-body.dark h2,
-body.dark h3,
-body.dark h4,
-body.dark .page-header h1,
-body.dark .card-header h2 {
-    color: #F1F5F9 !important;
-}
-
-/* Textos secundários */
-body.dark p,
-body.dark label,
-body.dark .subtitulo,
-body.dark .resumo-titulo,
-body.dark .resumo-legenda,
-body.dark .card-unidade,
-body.dark .card-profissional,
-body.dark .card-horario,
-body.dark .unidade-endereco,
-body.dark .stat-lbl {
-    color: #AAB7C8;
-}
-
-/* Cards gerais */
-body.dark .card,
-body.dark .card-resumo,
-body.dark .card-sala,
-body.dark .card-tabela,
-body.dark .card-produto,
-body.dark .tabela-container,
-body.dark .unidade-card,
-body.dark .agenda-card,
-body.dark .pendencias-card {
-    background-color: #222C3A !important;
-    color: #E5EAF2 !important;
-    border-color: #354255 !important;
-}
-
-/* Cabeçalho das tabelas */
-body.dark th,
-body.dark .tabela th {
-    background-color: #263449 !important;
-    color: #E5EAF2 !important;
-}
-
-/* Células das tabelas */
-body.dark td,
-body.dark .tabela td {
-    color: #DCE5F0 !important;
-    border-color: #354255 !important;
-}
-
-/* Linhas das tabelas */
-body.dark tbody tr {
-    background-color: #222C3A;
-}
-
-/* Campos de pesquisa, formulários e seleções */
-body.dark input,
-body.dark select,
-body.dark textarea {
-    background-color: #263449 !important;
-    color: #F1F5F9 !important;
-    border-color: #46546A !important;
-}
-
-/* Texto de orientação dos campos */
-body.dark input::placeholder,
-body.dark textarea::placeholder {
-    color: #9AA9BC;
-}
-
-/* Modais */
-body.dark .modal,
-body.dark dialog {
-    background-color: #222C3A !important;
-    color: #E5EAF2 !important;
-    border-color: #354255 !important;
-}
-
-body.dark .modal-topo,
-body.dark .modal label {
-    color: #E5EAF2;
-}
-
-/* Botões secundários */
-body.dark .botao-detalhes,
-body.dark .botao-consumir {
-    background-color: #263449 !important;
-    color: #8DB8F0 !important;
-    border-color: #5B88C5 !important;
-}
-
 /* Imagens e áreas internas de produtos */
 body.dark .produto-imagem {
-    background-color: #263449 !important;
-}
-
-
-/* ==========================================
-   MENU LATERAL - TEMA CLARO E ESCURO
-========================================== */
-
-/* Tema claro */
-.menu {
-    background-color: #5B88C5;
-    transition: background-color 0.3s ease;
-}
-
-/* Tema escuro */
-body.dark .menu {
-    background-color: #192A40 !important;
-}
-
-/* Textos e botões do menu escuro */
-body.dark .menu .menu-item {
-    color: #DCE6F2 !important;
-}
-
-/* Efeito ao passar o mouse */
-body.dark .menu .menu-item:hover {
-    background-color: #263B55 !important;
-    color: #FFFFFF !important;
-}
-
-/* Linha divisória */
-body.dark .menu hr {
-    border-color: #52647A;
-}
-
-/* Botão de alternância */
-body.dark #btnTema {
-    color: #DCE6F2 !important;
-}
-
-
-/* Botão de alternância */
-#btnTema {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    width: 100%;
-    text-align: left;
-}
-
-/* Transição suave */
-body,
-body * {
-    transition:
-        background-color 0.2s ease,
-        color 0.2s ease,
-        border-color 0.2s ease;
-}
-
-/* CORREÇÕES DARK THEME - DASHBOARD */
-body.dark .kpi-value,
-body.dark .agenda-item .time,
-body.dark .agenda-item .room,
-body.dark .p-title,
-body.dark .unidade-title-row h2,
-body.dark .stat-val {
-    color: #F1F5F9 !important;
-}
-
-body.dark .kpi-label,
-body.dark .kpi-subtext,
-body.dark .agenda-item .unit,
-body.dark .agenda-item .doctor,
-body.dark .p-desc,
-body.dark .page-header p,
-body.dark .header-titles p,
-body.dark .unidade-endereco,
-body.dark .stat-lbl {
-    color: #AAB7C8 !important;
-}
-
-/* Imagem ilustrativa das unidades */
-body.dark .unidade-img {
-    background: linear-gradient(135deg, #263B55, #192A40) !important;
-    color: #8DB8F0 !important;
+  background-color: #263449 !important;
 }
 
 /* CONVENIÊNCIA - MELHORAR CONTRASTE NO DARK THEME */
-
 body.dark .card-resumo strong,
 body.dark .produto-topo h3,
 body.dark .produto-preco {
-    color: #F1F5F9 !important;
+  color: #F1F5F9 !important;
 }
 
+/* 16/11/2026 — Ajusta cores e contraste destes elementos no modo escuro. */
 body.dark .resumo-titulo,
 body.dark .resumo-legenda,
 body.dark .quantidade-estoque {
-    color: #C2CEDD !important;
+  color: #C2CEDD !important;
 }
 
+/* 16/11/2026 — Ajusta cores e contraste destes elementos no modo escuro. */
 body.dark .produto-imagem {
-    background-color: #304158 !important;
-}
-
-/* SINO DE NOTIFICAÇÕES - DARK THEME */
-body.dark .notification-icon {
-    color: #B8CBE3 !important;
-}
-
-body.dark .notification-icon i {
-    color: #B8CBE3 !important;
-}
-
-/* Indicador de notificação */
-body.dark .notification-icon .badge {
-    background-color: #E88A72;
-    border-color: #192A40;
-}
-
-
-/* FINANCEIRO - PRESERVAR CORES DOS INDICADORES NO DARK THEME */
-
-body.dark .card-resumo {
-    background-color: #222C3A !important;
-    border-color: #354255 !important;
-}
-
-body.dark .resumo-titulo {
-    color: #C2CEDD !important;
+  background-color: #304158 !important;
 }
 
 /* Recebido - verde */
 body.dark .resumo-valor.status-pago {
-    color: #16A34A !important;
+  color: #16A34A !important;
 }
 
 /* Pendente - laranja */
 body.dark .resumo-valor.status-pendente {
-    color: #F97316 !important;
+  color: #F97316 !important;
 }
 
-/* Total previsto - azul */
-body.dark #valorPrevisto {
-    color: #8DB8F0 !important;
+/* ==========================================================
+   MENU DE OPÇÕES DOS PRODUTOS (3 PONTINHOS)
+========================================================== */
+.menu-produto-container {
+  position: relative;
+  flex-shrink: 0;
 }
 
-
-/* ==========================================
-   SELETOR DE APARÊNCIA - ATTENTO
-========================================== */
-
-.theme-selector {
-    position: relative;
-    width: 100%;
+/* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
+.btn-menu-produto {
+  background: transparent;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Menu suspenso */
-.theme-dropdown {
-    position: absolute;
-    bottom: calc(100% + 8px);
-    left: 10px;
-    width: 180px;
-    padding: 6px;
-    background-color: #FFFFFF;
-    border: 1px solid #DCE2EA;
-    border-radius: 12px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
-    z-index: 9999;
+/* 16/11/2026 — Realça a interação ao passar o ponteiro sobre o elemento. */
+.btn-menu-produto:hover {
+  background-color: #eef2fc;
+  color: #1c2b4a;
 }
 
-/* Esconde o menu quando fechado */
-.theme-dropdown[hidden] {
-    display: none;
+/* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
+.dropdown-produto {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 4px;
+  background-color: white;
+  border: 1px solid #e4e7ee;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 20;
+  min-width: 120px;
+  padding: 4px;
+  display: none;
+  flex-direction: column;
 }
 
-/* Opções */
-.theme-option {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 8px;
-    background: transparent;
-    color: #263449;
-    font-size: 14px;
-    text-align: left;
-    cursor: pointer;
+/* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
+.dropdown-produto.aberto {
+  display: flex;
 }
 
-/* Check fica no lado direito */
-.theme-check {
-    margin-left: auto;
+/* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
+.dropdown-produto button {
+  background: transparent;
+  border: none;
+  padding: 8px 10px;
+  text-align: left;
+  font-size: 13px;
+  color: #1c2b4a;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-/* Opção selecionada */
-.theme-option.active {
-    background-color: #EDE7FF;
-    color: #7040E8;
-    font-weight: 600;
+/* 16/11/2026 — Realça a interação ao passar o ponteiro sobre o elemento. */
+.dropdown-produto button:hover {
+  background-color: #f3f4f6;
 }
 
-.theme-option.active .theme-check::after {
-    content: "✓";
+/* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
+.dropdown-produto button.opcao-excluir {
+  color: #e74c3c;
 }
 
-/* Passar o mouse */
-.theme-option:hover {
-    background-color: #EEF2F7;
+/* 16/11/2026 — Realça a interação ao passar o ponteiro sobre o elemento. */
+.dropdown-produto button.opcao-excluir:hover {
+  background-color: #fde8e8;
 }
 
-.theme-option.active:hover {
-    background-color: #E4D9FF;
+/* Ajustes para o Tema Escuro */
+body.dark .btn-menu-produto {
+  color: #AAB7C8;
 }
 
-/* ==========================================
-   SELETOR NO TEMA ESCURO
-========================================== */
-
-body.dark .theme-dropdown {
-    background-color: #222C3A;
-    border-color: #354255;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+/* 16/11/2026 — Realça a interação ao passar o ponteiro sobre o elemento. */
+body.dark .btn-menu-produto:hover {
+  background-color: #304158;
+  color: #F1F5F9;
 }
 
-body.dark .theme-option {
-    color: #E5EAF2;
+/* 16/11/2026 — Ajusta cores e contraste destes elementos no modo escuro. */
+body.dark .dropdown-produto {
+  background-color: #222C3A;
+  border-color: #354255;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
 }
 
-body.dark .theme-option:hover {
-    background-color: #304158;
+/* 16/11/2026 — Ajusta cores e contraste destes elementos no modo escuro. */
+body.dark .dropdown-produto button {
+  color: #E5EAF2;
 }
 
-body.dark .theme-option.active {
-    background-color: #493477;
-    color: #FFFFFF;
+/* 16/11/2026 — Realça a interação ao passar o ponteiro sobre o elemento. */
+body.dark .dropdown-produto button:hover {
+  background-color: #304158;
 }
 
-body.dark .theme-option.active:hover {
-    background-color: #59418D;
+/* 16/11/2026 — Ajusta cores e contraste destes elementos no modo escuro. */
+body.dark .dropdown-produto button.opcao-excluir {
+  color: #f87171;
+}
+
+/* 16/11/2026 — Realça a interação ao passar o ponteiro sobre o elemento. */
+body.dark .dropdown-produto button.opcao-excluir:hover {
+  background-color: rgba(231, 76, 60, 0.15);
+}
+
+/* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
+body.has-sidebar .grade-produtos {
+  width: 100%;
+}
+
+/* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
+@media (max-width: 600px) {
+  .movimentacoes-titulo {
+    flex-wrap: wrap; gap: 12px;
+  }
+}
+
+/* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
+body.has-sidebar .grade-produtos {
+  height: auto; overflow: visible; grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr));
 }
