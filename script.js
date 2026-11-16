@@ -506,6 +506,7 @@ function mostrarVazio(container) {
       card.className = "card-produto";
 
       card.innerHTML = `
+     card.innerHTML = `
         <div class="produto-imagem">
           ${produto.icone}
         </div>
@@ -514,6 +515,20 @@ function mostrarVazio(container) {
 
           <div class="produto-topo">
             <h3>${produto.nome}</h3>
+
+            <div class="menu-produto-container">
+              <button type="button" class="btn-menu-produto" title="Opções">
+                <i data-lucide="more-vertical"></i>
+              </button>
+              <div class="dropdown-produto">
+                <button type="button" class="opcao-editar" data-id="${produto.id}">
+                  <i data-lucide="pencil" style="width: 14px; height: 14px;"></i> Editar
+                </button>
+                <button type="button" class="opcao-excluir" data-id="${produto.id}">
+                  <i data-lucide="trash-2" style="width: 14px; height: 14px;"></i> Excluir
+                </button>
+              </div>
+            </div>
           </div>
 
           <p class="produto-preco">${formatarDinheiro(produto.preco)}</p>
@@ -540,6 +555,7 @@ function mostrarVazio(container) {
       listaDeProdutos.appendChild(card);
     }
 
+    if (window.lucide) lucide.createIcons();
     adicionarEventosDosBotoesDeConsumo();
   }
 
@@ -835,6 +851,106 @@ function mostrarVazio(container) {
 
   });
 
+  
+/* -----------------------------
+     EDITAR E EXCLUIR PRODUTO (MENU 3 PONTINHOS)
+  ----------------------------- */
+
+  var modalEditarProduto = document.getElementById("modalEditarProduto");
+  var formEditarProduto = document.getElementById("formEditarProduto");
+
+  // Abre/fecha o dropdown e trata cliques em Editar ou Excluir
+  listaDeProdutos.addEventListener("click", function (evento) {
+    // 1. Botão de 3 pontinhos
+    var btnMenu = evento.target.closest(".btn-menu-produto");
+    if (btnMenu) {
+      evento.stopPropagation();
+      var dropdownAtual = btnMenu.nextElementSibling;
+      var estavaAberto = dropdownAtual.classList.contains("aberto");
+
+      // Fecha qualquer outro menu aberto
+      document.querySelectorAll(".dropdown-produto.aberto").forEach(function (d) {
+        d.classList.remove("aberto");
+      });
+
+      if (!estavaAberto) {
+        dropdownAtual.classList.add("aberto");
+      }
+      return;
+    }
+
+    // 2. Opção Editar
+    var btnEditar = evento.target.closest(".opcao-editar");
+    if (btnEditar) {
+      var idEditar = Number(btnEditar.getAttribute("data-id"));
+      var produto = produtos.find(function (p) { return p.id === idEditar; });
+      if (!produto) return;
+
+      document.getElementById("editIdProduto").value = produto.id;
+      document.getElementById("editNomeProduto").value = produto.nome;
+      document.getElementById("editPrecoProduto").value = produto.preco;
+      document.getElementById("editQuantidadeProduto").value = produto.estoque;
+
+      btnEditar.closest(".dropdown-produto").classList.remove("aberto");
+      abrirModal(modalEditarProduto);
+      return;
+    }
+
+    // 3. Opção Excluir
+    var btnExcluir = evento.target.closest(".opcao-excluir");
+    if (btnExcluir) {
+      var idExcluir = Number(btnExcluir.getAttribute("data-id"));
+      var indice = produtos.findIndex(function (p) { return p.id === idExcluir; });
+      if (indice === -1) return;
+
+      btnExcluir.closest(".dropdown-produto").classList.remove("aberto");
+
+      if (confirm('Deseja realmente excluir o produto "' + produtos[indice].nome + '"?')) {
+        produtos.splice(indice, 1);
+        atualizarSelectProdutos();
+        atualizarResumo();
+        aplicarFiltros();
+      }
+    }
+  });
+
+  // Fecha o menu se clicar fora dos cards
+  document.addEventListener("click", function () {
+    document.querySelectorAll(".dropdown-produto.aberto").forEach(function (d) {
+      d.classList.remove("aberto");
+    });
+  });
+
+  // Salva as alterações do produto editado
+  formEditarProduto.addEventListener("submit", function (evento) {
+    evento.preventDefault();
+
+    var id = Number(document.getElementById("editIdProduto").value);
+    var novoNome = document.getElementById("editNomeProduto").value;
+    var novoPreco = Number(document.getElementById("editPrecoProduto").value);
+    var novoEstoque = Number(document.getElementById("editQuantidadeProduto").value);
+
+    var produto = produtos.find(function (p) { return p.id === id; });
+    if (produto) {
+      var nomeAntigo = produto.nome;
+      produto.nome = novoNome;
+      produto.preco = novoPreco;
+      produto.estoque = novoEstoque;
+
+      // Atualiza o nome nas movimentações existentes para não quebrar o cálculo de valor
+      movimentacoes.forEach(function (m) {
+        if (m.produto === nomeAntigo) {
+          m.produto = novoNome;
+        }
+      });
+    }
+
+    fecharModal(modalEditarProduto);
+    atualizarSelectProdutos();
+    desenharMovimentacoes();
+    atualizarResumo();
+    aplicarFiltros();
+  });
 
   /* -----------------------------
      REGISTRAR CONSUMO
@@ -906,3 +1022,124 @@ function mostrarVazio(container) {
   atualizarResumo();
   aplicarFiltros(); // já desenha os produtos e o contador
 })();
+
+
+/* ==========================================
+   5. SELETOR DE APARÊNCIA - ATTENTO
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const botaoTema = document.getElementById("btnTema");
+    const menuTema = document.getElementById("menuTema");
+    const opcoesTema = document.querySelectorAll(".theme-option");
+
+    const chaveTema = "temaPreferencia";
+
+    // Detecta o tema do dispositivo
+    const preferenciaSistema = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+    );
+
+    // Recupera a escolha manual do usuário
+    let temaEscolhido = localStorage.getItem(chaveTema);
+
+    // Aplica o tema
+    function aplicarTema() {
+
+        let temaEscuro;
+
+        if (temaEscolhido === "dark") {
+            temaEscuro = true;
+        } 
+        else if (temaEscolhido === "light") {
+            temaEscuro = false;
+        } 
+        else {
+            // Sem escolha manual: acompanha o dispositivo
+            temaEscuro = preferenciaSistema.matches;
+        }
+
+        document.body.classList.toggle("dark", temaEscuro);
+
+        // Atualiza a opção selecionada
+        opcoesTema.forEach(function (opcao) {
+
+            const selecionado =
+                opcao.dataset.theme === temaEscolhido;
+
+            opcao.classList.toggle("active", selecionado);
+
+        });
+    }
+
+    // Abrir e fechar o seletor
+    if (botaoTema && menuTema) {
+
+        botaoTema.addEventListener("click", function (evento) {
+
+            evento.stopPropagation();
+
+            menuTema.hidden = !menuTema.hidden;
+
+            botaoTema.setAttribute(
+                "aria-expanded",
+                String(!menuTema.hidden)
+            );
+        });
+
+        // Escolher claro ou escuro
+        opcoesTema.forEach(function (opcao) {
+
+            opcao.addEventListener("click", function () {
+
+                temaEscolhido = opcao.dataset.theme;
+
+                localStorage.setItem(
+                    chaveTema,
+                    temaEscolhido
+                );
+
+                aplicarTema();
+
+                menuTema.hidden = true;
+
+                botaoTema.setAttribute("aria-expanded", "false");
+
+            });
+        });
+
+        // Fechar clicando fora
+        document.addEventListener("click", function (evento) {
+
+            if (!evento.target.closest(".theme-selector")) {
+
+                menuTema.hidden = true;
+
+                botaoTema.setAttribute("aria-expanded", "false");
+            }
+        });
+
+        // Fechar com ESC
+        document.addEventListener("keydown", function (evento) {
+
+            if (evento.key === "Escape") {
+
+                menuTema.hidden = true;
+
+                botaoTema.setAttribute("aria-expanded", "false");
+            }
+        });
+    }
+
+    // Detectar mudança no tema do dispositivo
+    preferenciaSistema.addEventListener("change", function () {
+
+        if (!temaEscolhido) {
+            aplicarTema();
+        }
+    });
+
+    // Aplicar ao entrar na página
+    aplicarTema();
+
+});

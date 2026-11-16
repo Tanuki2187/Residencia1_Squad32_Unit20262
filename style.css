@@ -1521,3 +1521,446 @@ tr:last-child td {
   height: 18px;
   stroke-width: 2;
 }
+
+/* ==========================================
+   10. TEMA ESCURO - ATTENTO
+
+/* Fundo geral e textos */
+body.dark {
+    background-color: #151B26 !important;
+    color: #E5EAF2;
+}
+
+/* Áreas principais */
+body.dark .main-content,
+body.dark .dashboard-container,
+body.dark .app {
+    background-color: #151B26 !important;
+    color: #E5EAF2;
+}
+
+/* Cabeçalhos e títulos */
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark h4,
+body.dark .page-header h1,
+body.dark .card-header h2 {
+    color: #F1F5F9 !important;
+}
+
+/* Textos secundários */
+body.dark p,
+body.dark label,
+body.dark .subtitulo,
+body.dark .resumo-titulo,
+body.dark .resumo-legenda,
+body.dark .card-unidade,
+body.dark .card-profissional,
+body.dark .card-horario,
+body.dark .unidade-endereco,
+body.dark .stat-lbl {
+    color: #AAB7C8;
+}
+
+/* Cards gerais */
+body.dark .card,
+body.dark .card-resumo,
+body.dark .card-sala,
+body.dark .card-tabela,
+body.dark .card-produto,
+body.dark .tabela-container,
+body.dark .unidade-card,
+body.dark .agenda-card,
+body.dark .pendencias-card {
+    background-color: #222C3A !important;
+    color: #E5EAF2 !important;
+    border-color: #354255 !important;
+}
+
+/* Cabeçalho das tabelas */
+body.dark th,
+body.dark .tabela th {
+    background-color: #263449 !important;
+    color: #E5EAF2 !important;
+}
+
+/* Células das tabelas */
+body.dark td,
+body.dark .tabela td {
+    color: #DCE5F0 !important;
+    border-color: #354255 !important;
+}
+
+/* Linhas das tabelas */
+body.dark tbody tr {
+    background-color: #222C3A;
+}
+
+/* Campos de pesquisa, formulários e seleções */
+body.dark input,
+body.dark select,
+body.dark textarea {
+    background-color: #263449 !important;
+    color: #F1F5F9 !important;
+    border-color: #46546A !important;
+}
+
+/* Texto de orientação dos campos */
+body.dark input::placeholder,
+body.dark textarea::placeholder {
+    color: #9AA9BC;
+}
+
+/* Modais */
+body.dark .modal,
+body.dark dialog {
+    background-color: #222C3A !important;
+    color: #E5EAF2 !important;
+    border-color: #354255 !important;
+}
+
+body.dark .modal-topo,
+body.dark .modal label {
+    color: #E5EAF2;
+}
+
+/* Botões secundários */
+body.dark .botao-detalhes,
+body.dark .botao-consumir {
+    background-color: #263449 !important;
+    color: #8DB8F0 !important;
+    border-color: #5B88C5 !important;
+}
+
+/* Imagens e áreas internas de produtos */
+body.dark .produto-imagem {
+    background-color: #263449 !important;
+}
+
+
+/* ==========================================
+   MENU LATERAL - TEMA CLARO E ESCURO
+
+/* Tema claro */
+.menu {
+    background-color: #5B88C5;
+    transition: background-color 0.3s ease;
+}
+
+/* Tema escuro */
+body.dark .menu {
+    background-color: #192A40 !important;
+}
+
+/* Textos e botões do menu escuro */
+body.dark .menu .menu-item {
+    color: #DCE6F2 !important;
+}
+
+/* Efeito ao passar o mouse */
+body.dark .menu .menu-item:hover {
+    background-color: #263B55 !important;
+    color: #FFFFFF !important;
+}
+
+/* Linha divisória */
+body.dark .menu hr {
+    border-color: #52647A;
+}
+
+/* Botão de alternância */
+body.dark #btnTema {
+    color: #DCE6F2 !important;
+}
+
+
+/* Botão de alternância */
+#btnTema {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+}
+
+/* Transição suave */
+body,
+body * {
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+/* CORREÇÕES DARK THEME - DASHBOARD */
+body.dark .kpi-value,
+body.dark .agenda-item .time,
+body.dark .agenda-item .room,
+body.dark .p-title,
+body.dark .unidade-title-row h2,
+body.dark .stat-val {
+    color: #F1F5F9 !important;
+}
+
+body.dark .kpi-label,
+body.dark .kpi-subtext,
+body.dark .agenda-item .unit,
+body.dark .agenda-item .doctor,
+body.dark .p-desc,
+body.dark .page-header p,
+body.dark .header-titles p,
+body.dark .unidade-endereco,
+body.dark .stat-lbl {
+    color: #AAB7C8 !important;
+}
+
+/* Imagem ilustrativa das unidades */
+body.dark .unidade-img {
+    background: linear-gradient(135deg, #263B55, #192A40) !important;
+    color: #8DB8F0 !important;
+}
+
+/* CONVENIÊNCIA - MELHORAR CONTRASTE NO DARK THEME */
+
+body.dark .card-resumo strong,
+body.dark .produto-topo h3,
+body.dark .produto-preco {
+    color: #F1F5F9 !important;
+}
+
+body.dark .resumo-titulo,
+body.dark .resumo-legenda,
+body.dark .quantidade-estoque {
+    color: #C2CEDD !important;
+}
+
+body.dark .produto-imagem {
+    background-color: #304158 !important;
+}
+
+/* SINO DE NOTIFICAÇÕES - DARK THEME */
+body.dark .notification-icon {
+    color: #B8CBE3 !important;
+}
+
+body.dark .notification-icon i {
+    color: #B8CBE3 !important;
+}
+
+/* Indicador de notificação */
+body.dark .notification-icon .badge {
+    background-color: #E88A72;
+    border-color: #192A40;
+}
+
+
+/* FINANCEIRO - PRESERVAR CORES DOS INDICADORES NO DARK THEME */
+
+body.dark .card-resumo {
+    background-color: #222C3A !important;
+    border-color: #354255 !important;
+}
+
+body.dark .resumo-titulo {
+    color: #C2CEDD !important;
+}
+
+/* Recebido - verde */
+body.dark .resumo-valor.status-pago {
+    color: #16A34A !important;
+}
+
+/* Pendente - laranja */
+body.dark .resumo-valor.status-pendente {
+    color: #F97316 !important;
+}
+
+/* Total previsto - azul */
+body.dark #valorPrevisto {
+    color: #8DB8F0 !important;
+}
+
+
+/* ==========================================
+   SELETOR DE APARÊNCIA - ATTENTO
+
+.theme-selector {
+    position: relative;
+    width: 100%;
+}
+
+/* Menu suspenso */
+.theme-dropdown {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 10px;
+    width: 180px;
+    padding: 6px;
+    background-color: #FFFFFF;
+    border: 1px solid #DCE2EA;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
+    z-index: 9999;
+}
+
+/* Esconde o menu quando fechado */
+.theme-dropdown[hidden] {
+    display: none;
+}
+
+/* Opções */
+.theme-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: #263449;
+    font-size: 14px;
+    text-align: left;
+    cursor: pointer;
+}
+
+/* Check fica no lado direito */
+.theme-check {
+    margin-left: auto;
+}
+
+/* Opção selecionada */
+.theme-option.active {
+    background-color: #EDE7FF;
+    color: #7040E8;
+    font-weight: 600;
+}
+
+.theme-option.active .theme-check::after {
+    content: "✓";
+}
+
+/* Passar o mouse */
+.theme-option:hover {
+    background-color: #EEF2F7;
+}
+
+.theme-option.active:hover {
+    background-color: #E4D9FF;
+}
+
+/* ==========================================
+   SELETOR NO TEMA ESCURO
+
+body.dark .theme-dropdown {
+    background-color: #222C3A;
+    border-color: #354255;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+}
+
+body.dark .theme-option {
+    color: #E5EAF2;
+}
+
+body.dark .theme-option:hover {
+    background-color: #304158;
+}
+
+body.dark .theme-option.active {
+    background-color: #493477;
+    color: #FFFFFF;
+}
+
+body.dark .theme-option.active:hover {
+    background-color: #59418D;
+}
+
+/* ==========================================================
+   MENU DE OPÇÕES DOS PRODUTOS (3 PONTINHOS)
+
+.menu-produto-container {
+  position: relative;
+  flex-shrink: 0;
+}
+.btn-menu-produto {
+  background: transparent;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-menu-produto:hover {
+  background-color: #eef2fc;
+  color: #1c2b4a;
+}
+.dropdown-produto {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 4px;
+  background-color: white;
+  border: 1px solid #e4e7ee;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 20;
+  min-width: 120px;
+  padding: 4px;
+  display: none;
+  flex-direction: column;
+}
+.dropdown-produto.aberto {
+  display: flex;
+}
+.dropdown-produto button {
+  background: transparent;
+  border: none;
+  padding: 8px 10px;
+  text-align: left;
+  font-size: 13px;
+  color: #1c2b4a;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dropdown-produto button:hover {
+  background-color: #f3f4f6;
+}
+.dropdown-produto button.opcao-excluir {
+  color: #e74c3c;
+}
+.dropdown-produto button.opcao-excluir:hover {
+  background-color: #fde8e8;
+}
+/* Ajustes para o Tema Escuro */
+body.dark .btn-menu-produto {
+  color: #AAB7C8;
+}
+body.dark .btn-menu-produto:hover {
+  background-color: #304158;
+  color: #F1F5F9;
+}
+body.dark .dropdown-produto {
+  background-color: #222C3A;
+  border-color: #354255;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+body.dark .dropdown-produto button {
+  color: #E5EAF2;
+}
+body.dark .dropdown-produto button:hover {
+  background-color: #304158;
+}
+body.dark .dropdown-produto button.opcao-excluir {
+  color: #f87171;
+}
+body.dark .dropdown-produto button.opcao-excluir:hover {
+  background-color: rgba(231, 76, 60, 0.15);
+}

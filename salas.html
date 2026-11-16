@@ -30,6 +30,37 @@
 
       <div class="menu-rodape">
         <hr>
+
+        <!-- Alternar tema claro/escuro -->
+    
+<div class="theme-selector">
+    <button type="button" class="menu-item"
+        id="btnTema"
+        aria-expanded="false"
+        aria-haspopup="true">
+        <span id="iconeTema">◐</span>
+        <span id="textoTema">Aparência</span>
+    </button>
+
+    <div class="theme-dropdown" id="menuTema" hidden>
+
+        <button type="button" class="theme-option"
+            data-theme="light">
+            <span>☀️</span>
+            <span>Claro</span>
+            <span class="theme-check"></span>
+        </button>
+
+        <button type="button" class="theme-option"
+            data-theme="dark">
+            <span>🌙</span>
+            <span>Escuro</span>
+            <span class="theme-check"></span>
+        </button>
+    </div>
+</div>
+
+    
         <button class="menu-item" data-pagina="config">Configurações</button>
         <a href="index.html" class="menu-item" data-pagina="sair">↩ Sair</a>
       </div>
