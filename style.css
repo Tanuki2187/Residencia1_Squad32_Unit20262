@@ -1524,7 +1524,6 @@ tr:last-child td {
 
 /* ==========================================
    10. TEMA ESCURO - ATTENTO
-========================================== */
 
 /* Fundo geral e textos */
 body.dark {
@@ -1642,7 +1641,6 @@ body.dark .produto-imagem {
 
 /* ==========================================
    MENU LATERAL - TEMA CLARO E ESCURO
-========================================== */
 
 /* Tema claro */
 .menu {
@@ -1787,7 +1785,6 @@ body.dark #valorPrevisto {
 
 /* ==========================================
    SELETOR DE APARÊNCIA - ATTENTO
-========================================== */
 
 .theme-selector {
     position: relative;
@@ -1856,7 +1853,6 @@ body.dark #valorPrevisto {
 
 /* ==========================================
    SELETOR NO TEMA ESCURO
-========================================== */
 
 body.dark .theme-dropdown {
     background-color: #222C3A;
@@ -1883,7 +1879,6 @@ body.dark .theme-option.active:hover {
 
 /* ==========================================================
    MENU DE OPÇÕES DOS PRODUTOS (3 PONTINHOS)
-========================================================== */
 
 .menu-produto-container {
   position: relative;

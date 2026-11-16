@@ -505,6 +505,7 @@ function mostrarVazio(container) {
       var card = document.createElement("div");
       card.className = "card-produto";
 
+      card.innerHTML = `
      card.innerHTML = `
         <div class="produto-imagem">
           ${produto.icone}
@@ -849,6 +850,7 @@ function mostrarVazio(container) {
     aplicarFiltros();
 
   });
+
   
 /* -----------------------------
      EDITAR E EXCLUIR PRODUTO (MENU 3 PONTINHOS)
@@ -1024,7 +1026,6 @@ function mostrarVazio(container) {
 
 /* ==========================================
    5. SELETOR DE APARÊNCIA - ATTENTO
-========================================== */
 
 document.addEventListener("DOMContentLoaded", function () {
 
