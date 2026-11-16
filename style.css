@@ -1880,3 +1880,92 @@ body.dark .theme-option.active {
 body.dark .theme-option.active:hover {
     background-color: #59418D;
 }
+
+/* ==========================================================
+   MENU DE OPÇÕES DOS PRODUTOS (3 PONTINHOS)
+========================================================== */
+
+.menu-produto-container {
+  position: relative;
+  flex-shrink: 0;
+}
+.btn-menu-produto {
+  background: transparent;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-menu-produto:hover {
+  background-color: #eef2fc;
+  color: #1c2b4a;
+}
+.dropdown-produto {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 4px;
+  background-color: white;
+  border: 1px solid #e4e7ee;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 20;
+  min-width: 120px;
+  padding: 4px;
+  display: none;
+  flex-direction: column;
+}
+.dropdown-produto.aberto {
+  display: flex;
+}
+.dropdown-produto button {
+  background: transparent;
+  border: none;
+  padding: 8px 10px;
+  text-align: left;
+  font-size: 13px;
+  color: #1c2b4a;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dropdown-produto button:hover {
+  background-color: #f3f4f6;
+}
+.dropdown-produto button.opcao-excluir {
+  color: #e74c3c;
+}
+.dropdown-produto button.opcao-excluir:hover {
+  background-color: #fde8e8;
+}
+/* Ajustes para o Tema Escuro */
+body.dark .btn-menu-produto {
+  color: #AAB7C8;
+}
+body.dark .btn-menu-produto:hover {
+  background-color: #304158;
+  color: #F1F5F9;
+}
+body.dark .dropdown-produto {
+  background-color: #222C3A;
+  border-color: #354255;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+body.dark .dropdown-produto button {
+  color: #E5EAF2;
+}
+body.dark .dropdown-produto button:hover {
+  background-color: #304158;
+}
+body.dark .dropdown-produto button.opcao-excluir {
+  color: #f87171;
+}
+body.dark .dropdown-produto button.opcao-excluir:hover {
+  background-color: rgba(231, 76, 60, 0.15);
+}
