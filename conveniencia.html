@@ -4,34 +4,66 @@
   <meta charset="UTF-8">
   <title>Conveniência</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
+  <!-- Sidebar -->
+  <aside class="menu">
+  <div class="logo">
+    <span class="logo-icone">
+      <img src="assets/favicon-96x96.png" alt="Logo">
+    </span>
+    <span>Attento</span>
+  </div>
+    
+  <nav class="menu-lista">
+ 
+    <a href="dashboard.html" class="menu-item" >Início</a>
+    <a href="unidades.html" class="menu-item" >Unidades</a>
+    <a href="salas.html" class="menu-item" >Salas</a>
+    <a href="conveniencia.html" class="menu-item" aria-current="page" >Conveniência</a>
+    <a href="financeiro.html" class="menu-item" >Financeiro</a>
+  </nav>
+
+  <div class="menu-rodape">
+    <hr>
+    
+    <!-- Alternar tema claro/escuro -->
+    
+<div class="theme-selector">
+    <button type="button" class="menu-item"
+        id="btnTema"
+        aria-expanded="false"
+        aria-haspopup="true">
+        <span id="iconeTema">◐</span>
+        <span id="textoTema">Aparência</span>
+    </button>
+
+    <div class="theme-dropdown" id="menuTema" hidden>
+
+        <button type="button" class="theme-option"
+            data-theme="light">
+            <span>☀️</span>
+            <span>Claro</span>
+            <span class="theme-check"></span>
+        </button>
+
+        <button type="button" class="theme-option"
+            data-theme="dark">
+            <span>🌙</span>
+            <span>Escuro</span>
+            <span class="theme-check"></span>
+        </button>
+    </div>
+</div>
+
+
+    <button class="menu-item" data-pagina="config">Configurações</button>
+    <a href="index.html" class="menu-item" data-pagina="sair">↩ Sair</a>
+  </div>
+</aside>
 
   <div class="app">
-
-    <!-- MENU LATERAL -->
-    <aside class="menu">
-      <div class="logo">
-          <span class="logo-icone">
-           <img src="assets/favicon-96x96.png" alt="Logo">
-          </span>
-       <span>Attento</span>
-      </div>
-
-      <nav class="menu-lista">
-        <a href="dashboard.html"></a><button class="menu-item"> Início</button></a>
-        <a href="unidades.html"><button class="menu-item" > Unidades</button></a>
-        <a href="salas.html"><button class="menu-item"> Salas</button></a>
-        <a href="conveniencia.html"><button class="menu-item"  aria-current="page"> Conveniência</button></a>
-        <a href="financeiro.html"><button class="menu-item"> Financeiro</button></a>
-      </nav>
-
-      <div class="menu-rodape">
-        <button class="menu-item" data-pagina="config">Configurações</button>
-        <a href="index.html"><button class="menu-item" data-pagina="sair">↩ Sair</button></a>
-      </div>
-    </aside>
-
     <!-- CONTEÚDO -->
     <main class="conteudo">
       <div class="topo-pagina">
@@ -110,15 +142,16 @@
 
       <div class="tabela-container">
         <table>
-          <thead>
-            <tr>
-              <th>Profissional</th>
-              <th>Produto</th>
-              <th>Quantidade</th>
-              <th>Data</th>
-              <th>Valor</th>
-              <th>Status</th>
-            </tr>
+         <thead>
+      <tr>
+    <th>Profissional</th>
+    <th>Produto</th>
+    <th>Quantidade</th>
+    <th>Data</th>
+    <th>Valor</th>
+    <th>Status</th>
+    <th>Ações</th>
+      </tr>
           </thead>
 
           <tbody id="listaMovimentacoes">
@@ -169,6 +202,46 @@
     </div>
   </div>
 
+ <!-- MODAL: EDITAR PRODUTO -->
+  <div class="modal-fundo" id="modalEditarProduto">
+    <div class="modal">
+
+      <div class="modal-topo">
+        <div>
+          <h2>Editar produto</h2>
+          <p>Altere as informações do item da conveniência.</p>
+        </div>
+
+        <button class="fechar-modal" data-fechar="modalEditarProduto">×</button>
+      </div>
+
+      <form id="formEditarProduto">
+        <input type="hidden" id="editIdProduto">
+
+        <label>
+          Nome do produto
+          <input type="text" id="editNomeProduto" required>
+        </label>
+
+        <label>
+          Preço
+          <input type="number" id="editPrecoProduto" min="0" step="0.01" required>
+        </label>
+
+        <label>
+          Estoque atual
+          <input type="number" id="editQuantidadeProduto" min="0" required>
+        </label>
+
+        <div class="modal-botoes">
+          <button type="button" class="botao-cancelar" data-fechar="modalEditarProduto">Cancelar</button>
+          <button type="submit" class="botao-principal">Salvar alterações</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+  
   <!-- MODAL: NOVO CONSUMO -->
   <div class="modal-fundo" id="modalConsumo">
     <div class="modal">

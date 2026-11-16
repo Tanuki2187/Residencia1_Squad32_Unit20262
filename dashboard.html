@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Using Font Awesome for placeholder icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="script.js" defer></script>
 </head>
 
 <style> 
@@ -32,27 +32,62 @@
 </style>
 <body>
     <div class="dashboard-container"> 
-<!-- Sidebar -->
+<!-- MENU LATERAL -->
+  <!-- Sidebar -->
   <aside class="menu">
-      <div class="logo">
-        <span class="logo-icone"></span>
-        <span class="logo-texto">Attento</span>
-      </div>
-    <nav class="menu-lista">
-        <!-- data-pagina indica qual botão pessoa clicou -->
-       <a href="dashboard.html"></a><button class="menu-item" aria-current="page"> Início</button></a>
-       <a href="unidades.html"><button class="menu-item" > Unidades</button></a>
-       <a href="salas.html"><button class="menu-item"> Salas</button></a>
-       <a href="conveniencia.html"><button class="menu-item" > Conveniência</button></a>
-       <a href="#"><button class="menu-item"> Financeiro</button></a>
-    </nav>
+  <div class="logo">
+    <span class="logo-icone">
+      <img src="assets/favicon-96x96.png" alt="Logo">
+    </span>
+    <span>Attento</span>
+  </div>
+    
+  <nav class="menu-lista">
+ 
+    <a href="dashboard.html" class="menu-item aria-current="page" >Início</a>
+    <a href="unidades.html" class="menu-item" >Unidades</a>
+    <a href="salas.html" class="menu-item" >Salas</a>
+    <a href="conveniencia.html" class="menu-item" >Conveniência</a>
+    <a href="financeiro.html" class="menu-item" " >Financeiro</a>
+  </nav>
 
-      <div class="menu-rodape">
-        <hr></hr>
-        <button class="menu-item" data-pagina="config"> Configurações</button>
-        <a href="index.html"><button class="menu-item" data-pagina="sair">↩ Sair</button></a>
-      </div>
-  </aside>
+  <div class="menu-rodape">
+    <hr>
+    
+    <!-- Alternar tema claro/escuro -->
+    
+<div class="theme-selector">
+    <button type="button" class="menu-item"
+        id="btnTema"
+        aria-expanded="false"
+        aria-haspopup="true">
+        <span id="iconeTema">◐</span>
+        <span id="textoTema">Aparência</span>
+    </button>
+
+    <div class="theme-dropdown" id="menuTema" hidden>
+
+        <button type="button" class="theme-option"
+            data-theme="light">
+            <span>☀️</span>
+            <span>Claro</span>
+            <span class="theme-check"></span>
+        </button>
+
+        <button type="button" class="theme-option"
+            data-theme="dark">
+            <span>🌙</span>
+            <span>Escuro</span>
+            <span class="theme-check"></span>
+        </button>
+    </div>
+</div>
+
+    <button class="menu-item" data-pagina="config">Configurações</button>
+    <a href="index.html" class="menu-item" data-pagina="sair">↩ Sair</a>
+  </div>
+</aside>
+
 <!-- Main Content -->
   <main class="main-content">     
     <!-- Header -->
