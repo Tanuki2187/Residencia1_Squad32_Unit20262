@@ -657,12 +657,22 @@ function iniciarSalas() {
   var salas = carregarSalas();
   aplicarParametrosFiltros({unidade:'filtroUnidade',status:'filtroStatus'});
   var formulario = porId('formEditarSalas'), campos = formulario.elements, dialogo = porId('dialogEditarSalas');
-  salas.forEach(s => campos.sala.add(new Option(s.nome + ' — ' + nomeUnidade(s.unidade), s.id)));
   ['unidade','status'].forEach(nome => { Array.from(porId(nome === 'unidade' ? 'filtroUnidade' : 'filtroStatus').options).slice(1).forEach(op => campos[nome].add(op.cloneNode(true))); });
   // 16/11/2026 — Identifica a sala escolhida no formulário de edição.
   function selecionada() { return salas.find(s => s.id === campos.sala.value); }
-  // 16/11/2026 — Carrega os dados da sala selecionada e limpa os erros do formulário.
-  function preencher() { var sala = selecionada(); ['nome','unidade','status','profissional','horario'].forEach(k => campos[k].value = sala[k]); mostrarErro('erroEditarSalas', ''); }
+  // 16/11/2026 — Carrega status, profissional e horário da sala escolhida e limpa os erros.
+  function preencherDados() { var sala = selecionada(); ['status','profissional','horario'].forEach(k => campos[k].value = sala ? sala[k] : ''); mostrarErro('erroEditarSalas', ''); }
+  // 16/11/2026 — Lista em "Nome da sala" apenas as salas da unidade escolhida, mantendo a sala atual quando possível.
+  function listarSalasDaUnidade() {
+    var atual = campos.sala.value, lista = ordenarLista(salas.filter(s => s.unidade === campos.unidade.value), 'nome', {nome:'nome'});
+    campos.sala.replaceChildren();
+    lista.forEach(s => campos.sala.add(new Option(s.nome, s.id)));
+    if (!lista.length) { var vazio = new Option('Nenhuma sala nesta unidade', ''); vazio.disabled = true; campos.sala.add(vazio); }
+    campos.sala.value = lista.some(s => s.id === atual) ? atual : (lista[0] ? lista[0].id : '');
+    preencherDados();
+  }
+  // 16/11/2026 — Abre o formulário já na unidade filtrada na página, quando houver uma.
+  function preencher() { if (porId('filtroUnidade').value !== 'todas') campos.unidade.value = porId('filtroUnidade').value; listarSalasDaUnidade(); }
   // 16/11/2026 — Atualiza os cards e a contagem das salas conforme os filtros.
   function atualizar() {
     atualizarUrlFiltros({unidade:'filtroUnidade',status:'filtroStatus'});
@@ -689,17 +699,19 @@ function iniciarSalas() {
     porId('contadorResultados').textContent = textoContagem(lista.length, salas.length, 'salas');
   }
   porId('btnEditarSalas').addEventListener('click', evento => { preencher(); abrirDialogo(dialogo, evento.currentTarget); });
-  campos.sala.addEventListener('change', preencher);
+  campos.unidade.addEventListener('change', listarSalasDaUnidade);
+  campos.sala.addEventListener('change', preencherDados);
   porId('btnCancelarEdicaoSala').addEventListener('click', () => dialogo.close('cancelar'));
   formulario.addEventListener('submit', evento => {
     evento.preventDefault();
-    if (!campos.nome.value.trim()) { mostrarErro('erroEditarSalas', 'Informe o nome da sala.'); return; }
-    var sala = selecionada(), alteracoes = {};
-    ['nome','unidade','status','profissional','horario'].forEach(k => alteracoes[k] = campos[k].value.trim());
-    alteracoes._versaoNomes = 1;
+    var sala = selecionada();
+    if (!sala) { mostrarErro('erroEditarSalas', 'Escolha uma sala da unidade selecionada.'); return; }
+    // 16/11/2026 — Nome e unidade não são editados aqui; são mantidos para preservar o registro da sala.
+    var alteracoes = {nome: sala.nome, unidade: sala.unidade, _versaoNomes: 1};
+    ['status','profissional','horario'].forEach(k => alteracoes[k] = campos[k].value.trim());
     try { localStorage.setItem('attento.sala.' + sala.id, JSON.stringify(alteracoes)); }
     catch { mostrarErro('erroEditarSalas', 'Não foi possível salvar. Verifique se o navegador permite o armazenamento local e tente novamente.'); return; }
-    Object.assign(sala, alteracoes); campos.sala.selectedOptions[0].textContent = sala.nome + ' — ' + nomeUnidade(sala.unidade);
+    Object.assign(sala, alteracoes);
     atualizar(); dialogo.close(); notificar('Sala atualizada.');
   });
   escutarFiltros(['campoBusca','filtroUnidade','filtroStatus','ordenacao'], atualizar);

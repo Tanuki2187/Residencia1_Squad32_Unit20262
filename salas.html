@@ -91,19 +91,15 @@
     </div>
 
     <form id="formEditarSalas">
+      <!-- 16/11/2026 - A unidade vem primeiro e filtra as salas que aparecem em "Nome da sala". -->
       <label>
-        Sala para editar
-        <select name="sala" autofocus></select>
+        Unidade
+        <select name="unidade" required autofocus></select>
       </label>
 
       <label>
         Nome da sala
-        <input type="text" name="nome" required pattern=".*\S.*" title="Digite o nome da sala">
-      </label>
-
-      <label>
-        Unidade
-        <select name="unidade" required></select>
+        <select name="sala" required></select>
       </label>
 
       <label>
