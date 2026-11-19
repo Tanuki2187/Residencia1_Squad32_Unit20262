@@ -69,7 +69,7 @@ var nomesDasUnidades = { 'Unidade 1': 'Jardim Europa', 'Unidade 2': 'Horizonte J
 function porId(id) { return document.getElementById(id); }
 
 // 16/11/2026 — Uniformiza textos para buscas sem distinção entre acentos e maiúsculas.
-function normalizar(texto) { return String(texto || '').trim().normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); }
+function normalizar(texto) { return String(texto || '').trim().normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); }
 
 // 16/11/2026 — Obtém a data local no formato aceito pelos campos de data.
 function hojeISO(data) {
@@ -363,7 +363,7 @@ function gerarTextoChamado(dados, usuario, data) {
   if(!assunto||assunto.length>120)throw new Error('Informe um assunto com até 120 caracteres.');
   if(!descricao||descricao.length>3000)throw new Error('Descreva o problema em até 3.000 caracteres.');
   if(!categorias.includes(dados.categoria))throw new Error('Selecione uma categoria válida.');
-  return ['ATTENTO — SOLICITAÇÃO DE SUPORTE TÉCNICO','Gerado em: '+(data||new Date()).toLocaleString('pt-BR'),'Solicitante: '+usuario.nome,'Categoria: '+dados.categoria,'Assunto: '+assunto,'','Descrição:',descricao,'','Arquivo gerado localmente. Encaminhe este arquivo à equipe de suporte.'].join('\r\n');
+  return ['ATTENTO — SOLICITAÇÃO DE SUPORTE TÉCNICO','Gerado em: '+(data||new Date()).toLocaleString('pt-BR'),'Solicitante: '+usuario.nome,'Categoria: '+dados.categoria,'Assunto: '+assunto,'','Descrição:',descricao,'','Arquivo gerado localmente. Encaminhe este arquivo à equipe de suporte.'] .join('\n') ;
 }
 
 // 16/11/2026 — Solicita descarte de alterações antes de fechar um formulário modificado.
@@ -539,7 +539,7 @@ function iniciarConfiguracoes() {
     catch(erro){mostrarErro('erroSuporte',erro.message);return;}
     var url;
     try{
-      url=URL.createObjectURL(new Blob(['\uFEFF'+texto],{type:'text/plain;charset=utf-8'}));
+      url=URL.createObjectURL(new Blob(['﻿'+texto],{type:'text/plain;charset=utf-8'}));
       var link=document.createElement('a');link.href=url;link.download='chamado-attento-'+hojeISO(agora)+'-'+String(agora.getHours()).padStart(2,'0')+String(agora.getMinutes()).padStart(2,'0')+String(agora.getSeconds()).padStart(2,'0')+'.txt';document.body.appendChild(link);link.click();link.remove();
     }catch{mostrarErro('erroSuporte','Não foi possível gerar o arquivo. Tente novamente.');return;}
     finally{if(url)setTimeout(()=>URL.revokeObjectURL(url),1000);}
@@ -595,6 +595,16 @@ function iniciarUnidades() {
    16/11/2026 — DASHBOARD
 ========================================================== */
 
+// Formata o horário com contexto explícito conforme o status da sala.
+function formatarHorarioContextual(sala) {
+  var h = (sala.horario || '').trim();
+  if (sala.status === 'Ocupada') return h ? 'Em uso: ' + h : 'Em uso no momento';
+  if (sala.status === 'Reservada') return h ? 'Reservada para ' + h : 'Reservada';
+  if (sala.status === 'Indisponível') return h || 'Indisponível';
+  if (!h) return 'Livre • Sem horário definido';
+  return /^pr[oó]xima/i.test(h) ? 'Livre • ' + h : 'Livre • ' + h;
+}
+
 // 16/11/2026 — Calcula os indicadores do dashboard a partir das fontes compartilhadas.
 function resumirOperacao(salas, pagamentos, conveniencia) {
   return {
@@ -625,7 +635,9 @@ function iniciarDashboard() {
     var agenda=porId('agendaDashboard');agenda.replaceChildren();
     ordenarLista(salas,'unidade',{unidade:s=>nomeUnidade(s.unidade)+' '+s.nome}).forEach(sala=>{
       var item=document.createElement('div');item.className='agenda-item';
-      item.innerHTML=`<span class="room fw-bold">${escapar(sala.nome)}</span><span class="unit">${escapar(nomeUnidade(sala.unidade))}</span><span class="status-pill status-${normalizar(sala.status)}">${escapar(sala.status)}</span><span class="time">${escapar(sala.horario||'Sem horário definido')}</span><span class="doctor">${escapar(sala.profissional||'Sem profissional')}</span>`;
+      var classeProf = sala.profissional ? 'doctor doctor-ativo' : 'doctor doctor-vazio';
+      var classeHorario = sala.status === 'Indisponível' ? 'time time-manutencao' : 'time time-' + normalizar(sala.status);
+      item.innerHTML=`<span class="room fw-bold">${escapar(sala.nome)}</span><span class="unit"><span class="meta-ico" aria-hidden="true">📍</span>${escapar(nomeUnidade(sala.unidade))}</span><span class="status-pill status-${normalizar(sala.status)}">${escapar(sala.status)}</span><span class="${classeHorario}"><span class="meta-ico" aria-hidden="true">${sala.status === 'Indisponível' ? '🔧' : '🕒'}</span>${escapar(formatarHorarioContextual(sala))}</span><span class="${classeProf}"><span class="meta-ico" aria-hidden="true">👤</span>${escapar(sala.profissional||'Sem profissional')}</span>`;
       agenda.appendChild(item);
     });
     var lista=porId('pendenciasDashboard');lista.replaceChildren();
@@ -681,16 +693,27 @@ function iniciarSalas() {
     var grade = porId('listaDeSalas'); grade.replaceChildren();
     lista.forEach(sala => {
       var frag = porId('modeloCard').content.cloneNode(true);
+      var statusNorm = normalizar(sala.status);
       frag.querySelector('.card-nome').textContent = sala.nome;
-      frag.querySelector('.card-unidade').textContent = nomeUnidade(sala.unidade);
-      frag.querySelector('.card-status').className = 'card-status status-' + normalizar(sala.status);
+
+      var elUnidade = frag.querySelector('.card-unidade');
+      elUnidade.innerHTML = `<span class="meta-ico" aria-hidden="true">📍</span>${escapar(nomeUnidade(sala.unidade))}`;
+
+      frag.querySelector('.card-status').className = 'card-status status-' + statusNorm;
       frag.querySelector('.texto-status').textContent = sala.status;
-      frag.querySelector('.card-profissional').textContent = sala.profissional || 'Sem profissional';
-      frag.querySelector('.card-horario').textContent = sala.horario || 'Sem horário definido';
+
+      var elProf = frag.querySelector('.card-profissional');
+      elProf.className = 'card-profissional ' + (sala.profissional ? 'prof-ativo' : 'prof-vazio');
+      elProf.innerHTML = `<span class="meta-ico" aria-hidden="true">👤</span>${escapar(sala.profissional || 'Sem profissional')}`;
+
+      var elHorario = frag.querySelector('.card-horario');
+      elHorario.className = 'card-horario horario-' + statusNorm;
+      elHorario.innerHTML = `<span class="meta-ico" aria-hidden="true">${sala.status === 'Indisponível' ? '🔧' : '🕒'}</span>${escapar(formatarHorarioContextual(sala))}`;
+
       frag.querySelector('.card-menu').remove();
       var detalhes = frag.querySelector('.botao-detalhes'); detalhes.dataset.foco = 'sala-' + sala.id;
       detalhes.addEventListener('click', () => {
-        porId('textoDetalhesSala').textContent = [sala.nome,nomeUnidade(sala.unidade),sala.status,sala.profissional || 'Sem profissional',sala.horario || 'Sem horário definido'].join('\n');
+        porId('textoDetalhesSala').textContent = [sala.nome,nomeUnidade(sala.unidade),sala.status,sala.profissional || 'Sem profissional',formatarHorarioContextual(sala)] .join('\n');
         abrirDialogo(porId('dialogDetalhesSala'), detalhes);
       });
       grade.appendChild(frag);
@@ -754,7 +777,7 @@ function iniciarFinanceiro() {
   porId('btnLimparFiltros').addEventListener('click', () => { ['campoBusca','dataInicio','dataFim'].forEach(id=>porId(id).value='');porId('filtroUnidade').value='todas';porId('filtroStatus').value='todos';porId('ordenacao').value='data';atualizar(); });
   porId('btnExportar').addEventListener('click', () => {
     var linhas = [['Profissional','Unidade','Sala','Valor','Vencimento','Pagamento','Status']].concat(naTela.map(p=>[p.profissional,nomeUnidade(p.unidade),p.sala,p.valor.toFixed(2).replace('.',','),p.vencimento,p.pagamento || '',p.status]));
-    var conteudo = '\uFEFF' + linhas.map(l=>l.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(';')).join('\r\n');
+      var conteudo = '﻿' + linhas.map(l=>l.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(';')).join('\n')
     var url = URL.createObjectURL(new Blob([conteudo], {type:'text/csv;charset=utf-8'})); var link=document.createElement('a');link.href=url;link.download='pagamentos.csv';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);notificar('Exportação iniciada com os pagamentos filtrados.');
   });
   document.addEventListener('visibilitychange', () => { if (!document.hidden) atualizar(); });

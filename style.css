@@ -463,22 +463,30 @@ tr:last-child td {
  * .status-disponivel do DASHBOARD, que usam os mesmos nomes.)
  */
 .card-status.status-disponivel {
-  color: #22a55e;
+  background-color: #dcfce7;
+  color: #15803d;
+  border: 1px solid #86efac;
 }
 
 /* verde */
 .card-status.status-reservada {
-  color: #e0a800;
+  background-color: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fcd34d;
 }
 
 /* amarelo */
 .card-status.status-ocupada {
-  color: #e0413a;
+  background-color: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
 }
 
 /* vermelho */
 .card-status.status-indisponivel {
-  color: #8a8f9c;
+  background-color: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
 }
 
 /* ==========================================================
@@ -2954,6 +2962,8 @@ body.pagina-dashboard {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
 }
 
 /* 16/11/2026 — Apresenta os dados e as ações dos cards de salas. */
@@ -2980,8 +2990,8 @@ body.pagina-dashboard {
   display: flex;
   align-items: center;
   gap: 6px;
-  margin-bottom: 10px;
   font-size: 13px;
+  flex-shrink: 0;
 }
 
 /* cinza */
@@ -3124,14 +3134,19 @@ body.dark #valorPrevisto {
    Catálogo, estoque, consumo e ações de produtos.
 ========================================================== */
 
-/* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
-.status-ocupada {
-  background: var(--green-bg); color: var(--green-text);
+/* Status no Dashboard com cores corretas e mais vivas */
+.agenda-item .status-disponivel {
+  background-color: #dcfce7;
+  color: #15803d;
+  border: 1px solid #86efac;
+  font-weight: 600;
 }
 
-/* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
-.status-disponivel {
-  background: var(--blue-bg);  color: var(--blue-text);
+.agenda-item .status-ocupada {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+  font-weight: 600;
 }
 
 /* Cada status tem uma cor - o JS decide qual classe usar. */
@@ -3508,4 +3523,224 @@ body.has-sidebar .grade-produtos {
 /* 16/11/2026 — Organiza os produtos, o estoque e os registros de consumo. */
 body.has-sidebar .grade-produtos {
   height: auto; overflow: visible; grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr));
+}
+
+/* ==========================================================
+   METADADOS E CORES CONTEXTUAIS (SALAS E DASHBOARD)
+========================================================== */
+.meta-ico {
+  font-size: 0.88em;
+  margin-right: 5px;
+}
+
+/* Pílulas de status no Dashboard (Reservada e Indisponível mais vivas) */
+.agenda-item .status-reservada {
+  background-color: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fcd34d;
+  font-weight: 600;
+}
+
+.agenda-item .status-indisponivel {
+  background-color: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+  font-weight: 600;
+}
+
+/* Unidade discreta no Dashboard e nos Cards */
+.agenda-item .unit,
+.card-sala .card-unidade {
+  display: inline-flex;
+  align-items: center;
+  color: #475569;
+  font-size: 0.88rem;
+}
+
+/* Destaque para Profissional ativo vs. Sem profissional */
+.agenda-item .doctor-ativo,
+.card-sala .prof-ativo {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 3px 10px;
+  border-radius: 6px;
+  background-color: #e0e7ff;
+  color: #3730a3;
+  border: 1px solid #a5b4fc;
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+.agenda-item .doctor-vazio,
+.card-sala .prof-vazio {
+  display: inline-flex;
+  align-items: center;
+  color: #64748b;
+  font-style: italic;
+  font-size: 0.86rem;
+}
+
+/* Topo do Card de Sala com status único à direita */
+.card-sala .card-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.card-sala .card-status {
+  margin: 0;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* Faixa contextual de Horário nos Cards de Sala (cores mais vivas) */
+.card-sala .card-horario {
+  display: flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  border-left: 4px solid transparent;
+}
+
+.card-sala .horario-disponivel {
+  background-color: #dcfce7;
+  color: #15803d;
+  border-left-color: #16a34a;
+}
+
+.card-sala .horario-ocupada {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  border-left-color: #dc2626;
+}
+
+.card-sala .horario-reservada {
+  background-color: #fef3c7;
+  color: #b45309;
+  border-left-color: #d97706;
+}
+
+.card-sala .horario-indisponivel {
+  background-color: #e2e8f0;
+  color: #334155;
+  border-left-color: #64748b;
+}
+
+/* Horário contextual no Dashboard */
+.agenda-item .time {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.agenda-item .time-disponivel {
+  color: #15803d !important;
+}
+
+.agenda-item .time-ocupada {
+  color: #b91c1c !important;
+}
+
+.agenda-item .time-reservada {
+  color: #b45309 !important;
+}
+
+.agenda-item .time-manutencao {
+  color: #475569 !important;
+}
+
+/* ==========================================================
+   MODO ESCURO (body.dark)
+========================================================== */
+body.dark .agenda-item .unit,
+body.dark .card-sala .card-unidade {
+  color: #cbd5e1 !important;
+}
+
+body.dark .agenda-item .status-disponivel,
+body.dark .card-status.status-disponivel {
+  background-color: rgba(22, 163, 74, 0.22);
+  color: #4ade80;
+  border-color: rgba(74, 222, 128, 0.45);
+}
+
+body.dark .agenda-item .status-ocupada,
+body.dark .card-status.status-ocupada {
+  background-color: rgba(220, 38, 38, 0.22);
+  color: #f87171;
+  border-color: rgba(248, 113, 113, 0.45);
+}
+
+body.dark .agenda-item .status-reservada,
+body.dark .card-status.status-reservada {
+  background-color: rgba(217, 119, 6, 0.22);
+  color: #fbbf24;
+  border-color: rgba(251, 191, 36, 0.45);
+}
+
+body.dark .agenda-item .status-indisponivel,
+body.dark .card-status.status-indisponivel {
+  background-color: rgba(148, 163, 184, 0.2);
+  color: #e2e8f0;
+  border-color: rgba(148, 163, 184, 0.4);
+}
+
+body.dark .agenda-item .doctor-ativo,
+body.dark .card-sala .prof-ativo {
+  background-color: rgba(99, 102, 241, 0.24);
+  color: #c7d2fe;
+  border-color: rgba(129, 140, 248, 0.45);
+}
+
+body.dark .agenda-item .doctor-vazio,
+body.dark .card-sala .prof-vazio {
+  color: #94a3b8 !important;
+}
+
+body.dark .card-sala .horario-disponivel {
+  background-color: rgba(22, 163, 74, 0.2);
+  color: #4ade80;
+  border-left-color: #22c55e;
+}
+
+body.dark .card-sala .horario-ocupada {
+  background-color: rgba(220, 38, 38, 0.2);
+  color: #f87171;
+  border-left-color: #ef4444;
+}
+
+body.dark .card-sala .horario-reservada {
+  background-color: rgba(217, 119, 6, 0.2);
+  color: #fbbf24;
+  border-left-color: #f59e0b;
+}
+
+body.dark .card-sala .horario-indisponivel {
+  background-color: rgba(148, 163, 184, 0.16);
+  color: #cbd5e1;
+  border-left-color: #94a3b8;
+}
+
+body.dark .agenda-item .time-disponivel {
+  color: #4ade80 !important;
+}
+
+body.dark .agenda-item .time-ocupada {
+  color: #f87171 !important;
+}
+
+body.dark .agenda-item .time-reservada {
+  color: #fbbf24 !important;
+}
+
+body.dark .agenda-item .time-manutencao {
+  color: #cbd5e1 !important;
 }
