@@ -29,6 +29,7 @@
   </nav>
   <div class="menu-rodape">
     <hr>
+<<<<<<< HEAD
     <div class="theme-selector">
       <button type="button" class="menu-item" id="btnTema" aria-label="Aparência" title="Aparência" aria-expanded="false" aria-haspopup="true" aria-controls="menuTema">
         <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.5 13A9 9 0 0 1 11 3.5 9 9 0 1 0 20.5 13Z"/></svg><span id="textoTema" class="menu-label">Aparência</span>
@@ -38,6 +39,38 @@
 <button type="button" class="theme-option" data-theme="light"><span aria-hidden="true">☀️</span><span>Claro</span><span class="theme-check"></span></button>
         <button type="button" class="theme-option" data-theme="dark"><span aria-hidden="true">🌙</span><span>Escuro</span><span class="theme-check"></span></button>
       </div>
+=======
+
+  <div class="menu-rodape">
+    <hr>
+
+    <!-- Alternar tema claro/escuro -->
+    
+<div class="theme-selector">
+    <button type="button" class="menu-item"
+        id="btnTema"
+        aria-expanded="false"
+        aria-haspopup="true">
+        <span id="iconeTema">◐</span>
+        <span id="textoTema">Aparência</span>
+    </button>
+
+    <div class="theme-dropdown" id="menuTema" hidden>
+
+        <button type="button" class="theme-option"
+            data-theme="light">
+            <span>☀️</span>
+            <span>Claro</span>
+            <span class="theme-check"></span>
+        </button>
+
+        <button type="button" class="theme-option"
+            data-theme="dark">
+            <span>🌙</span>
+            <span>Escuro</span>
+            <span class="theme-check"></span>
+        </button>
+>>>>>>> origin/main
     </div>
     <button type="button" class="menu-item" id="btnConfiguracoes" data-pagina="config" aria-label="Configurações" title="Configurações" aria-haspopup="dialog" aria-controls="dialogConfiguracoes"><svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m10 3-.6 2.2-2 .9-2-.6-2 3.5 1.6 1.6v2.8L3.4 15l2 3.5 2-.6 2 .9.6 2.2h4l.6-2.2 2-.9 2 .6 2-3.5-1.6-1.6v-2.8L20.6 9l-2-3.5-2 .6-2-.9L14 3Z"/><circle cx="12" cy="12" r="3"/></svg><span class="menu-label">Configurações</span></button>
     <a href="index.html" class="menu-item" data-pagina="sair" aria-label="Sair" title="Sair"><svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 4H4v16h5m5-13 5 5-5 5m-6-5h11"/></svg><span class="menu-label">Sair</span></a>

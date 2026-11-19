@@ -515,6 +515,168 @@ function iniciarConfiguracoes() {
     snapshot=estado();atualizarUsuarioInterface();document.dispatchEvent(new CustomEvent('attento:preferencias'));dialogo.close('salvo');notificar('Configurações salvas.');
   });
 
+  /* Devolve o texto exibido para o nível de estoque. */
+  function textoDoEstoque(estoque) {
+    if (estoque === 0) return "Sem estoque";
+    if (estoque <= 5) return "Estoque baixo";
+    return "Disponível";
+  }
+
+  /*
+   * Monta os cards de produto a partir da lista recebida
+   * e liga os botões "Registrar consumo" de cada card.
+   */
+  function desenharProdutos(lista) {
+
+    listaDeProdutos.innerHTML = "";
+
+    if (lista.length === 0) {
+      listaDeProdutos.innerHTML =
+        '<p class="sem-resultados">Nenhum produto encontrado.</p>';
+      return;
+    }
+
+    for (var i = 0; i < lista.length; i++) {
+
+      var produto = lista[i];
+
+      var card = document.createElement("div");
+      card.className = "card-produto";
+
+     card.innerHTML = `
+        <div class="produto-imagem">
+          ${produto.icone}
+        </div>
+
+        <div class="produto-informacoes">
+
+          <div class="produto-topo">
+            <h3>${produto.nome}</h3>
+
+            <div class="menu-produto-container">
+              <button type="button" class="btn-menu-produto" title="Opções">
+                <i data-lucide="more-vertical"></i>
+              </button>
+              <div class="dropdown-produto">
+                <button type="button" class="opcao-editar" data-id="${produto.id}">
+                  <i data-lucide="pencil" style="width: 14px; height: 14px;"></i> Editar
+                </button>
+                <button type="button" class="opcao-excluir" data-id="${produto.id}">
+                  <i data-lucide="trash-2" style="width: 14px; height: 14px;"></i> Excluir
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <p class="produto-preco">${formatarDinheiro(produto.preco)}</p>
+
+          <div class="produto-estoque">
+            <span class="bolinha-estoque ${classeDoEstoque(produto.estoque)}"></span>
+            <span class="${classeDoEstoque(produto.estoque)}">
+              ${textoDoEstoque(produto.estoque)}
+            </span>
+
+            <span class="quantidade-estoque">
+              ${produto.estoque} un.
+            </span>
+          </div>
+
+          <button class="botao-consumir"
+                  data-produto="${produto.nome}">
+            Registrar consumo
+          </button>
+
+        </div>
+      `;
+
+      listaDeProdutos.appendChild(card);
+    }
+
+    if (window.lucide) lucide.createIcons();
+    adicionarEventosDosBotoesDeConsumo();
+  }
+
+  /*
+   * Liga cada botão "Registrar consumo" ao modal de consumo,
+   * já selecionando o produto do card clicado.
+   */
+  function adicionarEventosDosBotoesDeConsumo() {
+
+    var botoes = document.querySelectorAll(".botao-consumir");
+
+    botoes.forEach(function (botao) {
+
+      botao.addEventListener("click", function () {
+
+        produtoConsumo.value = botao.getAttribute("data-produto");
+
+        abrirModal(modalConsumo);
+
+      });
+
+    });
+  }
+
+  /*
+   * Preenche o select de produtos do modal de consumo
+   * com todos os produtos cadastrados.
+   */
+  function atualizarSelectProdutos() {
+
+    produtoConsumo.innerHTML = "";
+
+    for (var i = 0; i < produtos.length; i++) {
+
+      var option = document.createElement("option");
+
+      option.value = produtos[i].nome;
+      option.textContent = produtos[i].nome;
+
+      produtoConsumo.appendChild(option);
+    }
+  }
+
+
+  /* -----------------------------
+     FILTROS
+  ----------------------------- */
+
+  /*
+   * Aplica a busca por nome e o filtro de estoque,
+   * redesenha os produtos e atualiza o contador.
+   */
+  function aplicarFiltros() {
+
+    var texto = campoBusca.value.toLowerCase();
+    var status = filtroStatus.value;
+
+    var produtosFiltrados = produtos.filter(function (produto) {
+
+      var bateComTexto = produto.nome.toLowerCase().includes(texto);
+
+      var bateComStatus = true;
+
+      if (status === "disponivel") {
+        bateComStatus = produto.estoque > 5;
+      }
+
+      if (status === "baixo") {
+        bateComStatus = produto.estoque > 0 && produto.estoque <= 5;
+      }
+
+      if (status === "indisponivel") {
+        bateComStatus = produto.estoque === 0;
+      }
+
+      return bateComTexto && bateComStatus;
+
+    });
+
+    desenharProdutos(produtosFiltrados);
+
+    document.getElementById("contadorProdutos").textContent =
+      produtosFiltrados.length +
+      (produtosFiltrados.length === 1 ? " produto" : " produtos");
   // 16/11/2026 — Confirma a restauração isolada e recarrega os módulos com os dados iniciais.
   async function restaurar(tipo,origem){
     if(estado()!==snapshot||fotoProcessando){if(!await confirmarDescarte())return;preparar();}
@@ -683,49 +845,191 @@ function iniciarSalas() {
     campos.sala.value = lista.some(s => s.id === atual) ? atual : (lista[0] ? lista[0].id : '');
     preencherDados();
   }
-  // 16/11/2026 — Abre o formulário já na unidade filtrada na página, quando houver uma.
-  function preencher() { if (porId('filtroUnidade').value !== 'todas') campos.unidade.value = porId('filtroUnidade').value; listarSalasDaUnidade(); }
-  // 16/11/2026 — Atualiza os cards e a contagem das salas conforme os filtros.
-  function atualizar() {
-    atualizarUrlFiltros({unidade:'filtroUnidade',status:'filtroStatus'});
-    var lista = salas.filter(s => normalizar(s.nome).includes(normalizar(porId('campoBusca').value)) && (porId('filtroUnidade').value === 'todas' || s.unidade === porId('filtroUnidade').value) && (porId('filtroStatus').value === 'todos' || s.status === porId('filtroStatus').value));
-    lista = ordenarLista(lista, porId('ordenacao').value, {nome:'nome',unidade:s=>nomeUnidade(s.unidade),status:'status'});
-    var grade = porId('listaDeSalas'); grade.replaceChildren();
-    lista.forEach(sala => {
-      var frag = porId('modeloCard').content.cloneNode(true);
-      var statusNorm = normalizar(sala.status);
-      frag.querySelector('.card-nome').textContent = sala.nome;
 
-      var elUnidade = frag.querySelector('.card-unidade');
-      elUnidade.innerHTML = `<span class="meta-ico" aria-hidden="true">📍</span>${escapar(nomeUnidade(sala.unidade))}`;
+  // Botões com [data-fechar="idDoModal"] fecham o modal indicado
+  document.querySelectorAll("[data-fechar]").forEach(function (botao) {
 
-      frag.querySelector('.card-status').className = 'card-status status-' + statusNorm;
-      frag.querySelector('.texto-status').textContent = sala.status;
+    botao.addEventListener("click", function () {
 
-      var elProf = frag.querySelector('.card-profissional');
-      elProf.className = 'card-profissional ' + (sala.profissional ? 'prof-ativo' : 'prof-vazio');
-      elProf.innerHTML = `<span class="meta-ico" aria-hidden="true">👤</span>${escapar(sala.profissional || 'Sem profissional')}`;
+      fecharModal(document.getElementById(botao.getAttribute("data-fechar")));
 
-      var elHorario = frag.querySelector('.card-horario');
-      elHorario.className = 'card-horario horario-' + statusNorm;
-      elHorario.innerHTML = `<span class="meta-ico" aria-hidden="true">${sala.status === 'Indisponível' ? '🔧' : '🕒'}</span>${escapar(formatarHorarioContextual(sala))}`;
-
-      frag.querySelector('.card-menu').remove();
-      var detalhes = frag.querySelector('.botao-detalhes'); detalhes.dataset.foco = 'sala-' + sala.id;
-      detalhes.addEventListener('click', () => {
-        porId('textoDetalhesSala').textContent = [sala.nome,nomeUnidade(sala.unidade),sala.status,sala.profissional || 'Sem profissional',formatarHorarioContextual(sala)] .join('\n');
-        abrirDialogo(porId('dialogDetalhesSala'), detalhes);
-      });
-      grade.appendChild(frag);
     });
-    if (!lista.length) grade.appendChild(porId('modeloVazio').content.cloneNode(true));
-    porId('contadorResultados').textContent = textoContagem(lista.length, salas.length, 'salas');
-  }
-  porId('btnEditarSalas').addEventListener('click', evento => { preencher(); abrirDialogo(dialogo, evento.currentTarget); });
-  campos.unidade.addEventListener('change', listarSalasDaUnidade);
-  campos.sala.addEventListener('change', preencherDados);
-  porId('btnCancelarEdicaoSala').addEventListener('click', () => dialogo.close('cancelar'));
-  formulario.addEventListener('submit', evento => {
+
+  });
+
+  // Clicar no fundo escuro (fora da caixa) também fecha o modal
+  document.querySelectorAll(".modal-fundo").forEach(function (modal) {
+
+    modal.addEventListener("click", function (evento) {
+
+      if (evento.target === modal) {
+        fecharModal(modal);
+      }
+
+    });
+
+  });
+
+
+  /* -----------------------------
+     CADASTRAR PRODUTO
+  ----------------------------- */
+
+  document.getElementById("btnNovoProduto")
+    .addEventListener("click", function () {
+
+      abrirModal(modalProduto);
+
+    });
+
+  /*
+   * Cadastra um novo produto a partir do formulário,
+   * fecha o modal e atualiza select, resumo e lista.
+   */
+  formProduto.addEventListener("submit", function (evento) {
+
+    evento.preventDefault();
+
+    var nome = document.getElementById("nomeProduto").value;
+    var preco = Number(document.getElementById("precoProduto").value);
+    var estoque = Number(document.getElementById("quantidadeProduto").value);
+
+    produtos.push({
+      id: produtos.length + 1,
+      nome: nome,
+      preco: preco,
+      estoque: estoque,
+      icone: "▣"
+    });
+
+    formProduto.reset();
+
+    fecharModal(modalProduto);
+
+    atualizarSelectProdutos();
+    atualizarResumo();
+    aplicarFiltros();
+
+  });
+
+  
+/* -----------------------------
+     EDITAR E EXCLUIR PRODUTO (MENU 3 PONTINHOS)
+  ----------------------------- */
+
+  var modalEditarProduto = document.getElementById("modalEditarProduto");
+  var formEditarProduto = document.getElementById("formEditarProduto");
+
+  // Abre/fecha o dropdown e trata cliques em Editar ou Excluir
+  listaDeProdutos.addEventListener("click", function (evento) {
+    // 1. Botão de 3 pontinhos
+    var btnMenu = evento.target.closest(".btn-menu-produto");
+    if (btnMenu) {
+      evento.stopPropagation();
+      var dropdownAtual = btnMenu.nextElementSibling;
+      var estavaAberto = dropdownAtual.classList.contains("aberto");
+
+      // Fecha qualquer outro menu aberto
+      document.querySelectorAll(".dropdown-produto.aberto").forEach(function (d) {
+        d.classList.remove("aberto");
+      });
+
+      if (!estavaAberto) {
+        dropdownAtual.classList.add("aberto");
+      }
+      return;
+    }
+
+    // 2. Opção Editar
+    var btnEditar = evento.target.closest(".opcao-editar");
+    if (btnEditar) {
+      var idEditar = Number(btnEditar.getAttribute("data-id"));
+      var produto = produtos.find(function (p) { return p.id === idEditar; });
+      if (!produto) return;
+
+      document.getElementById("editIdProduto").value = produto.id;
+      document.getElementById("editNomeProduto").value = produto.nome;
+      document.getElementById("editPrecoProduto").value = produto.preco;
+      document.getElementById("editQuantidadeProduto").value = produto.estoque;
+
+      btnEditar.closest(".dropdown-produto").classList.remove("aberto");
+      abrirModal(modalEditarProduto);
+      return;
+    }
+
+    // 3. Opção Excluir
+    var btnExcluir = evento.target.closest(".opcao-excluir");
+    if (btnExcluir) {
+      var idExcluir = Number(btnExcluir.getAttribute("data-id"));
+      var indice = produtos.findIndex(function (p) { return p.id === idExcluir; });
+      if (indice === -1) return;
+
+      btnExcluir.closest(".dropdown-produto").classList.remove("aberto");
+
+      if (confirm('Deseja realmente excluir o produto "' + produtos[indice].nome + '"?')) {
+        produtos.splice(indice, 1);
+        atualizarSelectProdutos();
+        atualizarResumo();
+        aplicarFiltros();
+      }
+    }
+  });
+
+  // Fecha o menu se clicar fora dos cards
+  document.addEventListener("click", function () {
+    document.querySelectorAll(".dropdown-produto.aberto").forEach(function (d) {
+      d.classList.remove("aberto");
+    });
+  });
+
+  // Salva as alterações do produto editado
+  formEditarProduto.addEventListener("submit", function (evento) {
+    evento.preventDefault();
+
+    var id = Number(document.getElementById("editIdProduto").value);
+    var novoNome = document.getElementById("editNomeProduto").value;
+    var novoPreco = Number(document.getElementById("editPrecoProduto").value);
+    var novoEstoque = Number(document.getElementById("editQuantidadeProduto").value);
+
+    var produto = produtos.find(function (p) { return p.id === id; });
+    if (produto) {
+      var nomeAntigo = produto.nome;
+      produto.nome = novoNome;
+      produto.preco = novoPreco;
+      produto.estoque = novoEstoque;
+
+      // Atualiza o nome nas movimentações existentes para não quebrar o cálculo de valor
+      movimentacoes.forEach(function (m) {
+        if (m.produto === nomeAntigo) {
+          m.produto = novoNome;
+        }
+      });
+    }
+
+    fecharModal(modalEditarProduto);
+    atualizarSelectProdutos();
+    desenharMovimentacoes();
+    atualizarResumo();
+    aplicarFiltros();
+  });
+
+  /* -----------------------------
+     REGISTRAR CONSUMO
+  ----------------------------- */
+
+  document.getElementById("btnNovoConsumo")
+    .addEventListener("click", function () {
+
+      abrirModal(modalConsumo);
+
+    });
+
+  /*
+   * Registra um consumo: baixa o estoque, adiciona a movimentação
+   * (como "Pendente") no topo da tabela e atualiza a tela.
+   */
+  formConsumo.addEventListener("submit", function (evento) {
+
     evento.preventDefault();
     var sala = selecionada();
     if (!sala) { mostrarErro('erroEditarSalas', 'Escolha uma sala da unidade selecionada.'); return; }
@@ -785,9 +1089,8 @@ function iniciarFinanceiro() {
 }
 
 
-/* ==========================================================
-   16/11/2026 — CONVENIÊNCIA
-========================================================== */
+/* ==========================================
+   5. SELETOR DE APARÊNCIA - ATTENTO
 
 // 16/11/2026 — Valida o consumo, reduz o estoque e guarda o preço praticado.
 function registrarConsumo(dados, entrada) {
@@ -950,4 +1253,5 @@ if (typeof document !== 'undefined') {
 }
 
 // 16/11/2026 — Disponibiliza a lógica para testes locais sem exigir o navegador.
-if (typeof module !== 'undefined' && module.exports) module.exports={hojeISO,paraISO,dataBR,statusPagamento,filtrarPeriodo,ordenarLista,normalizar,carregarSalas,criarDadosConveniencia,registrarConsumo,excluirProduto,excluirConsumo,iniciarPortal,obterPagamentos,carregarConveniencia,salvarConveniencia,resumirOperacao,aplicarParametrosFiltros,validarPerfil,carregarUsuario,iniciaisUsuario,carregarTema,salvarConfiguracoes,restaurarDados,gerarTextoChamado};
+if (typeof module !== 'undefined' && module.exports) module.exports={hojeISO,paraISO,dataBR,statusPagamento,filtrarPeriodo,ordenarLista,normalizar,carregarSalas,criarDadosConveniencia,registrarConsumo,excluirProduto,excluirConsumo,iniciarPortal,obterPagamentos,carregarConveniencia,salvarConveniencia,resumirOperacao,aplicarParametrosFiltros,validarPerfil,carregarUsuario,iniciaisUsuario,carregarTema,salvarConfiguracoes,restaurarDados,gerarTextoChamado}; 
+}
