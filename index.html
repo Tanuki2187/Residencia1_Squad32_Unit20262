@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Attento</title>
     <link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
 </head>
-<body>
+<body class="pagina-login">
     
     <div class="container">
         <!-- Left Panel -->
        <div class="lado-esquerdo" >
-       <img src="assets/web-app-manifest-512x512-white.png" alt="Logo completa" class="img-fluid" style="max-width:90%; max-height: 90%;">
-       <h4 style="color: #ffffff83; font-family: Verdana, 'Arial', sans-serif">Cuidado pleno com sua saúde mental</h4>
+       <img src="assets/web-app-manifest-512x512-white.png" alt="Logo completa" class="img-fluid">
+       <h4>Cuidado pleno com sua saúde mental</h4>
     </div>
     
        <svg class="lineart" >
@@ -27,12 +28,13 @@
                 <p>Faça login para acessar o sistema</p>
                 
                 <form class="login-form" action="dashboard.html">
-                    <input type="text" placeholder="Usuário" required>
-                    <input type="password" placeholder="Senha" required>
-                    <a href="www.google.com" target="_blank"><button type="submit">Entrar</button></a>
+                    <label for="usuarioLogin">Usuário</label><input type="text" id="usuarioLogin" autocomplete="username" placeholder="Usuário" required>
+                    <label for="senhaLogin">Senha</label><div class="campo-senha"><input type="password" id="senhaLogin" autocomplete="current-password" placeholder="Senha" required><button type="button" id="btnMostrarSenha" aria-controls="senhaLogin" aria-label="Mostrar senha" aria-pressed="false">Mostrar</button></div>
+                    <button type="submit">Entrar</button><a href="#dialogRecuperacao" id="recuperarSenha" class="recuperar-senha" aria-haspopup="dialog" aria-controls="dialogRecuperacao">Esqueci minha senha</a>
                 </form>
             </div>
         </div>
     </div>
+<dialog id="dialogRecuperacao" class="modal" aria-labelledby="dialogRecuperacaoTitulo"><div class="modal-topo"><h2 id="dialogRecuperacaoTitulo">Recuperação de senha</h2><button type="button" class="fechar-modal" data-fechar="dialogRecuperacao" aria-label="Fechar Recuperação de senha">×</button></div><p>Para recuperar sua senha, entre em contato com o administrador do sistema.</p><form method="dialog" class="modal-botoes"><button class="botao-principal" autofocus>Entendi</button></form></dialog>
 </body>
 </html>
