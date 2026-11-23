@@ -2,76 +2,51 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Conveniência</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="script.js" defer></script>
 </head>
-<body>
+<body class="has-sidebar">
   <!-- Sidebar -->
-  <aside class="menu">
-  <div class="logo">
-    <span class="logo-icone">
-      <img src="assets/favicon-96x96.png" alt="Logo">
-    </span>
-    <span>Attento</span>
+  <aside class="menu sidebar" id="menuLateral" aria-label="Menu lateral">
+  <div class="sidebar-header"><button type="button" class="menu-movel-fechar" id="btnFecharMenuMovel" aria-label="Fechar menu">×</button>
+    <a class="logo" href="dashboard.html" aria-label="Attento — início" title="Attento — início">
+      <span class="logo-icone"><img src="assets/favicon-96x96.png" alt=""></span>
+      <span class="menu-label">Attento</span>
+    </a>
+    <button type="button" id="btnRecolherMenu" class="sidebar-toggle" aria-label="Recolher menu" title="Recolher menu" aria-expanded="true" aria-controls="menuLateral"><svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m14 6-6 6 6 6"/></svg></button>
   </div>
-    
-  <nav class="menu-lista">
- 
-    <a href="dashboard.html" class="menu-item" >Início</a>
-    <a href="unidades.html" class="menu-item" >Unidades</a>
-    <a href="salas.html" class="menu-item" >Salas</a>
-    <a href="conveniencia.html" class="menu-item" aria-current="page" >Conveniência</a>
-    <a href="financeiro.html" class="menu-item" >Financeiro</a>
+  <nav class="menu-lista" aria-label="Navegação principal">
+    <a href="dashboard.html" class="menu-item" aria-label="Início" title="Início"><svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg><span class="menu-label">Início</span></a>
+    <a href="unidades.html" class="menu-item" aria-label="Unidades" title="Unidades"><svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 21v-4h6v4M8 7h2m4 0h2M8 11h2m4 0h2"/></svg><span class="menu-label">Unidades</span></a>
+    <a href="salas.html" class="menu-item" aria-label="Salas" title="Salas"><svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 21h16M6 21V4l12-2v19M14 12h.01"/></svg><span class="menu-label">Salas</span></a>
+    <a href="conveniencia.html" class="menu-item" aria-label="Conveniência" title="Conveniência" aria-current="page"><svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m3 9 2-6h14l2 6M4 10v11h16V10M9 21v-7h6v7"/><path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/></svg><span class="menu-label">Conveniência</span></a>
+    <a href="financeiro.html" class="menu-item" aria-label="Financeiro" title="Financeiro"><svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="15" rx="2"/><path d="M3 7V5a2 2 0 0 1 2-2h12M21 10h-6v5h6M17 12.5h.01"/></svg><span class="menu-label">Financeiro</span></a>
   </nav>
-
   <div class="menu-rodape">
     <hr>
-    <button class="menu-item" data-pagina="config">Configurações</button>
-    <a href="index.html" class="menu-item" data-pagina="sair">↩ Sair</a>
-  </div>
-</aside>
-
-    
-    <!-- Alternar tema claro/escuro -->
-    
-<div class="theme-selector">
-    <button type="button" class="menu-item"
-        id="btnTema"
-        aria-expanded="false"
-        aria-haspopup="true">
-        <span id="iconeTema">◐</span>
-        <span id="textoTema">Aparência</span>
-    </button>
-
-    <div class="theme-dropdown" id="menuTema" hidden>
-
-        <button type="button" class="theme-option"
-            data-theme="light">
-            <span>☀️</span>
-            <span>Claro</span>
-            <span class="theme-check"></span>
-        </button>
-
-        <button type="button" class="theme-option"
-            data-theme="dark">
-            <span>🌙</span>
-            <span>Escuro</span>
-            <span class="theme-check"></span>
-        </button>
+    <div class="theme-selector">
+      <button type="button" class="menu-item" id="btnTema" aria-label="Aparência" title="Aparência" aria-expanded="false" aria-haspopup="true" aria-controls="menuTema">
+        <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.5 13A9 9 0 0 1 11 3.5 9 9 0 1 0 20.5 13Z"/></svg><span id="textoTema" class="menu-label">Aparência</span>
+      </button>
+      <div class="theme-dropdown" id="menuTema" hidden>
+        <button type="button" class="theme-option" data-theme="system"><span aria-hidden="true">◐</span><span>Automático</span><span class="theme-check"></span></button>
+<button type="button" class="theme-option" data-theme="light"><span aria-hidden="true">☀️</span><span>Claro</span><span class="theme-check"></span></button>
+        <button type="button" class="theme-option" data-theme="dark"><span aria-hidden="true">🌙</span><span>Escuro</span><span class="theme-check"></span></button>
+      </div>
     </div>
-</div>
-
-
-    <button class="menu-item" data-pagina="config">Configurações</button>
-    <a href="index.html" class="menu-item" data-pagina="sair">↩ Sair</a>
+    <button type="button" class="menu-item" id="btnConfiguracoes" data-pagina="config" aria-label="Configurações" title="Configurações" aria-haspopup="dialog" aria-controls="dialogConfiguracoes"><svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m10 3-.6 2.2-2 .9-2-.6-2 3.5 1.6 1.6v2.8L3.4 15l2 3.5 2-.6 2 .9.6 2.2h4l.6-2.2 2-.9 2 .6 2-3.5-1.6-1.6v-2.8L20.6 9l-2-3.5-2 .6-2-.9L14 3Z"/><circle cx="12" cy="12" r="3"/></svg><span class="menu-label">Configurações</span></button>
+    <a href="index.html" class="menu-item" data-pagina="sair" aria-label="Sair" title="Sair"><svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 4H4v16h5m5-13 5 5-5 5m-6-5h11"/></svg><span class="menu-label">Sair</span></a>
   </div>
 </aside>
 
   <div class="app">
     <!-- CONTEÚDO -->
     <main class="conteudo">
-      <div class="topo-pagina">
+<header class="barra-usuario"><button type="button" id="btnMenuMovel" class="menu-movel-toggle" aria-controls="menuLateral" aria-expanded="false"><span aria-hidden="true">☰</span> Menu</button><button type="button" id="btnUsuario" class="usuario-botao" aria-haspopup="dialog" aria-controls="dialogUsuario"><span class="avatar" aria-hidden="true">JG</span><span><strong data-nome-usuario>João Gabriel</strong><small>Administrador</small></span><span aria-hidden="true">⌄</span></button></header>
+<div class="topo-pagina">
         <div>
           <h1>Conveniência</h1>
           <p class="subtitulo">Gerencie os produtos e os consumos da conveniência.</p>
@@ -82,13 +57,14 @@
         </button>
       </div>
 
+<details class="filtro-periodo filtro-periodo-retratil"><summary><span class="titulo-filtro-periodo">Filtrar por data</span><span id="periodoConsiderado" class="periodo-texto" role="status"></span></summary><div class="periodo-controles"><div class="filtros"><label>Consumos a partir de<input type="date" id="dataInicio"></label><label>Consumos até<input type="date" id="dataFim"></label><label>Ordenar consumos<select id="ordenacaoConsumos"><option value="data-desc">Data: mais recente</option><option value="data">Data: mais antiga</option><option value="valor-desc">Valor: maior primeiro</option><option value="valor">Valor: menor primeiro</option></select></label><button type="button" class="botao-secundario" id="btnLimparPeriodo">Limpar filtros de consumos</button></div><p id="erroPeriodo" class="erro-formulario" role="alert" hidden></p></div></details><p id="contadorConsumos" class="contador-resultados" role="status"></p>
       <!-- RESUMO -->
       <div class="resumo">
 
         <div class="card-resumo">
           <span class="resumo-titulo">Produtos</span>
           <strong id="totalProdutos">0</strong>
-          <span class="resumo-legenda">cadastrados</span>
+          <span class="resumo-legenda">no catálogo completo</span>
         </div>
 
         <div class="card-resumo">
@@ -106,21 +82,21 @@
         <div class="card-resumo">
           <span class="resumo-titulo">Estoque baixo</span>
           <strong id="estoqueBaixo">0</strong>
-          <span class="resumo-legenda">produtos</span>
+          <span class="resumo-legenda">no catálogo completo</span>
         </div>
 
       </div>
 
       <!-- FILTROS -->
       <div class="filtros">
-        <input type="text" id="campoBusca" placeholder=" Buscar produto...">
+        <label>Buscar produto<input type="text" id="campoBusca" placeholder=" Buscar produto..."></label>
 
-        <select id="filtroStatus">
+        <label>Status<select id="filtroStatus">
           <option value="todos">Todos os produtos</option>
           <option value="disponivel">Disponíveis</option>
           <option value="baixo">Estoque baixo</option>
           <option value="indisponivel">Sem estoque</option>
-        </select>
+        </select></label><label>Ordenar por<select id="ordenacao"><option value="nome">Nome: A–Z</option><option value="nome-desc">Nome: Z–A</option><option value="preco">Preço: menor primeiro</option><option value="preco-desc">Preço: maior primeiro</option><option value="estoque">Estoque: menor primeiro</option></select></label><button type="button" class="botao-secundario" id="btnLimparFiltros">Limpar filtros de produtos</button>
       </div>
 
       <!-- PRODUTOS -->
@@ -145,7 +121,8 @@
         </button>
       </div>
 
-      <div class="tabela-container">
+      
+<p class="dica-tabela">Deslize a tabela para ver todas as colunas.</p><div class="tabela-container" role="region" aria-label="Tabela de Consumos" tabindex="0">
         <table>
          <thead>
       <tr>
@@ -169,19 +146,18 @@
   </div>
 
   <!-- MODAL: NOVO PRODUTO -->
-  <div class="modal-fundo" id="modalProduto">
-    <div class="modal">
+  <dialog class="modal" id="modalProduto" aria-labelledby="modalProdutoTitulo">
 
       <div class="modal-topo">
         <div>
-          <h2>Cadastrar produto</h2>
+          <h2 id="modalProdutoTitulo">Cadastrar produto</h2>
           <p>Adicione um novo item à conveniência.</p>
         </div>
 
-        <button class="fechar-modal" data-fechar="modalProduto">×</button>
+        <button class="fechar-modal" data-fechar="modalProduto" type="button" aria-label="Fechar janela">×</button>
       </div>
 
-      <form id="formProduto">
+      <form id="formProduto"><p id="erroProduto" class="erro-formulario" role="alert" hidden></p>
 
         <label>
           Nome do produto
@@ -204,23 +180,22 @@
         </div>
 
       </form>
-    </div>
-  </div>
+    </dialog>
+  
 
  <!-- MODAL: EDITAR PRODUTO -->
-  <div class="modal-fundo" id="modalEditarProduto">
-    <div class="modal">
+  <dialog class="modal" id="modalEditarProduto" aria-labelledby="modalEditarProdutoTitulo">
 
       <div class="modal-topo">
         <div>
-          <h2>Editar produto</h2>
+          <h2 id="modalEditarProdutoTitulo">Editar produto</h2>
           <p>Altere as informações do item da conveniência.</p>
         </div>
 
-        <button class="fechar-modal" data-fechar="modalEditarProduto">×</button>
+        <button class="fechar-modal" data-fechar="modalEditarProduto" type="button" aria-label="Fechar janela">×</button>
       </div>
 
-      <form id="formEditarProduto">
+      <form id="formEditarProduto"><p id="erroEditarProduto" class="erro-formulario" role="alert" hidden></p>
         <input type="hidden" id="editIdProduto">
 
         <label>
@@ -244,23 +219,22 @@
         </div>
 
       </form>
-    </div>
-  </div>
+    </dialog>
+  
   
   <!-- MODAL: NOVO CONSUMO -->
-  <div class="modal-fundo" id="modalConsumo">
-    <div class="modal">
+  <dialog class="modal" id="modalConsumo" aria-labelledby="modalConsumoTitulo">
 
       <div class="modal-topo">
         <div>
-          <h2>Registrar consumo</h2>
+          <h2 id="modalConsumoTitulo">Registrar consumo</h2>
           <p>Registre uma venda da conveniência.</p>
         </div>
 
-        <button class="fechar-modal" data-fechar="modalConsumo">×</button>
+        <button class="fechar-modal" data-fechar="modalConsumo" type="button" aria-label="Fechar janela">×</button>
       </div>
 
-      <form id="formConsumo">
+      <form id="formConsumo"><p id="erroConsumo" class="erro-formulario" role="alert" hidden></p>
 
         <label>
           Profissional
@@ -289,9 +263,51 @@
         </div>
 
       </form>
-    </div>
-  </div>
+    </dialog>
+  
 
-  <script src="script.js"></script>
+  <dialog id="dialogConfiguracoes" class="modal modal-configuracoes" aria-labelledby="tituloConfiguracoes">
+  <div class="modal-topo"><h2 id="tituloConfiguracoes">Configurações</h2><button type="button" class="fechar-modal" data-fechar="dialogConfiguracoes" aria-label="Fechar configurações">×</button></div>
+  <form id="formConfiguracoes">
+    <p id="erroConfiguracoes" class="erro-formulario" role="alert" hidden></p>
+    <section class="config-secao" aria-labelledby="configAparenciaTitulo">
+      <h3 id="configAparenciaTitulo">Aparência</h3>
+      <label for="configTema">Tema</label><select id="configTema"><option value="system">Automático — acompanhar o dispositivo</option><option value="light">Claro</option><option value="dark">Escuro</option></select>
+    </section>
+    <section class="config-secao" aria-labelledby="configUsuarioTitulo">
+      <h3 id="configUsuarioTitulo">Dados do usuário</h3>
+      <label for="configNome">Nome</label><input id="configNome" type="text" maxlength="80" required autocomplete="name">
+      <div class="config-foto-linha"><span id="configFotoPreview" class="config-foto-preview" aria-label="Prévia da foto"></span><div>
+        <label for="configFoto">Alterar foto</label><input id="configFoto" type="file" accept="image/jpeg,image/png,image/webp" aria-describedby="configFotoAjuda">
+        <p id="configFotoAjuda" class="config-ajuda">JPG, PNG ou WebP de até 2 MB.</p><button type="button" class="botao-secundario" id="btnRemoverFoto">Remover foto</button>
+      </div></div>
+    </section>
+    <div class="modal-botoes"><button type="button" class="botao-cancelar" data-fechar="dialogConfiguracoes">Cancelar</button><button type="submit" class="botao-principal" id="btnSalvarConfiguracoes">Salvar alterações</button></div>
+  </form>
+  <section class="config-secao config-restauracao" aria-labelledby="configRestauracaoTitulo">
+    <h3 id="configRestauracaoTitulo">Restauração de dados</h3><p class="config-ajuda">Escolha os dados que deseja restaurar. Cada ação pede confirmação e recarrega a página.</p>
+    <div class="config-acoes"><button type="button" class="botao-secundario" id="btnRestaurarSalas">Restaurar salas</button><button type="button" class="botao-secundario" id="btnRestaurarConveniencia">Restaurar Conveniência</button></div>
+    <p id="resultadoRestauracao" role="status"></p>
+  </section>
+  <section class="config-secao" aria-labelledby="configSuporteTitulo"><h3 id="configSuporteTitulo">Suporte técnico</h3><p class="config-ajuda">Descreva o problema e gere um arquivo para encaminhar ao suporte.</p><button type="button" class="botao-secundario" id="btnAbrirChamado" aria-haspopup="dialog" aria-controls="dialogSuporte">Abrir chamado</button></section>
+</dialog>
+<dialog id="dialogSuporte" class="modal modal-suporte" aria-labelledby="tituloSuporte">
+ <div class="modal-topo"><h2 id="tituloSuporte">Abrir chamado — Suporte técnico</h2><button type="button" class="fechar-modal" data-fechar="dialogSuporte" aria-label="Fechar suporte técnico">×</button></div>
+ <p class="config-ajuda">Preencha os dados e baixe o chamado para encaminhá-lo à equipe de suporte. O arquivo não é enviado automaticamente.</p>
+ <form id="formSuporte"><p id="erroSuporte" class="erro-formulario" role="alert" hidden></p>
+  <label for="suporteCategoria">Categoria</label><select id="suporteCategoria"><option value="Erro de funcionamento">Erro de funcionamento</option><option value="Dúvida de uso">Dúvida de uso</option><option value="Sugestão de melhoria">Sugestão de melhoria</option><option value="Outro">Outro</option></select>
+  <label for="suporteAssunto">Assunto</label><input id="suporteAssunto" type="text" required maxlength="120">
+  <label for="suporteDescricao">Descrição</label><textarea id="suporteDescricao" rows="5" required maxlength="3000" placeholder="Explique o que aconteceu e como reproduzir o problema."></textarea>
+  <p id="resultadoSuporte" role="status"></p>
+  <div class="modal-botoes"><button type="button" class="botao-cancelar" data-fechar="dialogSuporte">Cancelar</button><button type="submit" class="botao-principal">Baixar chamado</button></div>
+ </form>
+</dialog>
+<dialog id="dialogDescartar" class="modal" aria-labelledby="tituloDescartar"><div class="modal-topo"><h2 id="tituloDescartar">Descartar alterações?</h2></div><p>Há alterações não salvas. Deseja descartá-las?</p><form method="dialog" class="modal-botoes"><button class="botao-cancelar" value="continuar" autofocus>Continuar editando</button><button class="botao-principal" value="descartar">Descartar</button></form></dialog>
+
+
+<dialog id="dialogUsuario" class="modal" aria-labelledby="dialogUsuarioTitulo"><div class="modal-topo"><h2 id="dialogUsuarioTitulo">Usuário</h2><button type="button" class="fechar-modal" data-fechar="dialogUsuario" aria-label="Fechar Usuário">×</button></div><div class="perfil-foto" data-foto-usuario></div><dl class="perfil-dados"><dt>Nome</dt><dd data-nome-usuario>João Gabriel</dd><dt>Perfil</dt><dd>Administrador</dd></dl><form method="dialog" class="modal-botoes"><button class="botao-principal" autofocus>Fechar</button></form></dialog>
+<dialog id="dialogConfirmacao" class="modal" aria-labelledby="dialogConfirmacaoTitulo"><div class="modal-topo"><h2 id="dialogConfirmacaoTitulo">Confirmar exclusão</h2><button type="button" class="fechar-modal" data-fechar="dialogConfirmacao" aria-label="Fechar Confirmar exclusão">×</button></div><p id="textoConfirmacao"></p><form method="dialog" class="modal-botoes"><button class="botao-cancelar" value="cancelar" autofocus>Cancelar</button><button class="botao-principal" value="confirmar">Excluir</button></form></dialog>
+<div id="mensagensSistema" class="mensagens-sistema" role="status" aria-live="polite" aria-atomic="true"></div><div id="acoesDesfazer" class="acoes-desfazer" aria-label="Exclusões que podem ser desfeitas"></div>
+<button type="button" id="fundoMenuMovel" class="fundo-menu-movel" aria-label="Fechar menu" tabindex="-1" hidden></button>
 </body>
 </html>
