@@ -52,8 +52,12 @@
           <h1>Salas</h1>
           <p class="subtitulo">Gerencie e visualize todas as salas das unidades.</p>
         </div>
-        <!-- 06/11/2026 - Abre o formulário para escolher e editar uma sala existente. -->
-        <button type="button" id="btnEditarSalas" class="botao-principal">Editar salas</button>
+        <div class="topo-acoes">
+          <!-- 23/11/2026 - Abre o calendário semanal com os dias, horários e profissionais de cada sala. -->
+          <button type="button" id="btnCalendarioSalas" class="botao-principal botao-com-icone" aria-haspopup="dialog" aria-controls="dialogCalendarioSalas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Calendário</button>
+          <!-- 06/11/2026 - Abre o formulário para escolher e editar uma sala existente. -->
+          <button type="button" id="btnEditarSalas" class="botao-principal">Editar salas</button>
+        </div>
       </div>
 
       <!-- FILTROS -->
@@ -126,6 +130,63 @@
     </form>
   </dialog>
 
+  <!-- 23/11/2026 - Calendário semanal das salas: mostra, por dia, quem ocupa cada sala e em qual horário. -->
+  <dialog id="dialogCalendarioSalas" class="modal modal-calendario" aria-labelledby="tituloCalendarioSalas">
+    <div class="modal-topo">
+      <div>
+        <h2 id="tituloCalendarioSalas">Calendário das salas</h2>
+        <p id="periodoCalendario" class="calendario-periodo" aria-live="polite"></p>
+      </div>
+      <button type="button" class="fechar-modal" data-fechar="dialogCalendarioSalas" aria-label="Fechar calendário">×</button>
+    </div>
+
+    <div class="calendario-barra">
+      <div class="calendario-navegacao" role="group" aria-label="Navegar entre semanas">
+        <button type="button" class="botao-secundario" id="btnSemanaAnterior" aria-label="Semana anterior">‹ Anterior</button>
+        <button type="button" class="botao-secundario" id="btnSemanaAtual">Esta semana</button>
+        <button type="button" class="botao-secundario" id="btnSemanaProxima" aria-label="Próxima semana">Próxima ›</button>
+      </div>
+      <label class="calendario-filtro">Unidade<select id="calendarioUnidade">
+        <option value="todas">Todas as unidades</option>
+        <option value="Unidade 1">Jardim Europa</option>
+        <option value="Unidade 2">Horizonte Jardins</option>
+      </select></label>
+      <label class="calendario-filtro">Horário<select id="calendarioHorario">
+        <option value="todos">Todos os horários</option>
+        <option value="08:00-12:00">08:00 – 12:00</option>
+        <option value="12:00-15:00">12:00 – 15:00</option>
+        <option value="15:00-18:00">15:00 – 18:00</option>
+      </select></label>
+    </div>
+
+    <p id="resumoCalendario" class="calendario-resumo" role="status"></p>
+
+    <div class="calendario-rolagem" tabindex="0" aria-label="Grade semanal das salas">
+      <table class="tabela-calendario" id="tabelaCalendario">
+        <thead><tr id="cabecalhoCalendario"></tr></thead>
+        <tbody id="corpoCalendario"></tbody>
+      </table>
+    </div>
+
+    <form id="formReserva" class="calendario-form" novalidate>
+      <h3>Nova reserva</h3>
+      <div class="calendario-form-campos">
+        <label>Sala<select name="sala" required></select></label>
+        <label>Dia<input type="date" name="data" required></label>
+        <label>Início<input type="time" name="inicio" value="15:00" required></label>
+        <label>Fim<input type="time" name="fim" value="18:00" required></label>
+        <label class="campo-largo">Profissional<input type="text" name="profissional" list="listaProfissionais" maxlength="80" placeholder="Ex.: Dra. Mariana Costa" required></label>
+      </div>
+      <datalist id="listaProfissionais"></datalist>
+      <p id="erroReserva" class="erro-formulario" role="alert" hidden></p>
+      <p id="avisoReserva" class="calendario-aviso" role="status"></p>
+      <div class="modal-botoes">
+        <button type="button" class="botao-cancelar" data-fechar="dialogCalendarioSalas">Fechar</button>
+        <button type="submit" class="botao-principal">Adicionar reserva</button>
+      </div>
+    </form>
+  </dialog>
+
   <!-- Um "modelo" de card, escondido, que o JS copia pra cada sala -->
   <template id="modeloCard">
     <div class="card-sala">
@@ -138,8 +199,19 @@
         <span class="card-menu">⋯</span>
       </div>
       <p class="card-unidade"></p>
-      <p class="card-profissional"></p>
+      <!-- 23/11/2026 - Bloco de destaque do profissional: avatar com iniciais + nome em evidência. -->
+      <div class="card-profissional">
+        <span class="prof-avatar" aria-hidden="true"></span>
+        <span class="prof-info"><span class="prof-rotulo"></span><strong class="prof-nome"></strong></span>
+      </div>
       <p class="card-horario"></p>
+
+      <!-- 23/11/2026 - Resumo da semana atual: dia, horário e profissional de cada reserva da sala. -->
+      <div class="card-semana">
+        <p class="card-semana-titulo">Esta semana</p>
+        <ul class="card-semana-lista"></ul>
+        <button type="button" class="card-semana-mais">Ver no calendário</button>
+      </div>
 
       <button class="botao-detalhes">Ver detalhes →</button>
     </div>

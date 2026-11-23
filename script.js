@@ -350,7 +350,7 @@ function salvarConfiguracoes(perfil, tema) {
 function restaurarDados(tipo) {
   if(!['salas','conveniencia'].includes(tipo))throw new Error('Categoria de restauração inválida.');
   var armazenamento=tipo==='salas'?localStorage:sessionStorage;
-  var chaves=tipo==='salas'?salasIniciais.map(s=>'attento.sala.'+s.id):[chaveConveniencia];
+  var chaves=tipo==='salas'?salasIniciais.map(s=>'attento.sala.'+s.id).concat(chaveAgenda):[chaveConveniencia]; // 23/11/2026 — Restaurar salas também volta o calendário à grade padrão.
   var anteriores=chaves.map(chave=>[chave,armazenamento.getItem(chave)]);
   try {chaves.forEach(chave=>armazenamento.removeItem(chave));}
   catch(erro){anteriores.forEach(([chave,valor])=>{try{if(valor!==null)armazenamento.setItem(chave,valor);}catch{}});throw erro;}
@@ -518,7 +518,7 @@ function iniciarConfiguracoes() {
   // 16/11/2026 — Confirma a restauração isolada e recarrega os módulos com os dados iniciais.
   async function restaurar(tipo,origem){
     if(estado()!==snapshot||fotoProcessando){if(!await confirmarDescarte())return;preparar();}
-    var descricao=tipo==='salas'?'Os nomes, unidades, status, profissionais e horários editados das salas serão substituídos pelos valores iniciais.':'Os produtos, estoques e consumos da sessão serão substituídos pelos valores iniciais.';
+    var descricao=tipo==='salas'?'Os nomes, unidades, status, profissionais e horários editados das salas, além das reservas do calendário, serão substituídos pelos valores iniciais.':'Os produtos, estoques e consumos da sessão serão substituídos pelos valores iniciais.';
     if(!await confirmarAcao(descricao+' A página será recarregada.',origem,{titulo:'Restaurar '+(tipo==='salas'?'salas':'Conveniência'),acao:'Restaurar'}))return;
     try{restaurarDados(tipo);}catch{mostrarErro('erroConfiguracoes','Não foi possível restaurar os dados. Verifique o armazenamento do navegador e tente novamente.');return;}
     porId('resultadoRestauracao').textContent='Dados restaurados. Recarregando a página…';
@@ -663,6 +663,270 @@ function iniciarDashboard() {
    16/11/2026 — SALAS
 ========================================================== */
 
+/* ---------- 23/11/2026 — CALENDÁRIO SEMANAL DAS SALAS ---------- */
+
+// 23/11/2026 — Chave das reservas adicionadas e removidas pelo usuário no calendário.
+var chaveAgenda = 'attento.agenda.v1';
+
+// 23/11/2026 — Grade fixa que se repete toda semana (dia: 1 = segunda ... 6 = sábado).
+var agendaSemanalPadrao = [
+  { salaId: "01", dia: 1, inicio: "08:00", fim: "12:00", profissional: "Dr. Carlos Silva" },
+  { salaId: "01", dia: 1, inicio: "15:00", fim: "18:00", profissional: "Dra. Ana Souza" },
+  { salaId: "01", dia: 3, inicio: "08:00", fim: "12:00", profissional: "Dr. Carlos Silva" },
+  { salaId: "01", dia: 4, inicio: "15:00", fim: "18:00", profissional: "Dr. Felipe Alves" },
+  { salaId: "02", dia: 2, inicio: "15:00", fim: "18:00", profissional: "Dr. Felipe Alves" },
+  { salaId: "02", dia: 5, inicio: "09:00", fim: "12:00", profissional: "Dra. Ana Souza" },
+  { salaId: "03", dia: 1, inicio: "10:00", fim: "14:00", profissional: "Dra. Mariana Costa" },
+  { salaId: "03", dia: 3, inicio: "15:00", fim: "18:00", profissional: "Dra. Mariana Costa" },
+  { salaId: "03", dia: 5, inicio: "15:00", fim: "18:00", profissional: "Dr. Roberto Lima" },
+  { salaId: "04", dia: 1, inicio: "08:00", fim: "12:00", profissional: "Dr. João Pereira" },
+  { salaId: "04", dia: 2, inicio: "15:00", fim: "18:00", profissional: "Dr. Roberto Lima" },
+  { salaId: "04", dia: 4, inicio: "08:00", fim: "12:00", profissional: "Dr. João Pereira" },
+  { salaId: "05", dia: 3, inicio: "15:00", fim: "18:00", profissional: "Dra. Ana Souza" },
+  { salaId: "05", dia: 6, inicio: "08:00", fim: "12:00", profissional: "Dr. João Pereira" },
+  { salaId: "07", dia: 4, inicio: "15:00", fim: "18:00", profissional: "Dra. Mariana Costa" },
+  { salaId: "08", dia: 2, inicio: "08:00", fim: "11:00", profissional: "Dr. Carlos Silva" },
+  { salaId: "08", dia: 5, inicio: "15:00", fim: "18:00", profissional: "Dr. Felipe Alves" }
+];
+
+// 23/11/2026 — Abreviações dos dias usadas no calendário e nos cards.
+var diasDaSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+
+// 23/11/2026 — Converte "AAAA-MM-DD" em data local (sem deslocamento de fuso).
+function isoParaData(iso) { var p = String(iso).split('-').map(Number); return new Date(p[0], p[1] - 1, p[2]); }
+
+// 23/11/2026 — Soma dias a uma data ISO e devolve outra data ISO.
+function somarDiasISO(iso, dias) { var d = isoParaData(iso); d.setDate(d.getDate() + dias); return hojeISO(d); }
+
+// 23/11/2026 — Devolve a segunda-feira (ISO) da semana da data informada.
+function inicioDaSemana(iso) { iso = iso || hojeISO(); var dia = isoParaData(iso).getDay(); return somarDiasISO(iso, dia === 0 ? -6 : 1 - dia); }
+
+// 23/11/2026 — Rótulo curto do dia: "Seg 23/11".
+function rotuloDia(iso) { return diasDaSemana[isoParaData(iso).getDay()] + ' ' + dataBR(iso).slice(0, 5); }
+
+// 23/11/2026 — Lê as reservas adicionadas e as removidas pelo usuário.
+function carregarAgenda() {
+  try {
+    var salvo = JSON.parse(localStorage.getItem(chaveAgenda));
+    if (salvo && Array.isArray(salvo.adicionadas) && Array.isArray(salvo.removidas)) return salvo;
+  } catch { /* Usa só a grade padrão. */ }
+  return {adicionadas: [], removidas: []};
+}
+
+// 23/11/2026 — Grava as alterações do calendário e informa se funcionou.
+function salvarAgenda(agenda) {
+  try { localStorage.setItem(chaveAgenda, JSON.stringify({adicionadas: agenda.adicionadas, removidas: agenda.removidas})); return true; }
+  catch { return false; }
+}
+
+// 23/11/2026 — Reservas de segunda a sábado da semana: grade padrão + adicionadas − removidas.
+function reservasDaSemana(segunda, agenda) {
+  agenda = agenda || carregarAgenda();
+  var sabado = somarDiasISO(segunda, 5), lista = [];
+  agendaSemanalPadrao.forEach(r => {
+    var data = somarDiasISO(segunda, r.dia - 1), id = 'p-' + r.salaId + '-' + data + '-' + r.inicio;
+    if (!agenda.removidas.includes(id)) lista.push({id, salaId: r.salaId, data, inicio: r.inicio, fim: r.fim, profissional: r.profissional});
+  });
+  agenda.adicionadas.forEach(r => { if (r.data >= segunda && r.data <= sabado) lista.push(Object.assign({}, r)); });
+  return lista.sort((a, b) => (a.data + a.inicio).localeCompare(b.data + b.inicio));
+}
+
+// 23/11/2026 — Valida uma nova reserva e impede choque de horário na sala ou com o mesmo profissional.
+function validarReserva(reserva, existentes, salas) {
+  var sala = salas.find(s => s.id === reserva.salaId);
+  if (!sala) throw new Error('Escolha uma sala.');
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(reserva.data || '')) throw new Error('Informe o dia da reserva.');
+  if (isoParaData(reserva.data).getDay() === 0) throw new Error('As salas funcionam de segunda a sábado. Escolha outro dia.');
+  if (!/^\d{2}:\d{2}$/.test(reserva.inicio || '') || !/^\d{2}:\d{2}$/.test(reserva.fim || '')) throw new Error('Informe o horário de início e de fim.');
+  if (reserva.inicio >= reserva.fim) throw new Error('O horário de fim deve ser depois do horário de início.');
+  var nome = String(reserva.profissional || '').trim().replace(/\s+/g, ' ');
+  if (!nome) throw new Error('Informe o profissional que vai usar a sala.');
+  if (nome.length > 80) throw new Error('O nome do profissional deve ter até 80 caracteres.');
+  var choque = existentes.find(r => r.data === reserva.data && r.inicio < reserva.fim && reserva.inicio < r.fim && (r.salaId === sala.id || normalizar(r.profissional) === normalizar(nome)));
+  if (choque) {
+    var salaChoque = salas.find(s => s.id === choque.salaId);
+    throw new Error(choque.salaId === sala.id
+      ? 'A sala ' + sala.nome + ' já está com ' + choque.profissional + ' das ' + choque.inicio + ' às ' + choque.fim + ' nesse dia.'
+      : choque.profissional + ' já está na sala ' + (salaChoque ? salaChoque.nome : '') + ' das ' + choque.inicio + ' às ' + choque.fim + ' nesse dia.');
+  }
+  return {salaId: sala.id, data: reserva.data, inicio: reserva.inicio, fim: reserva.fim, profissional: nome};
+}
+
+// 23/11/2026 — Iniciais do profissional sem o título: "Dra. Ana Souza" → "AS".
+function iniciaisProfissional(nome) {
+  var partes = String(nome || '').trim().replace(/^(dra?|profa?|sra?)\.?\s+/i, '').split(/\s+/).filter(Boolean);
+  if (!partes.length) return '?';
+  return (Array.from(partes[0])[0] + (partes.length > 1 ? Array.from(partes[partes.length - 1])[0] : '')).toLocaleUpperCase('pt-BR');
+}
+
+// 23/11/2026 — Escolhe sempre a mesma cor (0 a 5) para o mesmo profissional, no card e no calendário.
+// Os profissionais da grade padrão recebem cores diferentes entre si; nomes novos usam um cálculo pelo nome.
+function corProfissional(nome) {
+  var n = normalizar(nome), conhecidos = Array.from(new Set(agendaSemanalPadrao.map(r => normalizar(r.profissional))));
+  if (conhecidos.includes(n)) return conhecidos.indexOf(n) % 6;
+  var soma = 0;
+  for (var i = 0; i < n.length; i++) soma = (soma * 31 + n.charCodeAt(i)) % 9973;
+  return soma % 6;
+}
+
+// 23/11/2026 — Texto acima do nome do profissional, conforme o status da sala.
+function rotuloProfissional(sala) { return {'Ocupada': 'Na sala agora', 'Reservada': 'Reservada para'}[sala.status] || 'Profissional'; }
+
+// 23/11/2026 — Controla o diálogo do calendário: semanas, filtros, grade, nova reserva e remoção.
+function iniciarCalendarioSalas(salas, aoAlterar) {
+  var dialogo = porId('dialogCalendarioSalas');
+  if (!dialogo) return {abrir() {}};
+  var form = porId('formReserva'), campos = form.elements;
+  var semana = inicioDaSemana(), destaque = null;
+
+  // 23/11/2026 — Salas da unidade escolhida no calendário, na ordem unidade → nome.
+  function salasVisiveis() {
+    var unidade = porId('calendarioUnidade').value;
+    return ordenarLista(salas.filter(s => unidade === 'todas' || s.unidade === unidade), 'unidade', {unidade: s => s.unidade + ' ' + s.nome});
+  }
+
+  // 23/11/2026 — Verifica se a reserva cruza a faixa de horário escolhida no filtro.
+  function dentroDaFaixa(r) {
+    var faixa = porId('calendarioHorario').value;
+    if (faixa === 'todos') return true;
+    var [ini, fim] = faixa.split('-');
+    return r.inicio < fim && ini < r.fim;
+  }
+
+  // 23/11/2026 — Bloco de uma reserva na grade: horário, profissional e botão de remover.
+  function criarBlocoReserva(r, sala) {
+    var bloco = document.createElement('div');
+    bloco.className = 'cal-reserva cor-prof-' + corProfissional(r.profissional);
+    bloco.innerHTML = `<span class="cal-reserva-hora">${escapar(r.inicio)} – ${escapar(r.fim)}</span><span class="cal-reserva-prof"><span class="prof-avatar prof-avatar-mini" aria-hidden="true">${escapar(iniciaisProfissional(r.profissional))}</span><span>${escapar(r.profissional)}</span></span>`;
+    var remover = document.createElement('button');
+    remover.type = 'button'; remover.className = 'cal-reserva-remover'; remover.textContent = '×'; remover.title = 'Remover reserva';
+    remover.setAttribute('aria-label', 'Remover reserva de ' + r.profissional + ', ' + rotuloDia(r.data) + ', ' + r.inicio + ' às ' + r.fim);
+    remover.addEventListener('click', () => removerReserva(r, sala, remover));
+    bloco.appendChild(remover);
+    return bloco;
+  }
+
+  // 23/11/2026 — Redesenha cabeçalho, linhas das salas e o resumo da semana exibida.
+  function desenhar() {
+    var hoje = hojeISO(), dias = [0, 1, 2, 3, 4, 5].map(i => somarDiasISO(semana, i));
+    var visiveis = salasVisiveis(), reservas = reservasDaSemana(semana).filter(dentroDaFaixa);
+    porId('periodoCalendario').textContent = 'Semana de ' + dataBR(dias[0]) + ' a ' + dataBR(dias[5]) + (semana === inicioDaSemana() ? ' • semana atual' : '');
+
+    var cabecalho = porId('cabecalhoCalendario'); cabecalho.replaceChildren();
+    var thSala = document.createElement('th'); thSala.scope = 'col'; thSala.className = 'cal-col-sala'; thSala.textContent = 'Sala'; cabecalho.appendChild(thSala);
+    dias.forEach(d => {
+      var th = document.createElement('th'); th.scope = 'col'; if (d === hoje) th.className = 'coluna-hoje';
+      th.innerHTML = `<span class="cal-dia-nome">${diasDaSemana[isoParaData(d).getDay()]}</span><span class="cal-dia-data">${dataBR(d).slice(0, 5)}</span>${d === hoje ? '<span class="cal-hoje-tag">Hoje</span>' : ''}`;
+      cabecalho.appendChild(th);
+    });
+
+    var corpo = porId('corpoCalendario'); corpo.replaceChildren();
+    visiveis.forEach(sala => {
+      var tr = document.createElement('tr'); if (sala.id === destaque) tr.className = 'linha-destacada';
+      var th = document.createElement('th'); th.scope = 'row';
+      th.innerHTML = `<span class="cal-sala-nome">${escapar(sala.nome)}</span><span class="cal-sala-unidade">${escapar(nomeUnidade(sala.unidade))}</span>${sala.status === 'Indisponível' ? '<span class="cal-sala-alerta">Indisponível</span>' : ''}`;
+      tr.appendChild(th);
+      dias.forEach(d => {
+        var td = document.createElement('td'); if (d === hoje) td.className = 'coluna-hoje';
+        var doDia = reservas.filter(r => r.salaId === sala.id && r.data === d);
+        if (doDia.length) doDia.forEach(r => td.appendChild(criarBlocoReserva(r, sala)));
+        else td.innerHTML = '<span class="cal-livre">Livre</span>';
+        tr.appendChild(td);
+      });
+      corpo.appendChild(tr);
+    });
+
+    var naGrade = reservas.filter(r => visiveis.some(s => s.id === r.salaId));
+    var profissionais = new Set(naGrade.map(r => normalizar(r.profissional))).size;
+    var faixa = porId('calendarioHorario');
+    porId('resumoCalendario').textContent = naGrade.length + (naGrade.length === 1 ? ' reserva' : ' reservas') + ' • ' + profissionais + (profissionais === 1 ? ' profissional' : ' profissionais') + (faixa.value !== 'todos' ? ' no horário ' + faixa.selectedOptions[0].textContent : '') + ' nesta semana.';
+  }
+
+  // 23/11/2026 — Lista as salas no formulário (agrupadas por unidade), mantendo a escolha atual.
+  function preencherSalasFormulario() {
+    var atual = campos.sala.value; campos.sala.replaceChildren();
+    ['Unidade 1', 'Unidade 2'].forEach(unidade => {
+      var grupo = document.createElement('optgroup'); grupo.label = nomeUnidade(unidade);
+      ordenarLista(salas.filter(s => s.unidade === unidade), 'nome', {nome: 'nome'}).forEach(s => grupo.appendChild(new Option(s.nome, s.id)));
+      if (grupo.children.length) campos.sala.appendChild(grupo);
+    });
+    var visiveis = salasVisiveis();
+    campos.sala.value = salas.some(s => s.id === atual) && (visiveis.some(s => s.id === atual)) ? atual : (visiveis[0] || salas[0]).id;
+  }
+
+  // 23/11/2026 — Sugere um dia da semana exibida (hoje, se estiver nela) quando o campo estiver fora dela.
+  function ajustarDataPadrao() {
+    var sabado = somarDiasISO(semana, 5), atual = campos.data.value, hoje = hojeISO();
+    if (atual >= semana && atual <= sabado) return;
+    campos.data.value = hoje >= semana && hoje <= sabado ? hoje : semana;
+  }
+
+  // 23/11/2026 — Sugestões de nomes para o campo Profissional.
+  function atualizarListaProfissionais() {
+    var nomes = new Map();
+    salas.map(s => s.profissional).concat(agendaSemanalPadrao.map(r => r.profissional), carregarAgenda().adicionadas.map(r => r.profissional), pagamentosIniciais.map(p => p.profissional))
+      .filter(Boolean).forEach(n => { if (!nomes.has(normalizar(n))) nomes.set(normalizar(n), n); });
+    var lista = porId('listaProfissionais'); lista.replaceChildren();
+    Array.from(nomes.values()).sort((a, b) => a.localeCompare(b, 'pt-BR')).forEach(n => lista.appendChild(new Option(n)));
+  }
+
+  // 23/11/2026 — Remove uma reserva depois de confirmar (as da grade padrão ficam marcadas como removidas).
+  async function removerReserva(r, sala, origem) {
+    if (!await confirmarAcao('Remover a reserva de ' + r.profissional + ' na sala ' + sala.nome + ' (' + rotuloDia(r.data) + ', ' + r.inicio + ' – ' + r.fim + ')?', origem, {titulo: 'Remover reserva', acao: 'Remover'})) return;
+    var agenda = carregarAgenda();
+    if (r.id.startsWith('p-')) agenda.removidas.push(r.id); else agenda.adicionadas = agenda.adicionadas.filter(a => a.id !== r.id);
+    if (!salvarAgenda(agenda)) { mostrarErro('erroReserva', 'Não foi possível remover. Verifique se o navegador permite o armazenamento local.'); return; }
+    mostrarErro('erroReserva', '');
+    desenhar(); aoAlterar();
+    porId('avisoReserva').textContent = 'Reserva removida: ' + sala.nome + ', ' + rotuloDia(r.data) + ', ' + r.inicio + ' – ' + r.fim + '.';
+    dialogo.querySelector('.calendario-rolagem').focus();
+  }
+
+  // 23/11/2026 — Abre o calendário na semana atual; pode vir de um card (unidade e sala já destacadas).
+  function abrir(origem, opcoes) {
+    opcoes = opcoes || {};
+    semana = inicioDaSemana(); destaque = opcoes.salaId || null;
+    porId('calendarioUnidade').value = opcoes.unidade || porId('filtroUnidade').value;
+    porId('calendarioHorario').value = 'todos';
+    preencherSalasFormulario(); if (destaque) campos.sala.value = destaque;
+    campos.data.value = ''; ajustarDataPadrao(); atualizarListaProfissionais();
+    mostrarErro('erroReserva', ''); porId('avisoReserva').textContent = '';
+    desenhar();
+    abrirDialogo(dialogo, origem);
+    var linha = dialogo.querySelector('.linha-destacada');
+    if (linha) linha.scrollIntoView({block: 'nearest'});
+  }
+
+  // 23/11/2026 — Muda a semana exibida (em dias: -7, +7 ou volta para a atual).
+  function irPara(novaSemana) { semana = novaSemana; desenhar(); ajustarDataPadrao(); }
+  porId('btnSemanaAnterior').addEventListener('click', () => irPara(somarDiasISO(semana, -7)));
+  porId('btnSemanaProxima').addEventListener('click', () => irPara(somarDiasISO(semana, 7)));
+  porId('btnSemanaAtual').addEventListener('click', () => irPara(inicioDaSemana()));
+  porId('calendarioUnidade').addEventListener('change', () => { destaque = null; preencherSalasFormulario(); desenhar(); });
+  porId('calendarioHorario').addEventListener('change', desenhar);
+
+  form.addEventListener('submit', evento => {
+    evento.preventDefault();
+    var agenda = carregarAgenda(), nova;
+    var dados = {salaId: campos.sala.value, data: campos.data.value, inicio: campos.inicio.value, fim: campos.fim.value, profissional: campos.profissional.value};
+    try { nova = validarReserva(dados, reservasDaSemana(inicioDaSemana(/^\d{4}-\d{2}-\d{2}$/.test(dados.data) ? dados.data : hojeISO()), agenda), salas); }
+    catch (erro) { mostrarErro('erroReserva', erro.message); porId('avisoReserva').textContent = ''; return; }
+    nova.id = 'm-' + Date.now().toString(36);
+    agenda.adicionadas.push(nova);
+    if (!salvarAgenda(agenda)) { mostrarErro('erroReserva', 'Não foi possível salvar. Verifique se o navegador permite o armazenamento local e tente novamente.'); return; }
+    var sala = salas.find(s => s.id === nova.salaId);
+    // Garante que a nova reserva fique visível: semana dela, unidade dela e sem filtro de horário que a esconda.
+    semana = inicioDaSemana(nova.data); destaque = sala.id;
+    if (porId('calendarioUnidade').value !== 'todas' && porId('calendarioUnidade').value !== sala.unidade) porId('calendarioUnidade').value = sala.unidade;
+    if (!dentroDaFaixa(nova)) porId('calendarioHorario').value = 'todos';
+    mostrarErro('erroReserva', ''); campos.profissional.value = '';
+    desenhar(); aoAlterar(); atualizarListaProfissionais();
+    porId('avisoReserva').textContent = 'Reserva adicionada: ' + sala.nome + ', ' + rotuloDia(nova.data) + ', ' + nova.inicio + ' – ' + nova.fim + ' — ' + nova.profissional + '.';
+  });
+
+  return {abrir};
+}
+
 // 16/11/2026 — Monta os cards, aplica filtros e coordena a edição persistida das salas.
 function iniciarSalas() {
   if (!porId('listaDeSalas')) return;
@@ -691,6 +955,8 @@ function iniciarSalas() {
     var lista = salas.filter(s => normalizar(s.nome).includes(normalizar(porId('campoBusca').value)) && (porId('filtroUnidade').value === 'todas' || s.unidade === porId('filtroUnidade').value) && (porId('filtroStatus').value === 'todos' || s.status === porId('filtroStatus').value));
     lista = ordenarLista(lista, porId('ordenacao').value, {nome:'nome',unidade:s=>nomeUnidade(s.unidade),status:'status'});
     var grade = porId('listaDeSalas'); grade.replaceChildren();
+    // 23/11/2026 — Reservas da semana atual, usadas no resumo "Esta semana" de cada card.
+    var hoje = hojeISO(), reservasSemana = reservasDaSemana(inicioDaSemana());
     lista.forEach(sala => {
       var frag = porId('modeloCard').content.cloneNode(true);
       var statusNorm = normalizar(sala.status);
@@ -702,18 +968,37 @@ function iniciarSalas() {
       frag.querySelector('.card-status').className = 'card-status status-' + statusNorm;
       frag.querySelector('.texto-status').textContent = sala.status;
 
+      // 23/11/2026 — Profissional em destaque: avatar colorido com iniciais, rótulo do status e nome.
       var elProf = frag.querySelector('.card-profissional');
-      elProf.className = 'card-profissional ' + (sala.profissional ? 'prof-ativo' : 'prof-vazio');
-      elProf.innerHTML = `<span class="meta-ico" aria-hidden="true">👤</span>${escapar(sala.profissional || 'Sem profissional')}`;
+      elProf.className = 'card-profissional ' + (sala.profissional ? 'prof-ativo cor-prof-' + corProfissional(sala.profissional) : 'prof-vazio');
+      elProf.querySelector('.prof-avatar').textContent = sala.profissional ? iniciaisProfissional(sala.profissional) : '—';
+      elProf.querySelector('.prof-rotulo').textContent = sala.profissional ? rotuloProfissional(sala) : 'Profissional';
+      elProf.querySelector('.prof-nome').textContent = sala.profissional || 'Sem profissional no momento';
 
       var elHorario = frag.querySelector('.card-horario');
       elHorario.className = 'card-horario horario-' + statusNorm;
       elHorario.innerHTML = `<span class="meta-ico" aria-hidden="true">${sala.status === 'Indisponível' ? '🔧' : '🕒'}</span>${escapar(formatarHorarioContextual(sala))}`;
 
+      // 23/11/2026 — "Esta semana": dia, horário e profissional de cada reserva da sala (até 4).
+      var daSala = reservasSemana.filter(r => r.salaId === sala.id), listaSemana = frag.querySelector('.card-semana-lista');
+      daSala.slice(0, 4).forEach(r => {
+        var item = document.createElement('li');
+        item.className = 'semana-item cor-prof-' + corProfissional(r.profissional) + (r.data === hoje ? ' semana-hoje' : r.data < hoje ? ' semana-passada' : '');
+        item.innerHTML = `<span class="semana-dia">${r.data === hoje ? 'Hoje' : escapar(rotuloDia(r.data))}</span><span class="semana-hora">${escapar(r.inicio)} – ${escapar(r.fim)}</span><span class="semana-prof"><span class="prof-avatar prof-avatar-mini" aria-hidden="true">${escapar(iniciaisProfissional(r.profissional))}</span>${escapar(r.profissional)}</span>`;
+        listaSemana.appendChild(item);
+      });
+      if (!daSala.length) { var vazio = document.createElement('li'); vazio.className = 'semana-vazia'; vazio.textContent = 'Nenhuma reserva nesta semana.'; listaSemana.appendChild(vazio); }
+      var verSemana = frag.querySelector('.card-semana-mais');
+      verSemana.textContent = daSala.length > 4 ? 'Ver mais ' + (daSala.length - 4) + ' no calendário →' : 'Ver semana no calendário →';
+      verSemana.dataset.foco = 'semana-' + sala.id;
+      verSemana.setAttribute('aria-label', 'Ver a semana da sala ' + sala.nome + ' no calendário');
+      verSemana.addEventListener('click', () => calendario.abrir(verSemana, {unidade: sala.unidade, salaId: sala.id}));
+
       frag.querySelector('.card-menu').remove();
       var detalhes = frag.querySelector('.botao-detalhes'); detalhes.dataset.foco = 'sala-' + sala.id;
       detalhes.addEventListener('click', () => {
-        porId('textoDetalhesSala').textContent = [sala.nome,nomeUnidade(sala.unidade),sala.status,sala.profissional || 'Sem profissional',formatarHorarioContextual(sala)] .join('\n');
+        var semanaTexto = daSala.length ? ['', 'Esta semana:'].concat(daSala.map(r => '• ' + rotuloDia(r.data) + ', ' + r.inicio + ' – ' + r.fim + ' — ' + r.profissional)) : ['', 'Nenhuma reserva nesta semana.'];
+        porId('textoDetalhesSala').textContent = [sala.nome,nomeUnidade(sala.unidade),sala.status,sala.profissional || 'Sem profissional',formatarHorarioContextual(sala)].concat(semanaTexto).join('\n');
         abrirDialogo(porId('dialogDetalhesSala'), detalhes);
       });
       grade.appendChild(frag);
@@ -721,6 +1006,9 @@ function iniciarSalas() {
     if (!lista.length) grade.appendChild(porId('modeloVazio').content.cloneNode(true));
     porId('contadorResultados').textContent = textoContagem(lista.length, salas.length, 'salas');
   }
+  // 23/11/2026 — Calendário semanal; ao adicionar/remover reservas, os cards são atualizados.
+  var calendario = iniciarCalendarioSalas(salas, () => atualizar());
+  porId('btnCalendarioSalas').addEventListener('click', evento => calendario.abrir(evento.currentTarget));
   porId('btnEditarSalas').addEventListener('click', evento => { preencher(); abrirDialogo(dialogo, evento.currentTarget); });
   campos.unidade.addEventListener('change', listarSalasDaUnidade);
   campos.sala.addEventListener('change', preencherDados);
@@ -1101,4 +1389,4 @@ if (typeof document !== 'undefined') {
 }
 
 // 16/11/2026 — Disponibiliza a lógica para testes locais sem exigir o navegador.
-if (typeof module !== 'undefined' && module.exports) module.exports={hojeISO,paraISO,dataBR,statusPagamento,filtrarPeriodo,ordenarLista,normalizar,carregarSalas,criarDadosConveniencia,registrarConsumo,excluirProduto,excluirConsumo,iniciarPortal,obterPagamentos,carregarConveniencia,salvarConveniencia,resumirOperacao,aplicarParametrosFiltros,validarPerfil,carregarUsuario,iniciaisUsuario,carregarTema,salvarConfiguracoes,restaurarDados,gerarTextoChamado};
+if (typeof module !== 'undefined' && module.exports) module.exports={hojeISO,paraISO,dataBR,statusPagamento,filtrarPeriodo,ordenarLista,normalizar,carregarSalas,criarDadosConveniencia,registrarConsumo,excluirProduto,excluirConsumo,iniciarPortal,obterPagamentos,carregarConveniencia,salvarConveniencia,resumirOperacao,aplicarParametrosFiltros,validarPerfil,carregarUsuario,iniciaisUsuario,carregarTema,salvarConfiguracoes,restaurarDados,gerarTextoChamado,inicioDaSemana,reservasDaSemana,validarReserva,iniciaisProfissional,corProfissional};
